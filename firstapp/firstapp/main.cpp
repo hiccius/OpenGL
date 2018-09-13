@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-int32_t main(int32_t argc, char* argv[])
+GLFWwindow* InitWindow(int32_t width, int32_t weight, const std::string title)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -10,7 +10,12 @@ int32_t main(int32_t argc, char* argv[])
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+    return glfwCreateWindow(width, weight, title.c_str(), nullptr, nullptr);
+}
+
+int32_t main(int32_t argc, char* argv[])
+{
+    GLFWwindow* window = InitWindow(800, 600, "LearnOpenGL");
     if (!window)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
