@@ -1,7 +1,7 @@
 #include "window.h"
 
 
-CWindow::CWindow()
+CWindow::CWindow() noexcept
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -11,13 +11,13 @@ CWindow::CWindow()
 }
 
 
-CWindow::~CWindow()
+CWindow::~CWindow() noexcept
 {
     glfwTerminate();
 }
 
 
-bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title)
+bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title) noexcept
 {
     _window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
@@ -33,19 +33,19 @@ bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title)
 }
 
 
-void CWindow::SetResizeCallback(GLFWframebuffersizefun callback)
+void CWindow::SetResizeCallback(GLFWframebuffersizefun callback) const noexcept
 {
     glfwSetFramebufferSizeCallback(_window, callback);
 }
 
 
-bool CWindow::IsOpen()
+bool CWindow::IsOpen() const noexcept
 {
     return !glfwWindowShouldClose(_window);
 }
 
 
-void CWindow::PollCloseKey(int32_t key)
+void CWindow::PollCloseKey(int32_t key) const noexcept
 {
     if (glfwGetKey(_window, key) == GLFW_PRESS)
     {
@@ -54,7 +54,7 @@ void CWindow::PollCloseKey(int32_t key)
 }
 
 
-void CWindow::RedrawAndPoll()
+void CWindow::RedrawAndPoll() const noexcept
 {
     glfwSwapBuffers(_window);
     glfwPollEvents();

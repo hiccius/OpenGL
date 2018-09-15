@@ -29,3 +29,18 @@ private:
     const char* const   _data;
     const std::size_t   _size;
 };
+
+
+class OpenGLException : public std::exception
+{
+public:
+    OpenGLException(const std::string& errorString) : _errorString{ errorString } {};
+
+    virtual const char* what() const noexcept override final
+    {
+        return _errorString.c_str();
+    }
+
+private:
+    std::string _errorString;
+};
