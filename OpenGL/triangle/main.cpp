@@ -38,12 +38,14 @@ int32_t main(int32_t argc, char* argv[])
         glViewport(10, 0, width, height);
     });
 
+
     // Load GLAD
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
 
     // Shader program
     CShaderProgram shaderProgram;
@@ -103,13 +105,13 @@ int32_t main(int32_t argc, char* argv[])
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(decltype(vertices)::value_type), 0);
     glEnableVertexAttribArray(0);
 
-    // render loop
+    // Render loop
     while (window.IsOpen())
     {
-        // poll escape key to close
+        // Poll escape key to close
         window.PollCloseKey(GLFW_KEY_ESCAPE);
 
-        // render
+        // Render
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -117,7 +119,7 @@ int32_t main(int32_t argc, char* argv[])
         glBindVertexArray(vertexArrayObjectId);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        // poll events and redraw window
+        // Poll events and redraw window
         window.RedrawAndPoll();
     }
 
