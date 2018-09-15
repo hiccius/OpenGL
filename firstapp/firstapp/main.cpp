@@ -6,12 +6,21 @@
 #include "helpers.h"
 
 constexpr CStringLiteral vertexShaderSource =
-    "#version 330 core"                                     "\n"
+    "#version 440 core"                                     "\n"
     "layout(location = 0) in vec3 aPos;"                    "\n"
     "void main()"                                           "\n"
     "{"                                                     "\n"
         "gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"  "\n"
     "};";
+
+constexpr CStringLiteral fragmentShaderSource =
+    "#version 440 core"                             "\n"
+    "out vec4 fragColor;"                           "\n"
+    "void main()"                                   "\n"
+    "{"                                             "\n"
+        "fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0);"  "\n"
+    "};";
+
 
 GLFWwindow* InitWindow(int32_t width, int32_t weight, const std::string title)
 {
@@ -77,6 +86,23 @@ int32_t main(int32_t argc, char* argv[])
         char infoLog[infoLogSize];
         glGetShaderInfoLog(vertexShaderId, infoLogSize, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    // fragment shader
+    GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShaderId, 1, &fragmentShaderSource, nullptr);
+    glCompileShader(fragmentShaderId);
+
+    glGetShaderiv(fragmentShaderId, GL_COMPILE_STATUS, &success);
+
+    if (!success)
+    {
+        constexpr uint32_t infoLogSize{ 512 };
+        char infoLog[infoLogSize];
+        glGetShaderInfoLog(fragmentShaderId, infoLogSize, nullptr, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
         glfwTerminate();
         return -1;
     }
