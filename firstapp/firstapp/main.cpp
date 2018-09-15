@@ -107,6 +107,28 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
+
+    // shader program
+    GLuint shaderProgramId = glCreateProgram();
+    glAttachShader(shaderProgramId, vertexShaderId);
+    glAttachShader(shaderProgramId, fragmentShaderId);
+    glLinkProgram(shaderProgramId);
+
+    glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        constexpr uint32_t infoLogSize{ 512 };
+        char infoLog[infoLogSize];
+        glGetProgramInfoLog(shaderProgramId, infoLogSize, nullptr, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    glUseProgram(shaderProgramId);
+    glDeleteShader(vertexShaderId);
+    glDeleteShader(fragmentShaderId);
+
     // render loop
     while (!glfwWindowShouldClose(window))
     {
