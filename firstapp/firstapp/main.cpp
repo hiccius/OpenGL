@@ -57,21 +57,6 @@ int32_t main(int32_t argc, char* argv[])
                                                glViewport(10, 0, width, height);
                                            });
 
-    constexpr std::array<float, 9> vertices = 
-    { 
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
-    };
-
-    // generate buffer
-    GLuint VertexBufferObjectId;
-    glGenBuffers(1, &VertexBufferObjectId);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObjectId);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(decltype(vertices)::value_type), 
-                 vertices.data(), GL_STATIC_DRAW);
-
     // vertex shader
     GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShaderId, 1, &vertexShaderSource, nullptr);
@@ -125,10 +110,33 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
-    glUseProgram(shaderProgramId);
     glDeleteShader(vertexShaderId);
     glDeleteShader(fragmentShaderId);
 
+    // generate vertex buffer
+    constexpr std::array<GLfloat, 9> vertices =
+    {
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.0f,  0.5f, 0.0f
+    };
+
+    GLuint vertexBufferObjectId;
+    glGenBuffers(1, &vertexBufferObjectId);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectId);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(decltype(vertices)::value_type),
+                 vertices.data(), GL_STATIC_DRAW);
+
+    // vertex array object
+    GLuint vertexArrayObjectId;
+    glGenVertexArrays(1, &vertexArrayObjectId);
+
+    // vertex attributes
+    glBindVertexArray(vertexArrayObjectId);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(decltype(vertices)::value_type), 0);
+    glEnableVertexAttribArray(0);
+    
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -142,10 +150,17 @@ int32_t main(int32_t argc, char* argv[])
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        glUseProgram(shaderProgramId);
+        glBindVertexArray(vertexArrayObjectId);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
         // check and call events and swap the buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    glDeleteBuffers(1, &vertexBufferObjectId);
+    glDeleteVertexArrays(1, &vertexArrayObjectId);
 
     glfwTerminate();
     return 0;
