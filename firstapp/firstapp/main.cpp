@@ -1,8 +1,8 @@
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <array>
 
+#include "window.h"
 #include "helpers.h"
 
 constexpr CStringLiteral vertexShaderSource =
@@ -22,40 +22,29 @@ constexpr CStringLiteral fragmentShaderSource =
     "};";
 
 
-GLFWwindow* InitWindow(int32_t width, int32_t weight, const std::string title)
-{
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    return glfwCreateWindow(width, weight, title.c_str(), nullptr, nullptr);
-}
-
 int32_t main(int32_t argc, char* argv[])
 {
-    GLFWwindow* window = InitWindow(800, 600, "LearnOpenGL");
-    if (!window)
+    CWindow window;
+    if (!window.SetUp(800, 600, "LearnOpenGL"))
     {
         std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        glfwTerminate();
         return -1;
     }
 
     // Set window coordinates and adjust when resizing
-    glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int width, int height)
-                                           {
-                                               glViewport(10, 0, width, height);
-                                           });
+    window.SetResizeCallback([](GLFWwindow* window, int width, int height)
+    {
+        glViewport(10, 0, width, height);
+    });
+
+    // Load GLAD
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+
+
 
     // vertex shader
     GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -71,7 +60,6 @@ int32_t main(int32_t argc, char* argv[])
         char infoLog[infoLogSize];
         glGetShaderInfoLog(vertexShaderId, infoLogSize, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-        glfwTerminate();
         return -1;
     }
 
@@ -88,7 +76,6 @@ int32_t main(int32_t argc, char* argv[])
         char infoLog[infoLogSize];
         glGetShaderInfoLog(fragmentShaderId, infoLogSize, nullptr, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-        glfwTerminate();
         return -1;
     }
 
@@ -106,7 +93,6 @@ int32_t main(int32_t argc, char* argv[])
         char infoLog[infoLogSize];
         glGetProgramInfoLog(shaderProgramId, infoLogSize, nullptr, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
-        glfwTerminate();
         return -1;
     }
 
@@ -138,13 +124,10 @@ int32_t main(int32_t argc, char* argv[])
     glEnableVertexAttribArray(0);
     
     // render loop
-    while (!glfwWindowShouldClose(window))
+    while (window.IsOpen())
     {
-        // input
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        {
-            glfwSetWindowShouldClose(window, true);
-        }
+        // poll escape key to close
+        window.PollCloseKey(GLFW_KEY_ESCAPE);
 
         // render
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -154,14 +137,12 @@ int32_t main(int32_t argc, char* argv[])
         glBindVertexArray(vertexArrayObjectId);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        // check and call events and swap the buffers
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        // poll events and redraw window
+        window.RedrawAndPoll();
     }
 
     glDeleteBuffers(1, &vertexBufferObjectId);
     glDeleteVertexArrays(1, &vertexArrayObjectId);
 
-    glfwTerminate();
     return 0;
 }
