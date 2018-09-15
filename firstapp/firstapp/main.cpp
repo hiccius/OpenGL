@@ -1,6 +1,17 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <array>
+
+#include "helpers.h"
+
+constexpr CStringLiteral vertexShaderSource =
+    "#version 330 core"                                     "\n"
+    "layout(location = 0) in vec3 aPos;"                    "\n"
+    "void main()"                                           "\n"
+    "{"                                                     "\n"
+        "gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"  "\n"
+    "};";
 
 GLFWwindow* InitWindow(int32_t width, int32_t weight, const std::string title)
 {
@@ -36,6 +47,39 @@ int32_t main(int32_t argc, char* argv[])
                                            {
                                                glViewport(10, 0, width, height);
                                            });
+
+    constexpr std::array<float, 9> vertices = 
+    { 
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.0f,  0.5f, 0.0f
+    };
+
+    // generate buffer
+    GLuint VertexBufferObjectId;
+    glGenBuffers(1, &VertexBufferObjectId);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObjectId);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(decltype(vertices)::value_type), 
+                 vertices.data(), GL_STATIC_DRAW);
+
+    // vertex shader
+    GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShaderId, 1, &vertexShaderSource, nullptr);
+    glCompileShader(vertexShaderId);
+
+    GLint success;
+    glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &success);
+
+    if (!success)
+    {
+        constexpr uint32_t infoLogSize{ 512 };
+        char infoLog[infoLogSize];
+        glGetShaderInfoLog(vertexShaderId, infoLogSize, nullptr, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+        glfwTerminate();
+        return -1;
+    }
 
     // render loop
     while (!glfwWindowShouldClose(window))
