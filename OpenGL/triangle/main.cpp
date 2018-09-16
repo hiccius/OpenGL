@@ -45,7 +45,7 @@ int32_t main(int32_t argc, char* argv[])
 
     try
     {
-        shaderProgram.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+        shaderProgram.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSourceOrange);
     }
     catch (const OpenGLException& exc)
     {

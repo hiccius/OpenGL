@@ -4,7 +4,7 @@
 CShaderProgram::CShaderProgram() noexcept : _id{ glCreateProgram() } {};
 
 
-void CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceCode)
+GLuint CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceCode)
 {
     GLuint shaderId = glCreateShader(shaderType);
     glShaderSource(shaderId, 1, &sourceCode, nullptr);
@@ -16,6 +16,7 @@ void CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceCod
     if (success)
     {
         _shaderIds.push_back(shaderId);
+        return shaderId;
     }
     else
     {
@@ -27,9 +28,19 @@ void CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceCod
 }
 
 
+void CShaderProgram::AttachCompiledShader(GLuint shaderId)
+{
+    _compiledShaderIds.push_back(shaderId);
+}
+
+
 void CShaderProgram::Link()
 {
     for (const auto& shaderId : _shaderIds)
+    {
+        glAttachShader(_id, shaderId);
+    }
+    for (const auto& shaderId : _compiledShaderIds)
     {
         glAttachShader(_id, shaderId);
     }
@@ -44,6 +55,7 @@ void CShaderProgram::Link()
             glDeleteShader(shaderId);
         }
         _shaderIds.clear();
+        _compiledShaderIds.clear();
     }
     else
     {

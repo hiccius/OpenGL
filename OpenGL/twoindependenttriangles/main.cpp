@@ -32,10 +32,11 @@ int32_t main(int32_t argc, char* argv[])
     }
 
     // Shader program
-    CShaderProgram shaderProgram;
+    CShaderProgram shaderProgramOrange;
+    GLuint vertexShaderId;
     try
     {
-        shaderProgram.AttachNewShader(GL_VERTEX_SHADER, vertexShaderSource);
+        vertexShaderId = shaderProgramOrange.AttachNewShader(GL_VERTEX_SHADER, vertexShaderSource);
     }
     catch (const OpenGLException& exc)
     {
@@ -45,7 +46,7 @@ int32_t main(int32_t argc, char* argv[])
 
     try
     {
-        shaderProgram.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSourceOrange);
+        shaderProgramOrange.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSourceOrange);
     }
     catch (const OpenGLException& exc)
     {
@@ -55,7 +56,29 @@ int32_t main(int32_t argc, char* argv[])
 
     try
     {
-        shaderProgram.Link();
+        shaderProgramOrange.Link();
+    }
+    catch (const OpenGLException& exc)
+    {
+        std::cout << "ERROR::SHADER::PROGRAM::" << exc.what() << std::endl;
+        return -1;
+    }
+
+    CShaderProgram shaderProgramYellow;
+    shaderProgramYellow.AttachCompiledShader(vertexShaderId);
+    try
+    {
+        shaderProgramYellow.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSourceYellow);
+    }
+    catch (const OpenGLException& exc)
+    {
+        std::cout << "ERROR::SHADER::FRAGMENT::" << exc.what() << std::endl;
+        return -1;
+    }
+
+    try
+    {
+        shaderProgramYellow.Link();
     }
     catch (const OpenGLException& exc)
     {
@@ -64,20 +87,27 @@ int32_t main(int32_t argc, char* argv[])
     }
 
     // Vertex data
-    CVertexDataHandler vertexDataHandler;
-    constexpr std::array<GLfloat, 18> vertices =
+    CVertexDataHandler vertexDataHandler1;
+    constexpr std::array<GLfloat, 9> vertices1 =
     {
         // first triangle
         -0.4f,  0.5f, 0.0f,
         -0.8f, -0.5f, 0.0f,
-         0.0f, -0.5f, 0.0f,
-        // second triangle
-         0.4f,  0.5f, 0.0f,
-         0.0f, -0.5f, 0.0f,
-         0.8f, -0.5f, 0.0f,
+         0.0f, -0.5f, 0.0f
     };
-    vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
-    vertexDataHandler.AddAttributes();
+    vertexDataHandler1.AddBufferObject(vertices1, GL_ARRAY_BUFFER);
+    vertexDataHandler1.AddAttributes();
+
+    CVertexDataHandler vertexDataHandler2;
+    constexpr std::array<GLfloat, 9> vertices2 =
+    {
+         // second triangle
+          0.4f,  0.5f, 0.0f,
+          0.0f, -0.5f, 0.0f,
+          0.8f, -0.5f, 0.0f
+    };
+    vertexDataHandler2.AddBufferObject(vertices2, GL_ARRAY_BUFFER);
+    vertexDataHandler2.AddAttributes();
 
     // Render loop
     while (window.IsOpen())
@@ -89,8 +119,10 @@ int32_t main(int32_t argc, char* argv[])
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        shaderProgram.Use();
-        vertexDataHandler.DrawArrays(6);
+        shaderProgramOrange.Use();
+        vertexDataHandler1.DrawArrays(6);
+        shaderProgramYellow.Use();
+        vertexDataHandler2.DrawArrays(6);
 
         // Poll events and redraw window
         window.RedrawAndPoll();
