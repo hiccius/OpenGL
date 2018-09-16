@@ -5,6 +5,8 @@
 #include "helpers.h"
 #include "window.h"
 #include "shaderprogram.h"
+#include "vertexDataHandler.h"
+
 
 constexpr CStringLiteral vertexShaderSource =
     "#version 440 core"                                     "\n"
@@ -38,7 +40,6 @@ int32_t main(int32_t argc, char* argv[])
         glViewport(10, 0, width, height);
     });
 
-
     // Load GLAD
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
@@ -46,10 +47,8 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
-
     // Shader program
     CShaderProgram shaderProgram;
-
     try
     {
         shaderProgram.AttachNewShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -80,30 +79,16 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
-
-    // generate vertex buffer
+    // Vertex data
+    CVertexDataHandler vertexDataHandler;
     constexpr std::array<GLfloat, 9> vertices =
     {
         -0.5f, -0.5f, 0.0f,
          0.5f, -0.5f, 0.0f,
          0.0f,  0.5f, 0.0f
     };
-
-    GLuint vertexBufferObjectId;
-    glGenBuffers(1, &vertexBufferObjectId);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectId);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(decltype(vertices)::value_type),
-                 vertices.data(), GL_STATIC_DRAW);
-
-    // vertex array object
-    GLuint vertexArrayObjectId;
-    glGenVertexArrays(1, &vertexArrayObjectId);
-
-    // vertex attributes
-    glBindVertexArray(vertexArrayObjectId);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(decltype(vertices)::value_type), 0);
-    glEnableVertexAttribArray(0);
+    vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
+    vertexDataHandler.AddAttributes();
 
     // Render loop
     while (window.IsOpen())
@@ -116,15 +101,11 @@ int32_t main(int32_t argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
         shaderProgram.Use();
-        glBindVertexArray(vertexArrayObjectId);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        vertexDataHandler.DrawArrays();
 
         // Poll events and redraw window
         window.RedrawAndPoll();
     }
-
-    glDeleteBuffers(1, &vertexBufferObjectId);
-    glDeleteVertexArrays(1, &vertexArrayObjectId);
 
     return 0;
 }

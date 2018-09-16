@@ -5,6 +5,8 @@
 #include "helpers.h"
 #include "window.h"
 #include "shaderprogram.h"
+#include "vertexDataHandler.h"
+
 
 constexpr CStringLiteral vertexShaderSource =
 "#version 440 core"                                     "\n"
@@ -80,12 +82,9 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
-    // vertex array object
-    GLuint vertexArrayObjectId;
-    glGenVertexArrays(1, &vertexArrayObjectId);
-    glBindVertexArray(vertexArrayObjectId);
+    // Vertex data
+    CVertexDataHandler vertexDataHandler;
 
-    // generate vertex buffer
     constexpr std::array<GLfloat, 12> vertices =
     {
          0.5f,  0.5f, 0.0f,
@@ -93,34 +92,19 @@ int32_t main(int32_t argc, char* argv[])
         -0.5f, -0.5f, 0.0f,
         -0.5f,  0.5f, 0.0f
     };
+    vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
 
-    GLuint vertexBufferObjectId;
-    glGenBuffers(1, &vertexBufferObjectId);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectId);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(decltype(vertices)::value_type),
-        vertices.data(), GL_STATIC_DRAW);
-
-    // element buffer object
     constexpr std::array<GLint, 6> indices =
     {
         0, 1, 3,
         1, 2, 3
     };
+    vertexDataHandler.AddBufferObject(indices, GL_ELEMENT_ARRAY_BUFFER);
 
-    GLuint elementBufferObjectId;
-    glGenBuffers(1, &elementBufferObjectId);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(decltype(indices)::value_type),
-        indices.data(), GL_STATIC_DRAW);
-
-    // vertex attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(decltype(vertices)::value_type), 0);
-    glEnableVertexAttribArray(0);
+    vertexDataHandler.AddAttributes();
 
     // Polygon mode
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Render loop
     while (window.IsOpen())
@@ -133,16 +117,11 @@ int32_t main(int32_t argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
         shaderProgram.Use();
-        glBindVertexArray(vertexArrayObjectId);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        vertexDataHandler.DrawElements();
 
         // Poll events and redraw window
         window.RedrawAndPoll();
     }
-
-    glDeleteBuffers(1, &vertexBufferObjectId);
-    glDeleteBuffers(1, &elementBufferObjectId);
-    glDeleteVertexArrays(1, &vertexArrayObjectId);
 
     return 0;
 }
