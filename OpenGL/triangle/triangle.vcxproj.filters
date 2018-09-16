@@ -44,5 +44,8 @@
     <ClInclude Include="..\common\vertexdatahandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\glslcode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

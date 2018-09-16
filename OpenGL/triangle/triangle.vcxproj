@@ -129,6 +129,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\glslcode.h" />
     <ClInclude Include="..\common\helpers.h" />
     <ClInclude Include="..\common\shaderprogram.h" />
     <ClInclude Include="..\common\vertexdatahandler.h" />
