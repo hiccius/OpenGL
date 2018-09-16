@@ -65,11 +65,16 @@ int32_t main(int32_t argc, char* argv[])
 
     // Vertex data
     CVertexDataHandler vertexDataHandler;
-    constexpr std::array<GLfloat, 9> vertices =
+    constexpr std::array<GLfloat, 18> vertices =
     {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+        // first triangle
+        -0.4f,  0.5f, 0.0f,
+        -0.8f, -0.5f, 0.0f,
+         0.0f, -0.5f, 0.0f,
+        // second triangle
+         0.4f,  0.5f, 0.0f,
+         0.0f, -0.5f, 0.0f,
+         0.8f, -0.5f, 0.0f,
     };
     vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
     vertexDataHandler.AddAttributes();
@@ -85,7 +90,7 @@ int32_t main(int32_t argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
         shaderProgram.Use();
-        vertexDataHandler.DrawArrays(3);
+        vertexDataHandler.DrawArrays(6);
 
         // Poll events and redraw window
         window.RedrawAndPoll();

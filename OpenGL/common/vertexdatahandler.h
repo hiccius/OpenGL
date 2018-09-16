@@ -25,7 +25,7 @@ public:
 
     void AddAttributes() const noexcept;
 
-    void DrawArrays() const noexcept;
+    void DrawArrays(GLsizei numberOfVertices) const noexcept;
     void DrawElements() const noexcept;
 
 private:

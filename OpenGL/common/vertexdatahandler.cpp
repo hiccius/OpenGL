@@ -25,10 +25,10 @@ void CVertexDataHandler::AddAttributes() const noexcept
 }
 
 
-void CVertexDataHandler::DrawArrays() const noexcept
+void CVertexDataHandler::DrawArrays(GLsizei numberOfVertices) const noexcept
 {
     glBindVertexArray(_vertexArrayObjectId);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, numberOfVertices);
 }
 
 
