@@ -71,3 +71,17 @@ void CShaderProgram::Use()
 {
     glUseProgram(_id);
 }
+
+
+GLint CShaderProgram::GetUniformLocation(const std::string& name) const
+{
+    GLint location = glGetUniformLocation(_id, name.c_str());
+    if (location != -1)
+    {
+        return location;
+    }
+    else
+    {
+        throw OpenGLException("Location of \"" + name + "\" not found");
+    }
+}

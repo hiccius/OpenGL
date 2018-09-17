@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "twotriangles", "twotriangle
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "twoindependenttriangles", "twoindependenttriangles\twoindependenttriangles.vcxproj", "{6D8893E9-C3D5-4292-B776-D2E558623591}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "coloredtriangle", "coloredtriangle\coloredtriangle.vcxproj", "{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "changingtriangle", "changingtriangle\changingtriangle.vcxproj", "{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +55,22 @@ Global
 		{6D8893E9-C3D5-4292-B776-D2E558623591}.Release|x64.Build.0 = Release|x64
 		{6D8893E9-C3D5-4292-B776-D2E558623591}.Release|x86.ActiveCfg = Release|Win32
 		{6D8893E9-C3D5-4292-B776-D2E558623591}.Release|x86.Build.0 = Release|Win32
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Debug|x64.ActiveCfg = Debug|x64
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Debug|x64.Build.0 = Debug|x64
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Debug|x86.ActiveCfg = Debug|Win32
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Debug|x86.Build.0 = Debug|Win32
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Release|x64.ActiveCfg = Release|x64
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Release|x64.Build.0 = Release|x64
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Release|x86.ActiveCfg = Release|Win32
+		{F5C7C4F1-1C4F-4D5A-AD3C-A42AC29938C5}.Release|x86.Build.0 = Release|Win32
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Debug|x64.ActiveCfg = Debug|x64
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Debug|x64.Build.0 = Debug|x64
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Debug|x86.Build.0 = Debug|Win32
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Release|x64.ActiveCfg = Release|x64
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Release|x64.Build.0 = Release|x64
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Release|x86.ActiveCfg = Release|Win32
+		{DD7082A8-CF60-40BD-9800-14EE60EEA9B1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

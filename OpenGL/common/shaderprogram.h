@@ -17,6 +17,7 @@ public:
     void   Link();
 
     void Use();
+    GLint GetUniformLocation(const std::string& name) const;
 
 private:
     GLuint              _id;
