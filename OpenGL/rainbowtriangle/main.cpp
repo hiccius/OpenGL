@@ -6,7 +6,7 @@
 #include "window.h"
 #include "shaderprogram.h"
 #include "vertexDataHandler.h"
-#include "glslcode.h"
+#include "glslcolorinput.h"
 
 
 int32_t main(int32_t argc, char* argv[])
@@ -33,6 +33,7 @@ int32_t main(int32_t argc, char* argv[])
 
     // Shader program
     CShaderProgram shaderProgram;
+
     try
     {
         shaderProgram.AttachNewShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -40,16 +41,18 @@ int32_t main(int32_t argc, char* argv[])
     catch (const OpenGLException& exc)
     {
         std::cout << "ERROR::SHADER::VERTEX::" << exc.what() << std::endl;
+        std::cin.ignore();
         return -1;
     }
 
     try
     {
-        shaderProgram.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSourceOrange);
+        shaderProgram.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
     }
     catch (const OpenGLException& exc)
     {
         std::cout << "ERROR::SHADER::FRAGMENT::" << exc.what() << std::endl;
+        std::cin.ignore();
         return -1;
     }
 
@@ -60,19 +63,22 @@ int32_t main(int32_t argc, char* argv[])
     catch (const OpenGLException& exc)
     {
         std::cout << "ERROR::SHADER::PROGRAM::" << exc.what() << std::endl;
+        std::cin.ignore();
         return -1;
     }
 
     // Vertex data
     CVertexDataHandler vertexDataHandler;
-    constexpr std::array<GLfloat, 9> vertices =
+    constexpr std::array<GLfloat, 18> vertices =
     {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+        // positions        // colors
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+         0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f
     };
     vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
-    vertexDataHandler.AddAttributes(0, 3, 0);
+    vertexDataHandler.AddAttributes(0, 6, 0);
+    vertexDataHandler.AddAttributes(1, 6, 3);
 
     // Render loop
     while (window.IsOpen())

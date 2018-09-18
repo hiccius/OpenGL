@@ -85,7 +85,7 @@ int32_t main(int32_t argc, char* argv[])
     };
     vertexDataHandler.AddBufferObject(indices, GL_ELEMENT_ARRAY_BUFFER);
 
-    vertexDataHandler.AddAttributes();
+    vertexDataHandler.AddAttributes(0, 3, 0);
 
     // Polygon mode
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
