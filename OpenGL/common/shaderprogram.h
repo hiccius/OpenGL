@@ -12,12 +12,15 @@ class CShaderProgram
 public:
     CShaderProgram() noexcept;
 
-    GLuint AttachNewShader(GLenum shaderType, CStringLiteral sourceCode);
-    void   AttachCompiledShader(GLuint shaderId);
-    void   Link();
+    void    AttachShadersFromFile(CStringLiteral vertexShader, CStringLiteral fragmentShader);
 
-    void Use();
-    GLint GetUniformLocation(const std::string& name) const;
+    template <typename TString>
+    GLuint  AttachNewShader(GLenum shaderType, TString sourceCode);
+    void    AttachCompiledShader(GLuint shaderId);
+    void    Link();
+
+    void    Use();
+    GLint   GetUniformLocation(const std::string& name) const;
 
 private:
     GLuint              _id;

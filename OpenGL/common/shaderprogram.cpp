@@ -1,10 +1,43 @@
 #include "shaderprogram.h"
 
+#include <fstream>
+#include <sstream>
 
 CShaderProgram::CShaderProgram() noexcept : _id{ glCreateProgram() } {};
 
 
-GLuint CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceCode)
+void CShaderProgram::AttachShadersFromFile(CStringLiteral vertexShader, CStringLiteral fragmentShader)
+{
+    std::stringstream vertexShaderCode, fragmentShaderCode;
+    std::ifstream vertexShaderFile, fragmentShaderFile;
+
+    vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+    try
+    {
+        vertexShaderFile.open(vertexShader);
+        fragmentShaderFile.open(fragmentShader);
+
+        vertexShaderCode << vertexShaderFile.rdbuf();
+        fragmentShaderCode << fragmentShaderFile.rdbuf();
+
+        vertexShaderFile.close();
+        fragmentShaderFile.close();
+    }
+    catch (const std::fstream::failure& exception)
+    {
+        throw OpenGLException(std::string("FILE_NOT_SUCCESFULLY_READ: ") + exception.what());
+    }
+
+    AttachNewShader(GL_VERTEX_SHADER, vertexShaderCode.str().c_str());
+    AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderCode.str().c_str());
+    Link();
+}
+
+
+template <typename TString>
+GLuint CShaderProgram::AttachNewShader(GLenum shaderType, TString sourceCode)
 {
     GLuint shaderId = glCreateShader(shaderType);
     glShaderSource(shaderId, 1, &sourceCode, nullptr);
@@ -27,6 +60,8 @@ GLuint CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceC
     }
 }
 
+template GLuint CShaderProgram::AttachNewShader(GLenum shaderType, CStringLiteral sourceCode);
+template GLuint CShaderProgram::AttachNewShader(GLenum shaderType, const char* sourceCode);
 
 void CShaderProgram::AttachCompiledShader(GLuint shaderId)
 {
