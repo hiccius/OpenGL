@@ -91,6 +91,7 @@ int32_t main(int32_t argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
         shaderProgram.Use();
+        glUniform1f(shaderProgram.GetUniformLocation("offset"), 0.2f);
         vertexDataHandler.DrawArrays(3);
 
         // Poll events and redraw window
