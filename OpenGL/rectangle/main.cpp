@@ -6,7 +6,6 @@
 #include "window.h"
 #include "shaderprogram.h"
 #include "vertexDataHandler.h"
-#include "glslcode.h"
 
 
 int32_t main(int32_t argc, char* argv[])
@@ -38,31 +37,11 @@ int32_t main(int32_t argc, char* argv[])
 
     try
     {
-        shaderProgram.AttachNewShader(GL_VERTEX_SHADER, vertexShaderSource);
+        shaderProgram.AttachShadersFromFile("shader.vert", "shader.frag");
     }
     catch (const OpenGLException& exc)
     {
         std::cout << "ERROR::SHADER::VERTEX::" << exc.what() << std::endl;
-        return -1;
-    }
-
-    try
-    {
-        shaderProgram.AttachNewShader(GL_FRAGMENT_SHADER, fragmentShaderSourceOrange);
-    }
-    catch (const OpenGLException& exc)
-    {
-        std::cout << "ERROR::SHADER::FRAGMENT::" << exc.what() << std::endl;
-        return -1;
-    }
-
-    try
-    {
-        shaderProgram.Link();
-    }
-    catch (const OpenGLException& exc)
-    {
-        std::cout << "ERROR::SHADER::PROGRAM::" << exc.what() << std::endl;
         return -1;
     }
 
@@ -80,15 +59,15 @@ int32_t main(int32_t argc, char* argv[])
 
     constexpr std::array<GLint, 6> indices =
     {
-        0, 1, 3,
-        1, 2, 3
+        0, 1, 2,
+        0, 2, 3
     };
     vertexDataHandler.AddBufferObject(indices, GL_ELEMENT_ARRAY_BUFFER);
 
-    vertexDataHandler.AddAttributes(0, 3, 0);
+    vertexDataHandler.AddAttributes(0, 3, 3, 0);
 
     // Polygon mode
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // Render loop
     while (window.IsOpen())

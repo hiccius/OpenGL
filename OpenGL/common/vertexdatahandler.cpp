@@ -18,9 +18,9 @@ CVertexDataHandler::~CVertexDataHandler() noexcept
 }
 
 
-void CVertexDataHandler::AddAttributes(GLuint index, GLuint stride, GLuint offset) const noexcept
+void CVertexDataHandler::AddAttributes(GLuint index, GLuint components, GLuint stride, GLuint offset) const noexcept
 {
-    glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat),
+    glVertexAttribPointer(index, components, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat),
                           reinterpret_cast<void *>(offset * sizeof(GLfloat)));
     glEnableVertexAttribArray(index);
 }

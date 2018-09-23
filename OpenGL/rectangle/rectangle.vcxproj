@@ -128,11 +128,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\glslcode.h" />
     <ClInclude Include="..\common\helpers.h" />
     <ClInclude Include="..\common\shaderprogram.h" />
     <ClInclude Include="..\common\vertexdatahandler.h" />
     <ClInclude Include="..\common\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader.frag" />
+    <None Include="shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

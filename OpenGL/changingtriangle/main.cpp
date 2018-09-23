@@ -72,7 +72,7 @@ int32_t main(int32_t argc, char* argv[])
          0.0f,  0.5f, 0.0f
     };
     vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
-    vertexDataHandler.AddAttributes(0, 3, 0);
+    vertexDataHandler.AddAttributes(0, 3, 3, 0);
 
     // Render loop
     while (window.IsOpen())
@@ -85,8 +85,8 @@ int32_t main(int32_t argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Triangle
-        GLfloat timeInSeconds = glfwGetTime();
-        GLfloat greenValue = sin(timeInSeconds) / 2.0f + 0.5f;
+        GLdouble timeInSeconds = glfwGetTime();
+        GLfloat greenValue = sin(static_cast<float>(timeInSeconds)) / 2.0f + 0.5f;
         shaderProgram.Use();
         glUniform4f(shaderProgram.GetUniformLocation("ourColor"), 0.0f, greenValue, 0.0f, 1.0f);
         vertexDataHandler.DrawArrays(3);

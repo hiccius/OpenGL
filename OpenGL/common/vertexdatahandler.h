@@ -23,7 +23,7 @@ public:
         _bufferIds.push_back(bufferObjectId);
     }
 
-    void AddAttributes(GLuint index, GLuint stride, GLuint offset) const noexcept;
+    void AddAttributes(GLuint index, GLuint components, GLuint stride, GLuint offset) const noexcept;
 
     void DrawArrays(GLsizei numberOfVertices) const noexcept;
     void DrawElements() const noexcept;

@@ -77,7 +77,7 @@ int32_t main(int32_t argc, char* argv[])
          0.8f, -0.5f, 0.0f,
     };
     vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
-    vertexDataHandler.AddAttributes(0, 3, 0);
+    vertexDataHandler.AddAttributes(0, 3, 3, 0);
 
     // Render loop
     while (window.IsOpen())

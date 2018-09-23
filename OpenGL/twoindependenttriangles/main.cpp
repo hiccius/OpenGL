@@ -96,7 +96,7 @@ int32_t main(int32_t argc, char* argv[])
          0.0f, -0.5f, 0.0f
     };
     vertexDataHandler1.AddBufferObject(vertices1, GL_ARRAY_BUFFER);
-    vertexDataHandler1.AddAttributes(0, 3, 0);
+    vertexDataHandler1.AddAttributes(0, 3, 3, 0);
 
     CVertexDataHandler vertexDataHandler2;
     constexpr std::array<GLfloat, 9> vertices2 =
@@ -107,7 +107,7 @@ int32_t main(int32_t argc, char* argv[])
           0.8f, -0.5f, 0.0f
     };
     vertexDataHandler2.AddBufferObject(vertices2, GL_ARRAY_BUFFER);
-    vertexDataHandler2.AddAttributes(0, 3, 0);
+    vertexDataHandler2.AddAttributes(0, 3, 3, 0);
 
     // Render loop
     while (window.IsOpen())
