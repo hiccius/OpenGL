@@ -44,3 +44,10 @@ public:
 private:
     std::string _errorString;
 };
+
+
+template <typename T>
+T limitValue(T value, T min, T max)
+{
+    return value > max ? max : (value < min ? min : value);
+}

@@ -14,6 +14,7 @@ public:
 
     bool IsOpen() const noexcept;
 
+    bool PollKey(int32_t key) const noexcept;
     void PollCloseKey(int32_t key) const noexcept;
     void RedrawAndPoll() const noexcept;
 

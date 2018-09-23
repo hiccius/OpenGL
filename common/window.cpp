@@ -45,9 +45,15 @@ bool CWindow::IsOpen() const noexcept
 }
 
 
+bool CWindow::PollKey(int32_t key) const noexcept
+{
+    return glfwGetKey(_window, key) == GLFW_PRESS;
+}
+
+
 void CWindow::PollCloseKey(int32_t key) const noexcept
 {
-    if (glfwGetKey(_window, key) == GLFW_PRESS)
+    if (PollKey(key))
     {
         glfwSetWindowShouldClose(_window, true);
     }
