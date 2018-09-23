@@ -18,33 +18,36 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\OpenGL\common\glad.c">
+    <ClCompile Include="..\..\common\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\OpenGL\common\shaderprogram.cpp">
+    <ClCompile Include="..\..\common\shaderprogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\OpenGL\common\vertexdatahandler.cpp">
+    <ClCompile Include="..\..\common\textureHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\OpenGL\common\window.cpp">
+    <ClCompile Include="..\..\common\vertexdatahandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\OpenGL\common\helpers.h">
+    <ClInclude Include="..\..\common\helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenGL\common\shaderprogram.h">
+    <ClInclude Include="..\..\common\shaderprogram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenGL\common\vertexdatahandler.h">
+    <ClInclude Include="..\..\common\texturehandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenGL\common\window.h">
+    <ClInclude Include="..\..\common\vertexdatahandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stb_image.h">
+    <ClInclude Include="..\..\common\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

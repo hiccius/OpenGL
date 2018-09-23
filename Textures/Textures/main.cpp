@@ -6,9 +6,8 @@
 #include "window.h"
 #include "shaderprogram.h"
 #include "vertexDataHandler.h"
+#include "texturehandler.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 int32_t main(int32_t argc, char* argv[])
 {
@@ -44,51 +43,20 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
-    // Load texture 1
-    GLuint texture1Id;
-    glGenTextures(1, &texture1Id);
-    glBindTexture(GL_TEXTURE_2D, texture1Id);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // Load textures
+    CTextureHandler textureHandler;
 
-    GLint height, width, numberOfChannels;
-    uint8_t* textureData = stbi_load("..\\Resources\\container.jpg", &width, &height, &numberOfChannels, 0);
-    if (textureData)
+    try
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
-        glGenerateMipmap(GL_TEXTURE_2D);
-        stbi_image_free(textureData);
+        textureHandler.AddTexture("..\\Resources\\container.jpg", GL_RGB);
+        textureHandler.AddTexture("..\\Resources\\awesomeface.png", GL_RGBA);
     }
-    else
+    catch (const OpenGLException& exc)
     {
-        std::cout << "Error loading texture" << std::endl;
+        std::cout << "ERROR::TEXTURE_LOADING::" << exc.what() << std::endl;
         return -1;
     }
 
-    // Load texture 2
-    GLuint texture2Id;
-    glGenTextures(1, &texture2Id);
-    glBindTexture(GL_TEXTURE_2D, texture2Id);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    stbi_set_flip_vertically_on_load(true);
-    textureData = stbi_load("..\\Resources\\awesomeface.png", &width, &height, &numberOfChannels, 0);
-    if (textureData)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
-        glGenerateMipmap(GL_TEXTURE_2D);
-        stbi_image_free(textureData);
-    }
-    else
-    {
-        std::cout << "Error loading texture" << std::endl;
-        return -1;
-    }
 
     // Vertex data
     CVertexDataHandler vertexDataHandler;
@@ -129,14 +97,11 @@ int32_t main(int32_t argc, char* argv[])
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Bind texture
+        // Bind textures
+        textureHandler.ActiveTextures();
 
-        // Render constainer
+        // Render container
         shaderProgram.Use();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1Id);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2Id);
         vertexDataHandler.DrawElements();
 
         // Poll events and redraw window
