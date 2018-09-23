@@ -48,8 +48,8 @@ int32_t main(int32_t argc, char* argv[])
 
     try
     {
-        textureHandler.AddTexture("..\\Resources\\container.jpg", GL_RGB, GL_CLAMP_TO_EDGE);
-        textureHandler.AddTexture("..\\Resources\\awesomeface.png", GL_RGBA, GL_REPEAT);
+        textureHandler.AddTexture("..\\Resources\\container.jpg", GL_RGB, GL_CLAMP_TO_EDGE, GL_LINEAR);
+        textureHandler.AddTexture("..\\Resources\\awesomeface.png", GL_RGBA, GL_REPEAT, GL_LINEAR);
     }
     catch (const OpenGLException& exc)
     {

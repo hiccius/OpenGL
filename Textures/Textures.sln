@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flippedface", "flippedface\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multiplefaces", "multiplefaces\multiplefaces.vcxproj", "{94A1C819-6835-44FF-A074-51CDDAF22903}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "centeroftexture", "centeroftexture\centeroftexture.vcxproj", "{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x64.Build.0 = Release|x64
 		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x86.ActiveCfg = Release|Win32
 		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x86.Build.0 = Release|Win32
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Debug|x64.ActiveCfg = Debug|x64
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Debug|x64.Build.0 = Debug|x64
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Debug|x86.ActiveCfg = Debug|Win32
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Debug|x86.Build.0 = Debug|Win32
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Release|x64.ActiveCfg = Release|x64
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Release|x64.Build.0 = Release|x64
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Release|x86.ActiveCfg = Release|Win32
+		{41D986D6-8128-4B7B-BED8-E3FC5FBEF7C6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,8 +48,8 @@ int32_t main(int32_t argc, char* argv[])
 
     try
     {
-        textureHandler.AddTexture("..\\Resources\\container.jpg", GL_RGB, GL_REPEAT, GL_LINEAR);
-        textureHandler.AddTexture("..\\Resources\\awesomeface.png", GL_RGBA, GL_REPEAT, GL_LINEAR);
+        textureHandler.AddTexture("..\\Resources\\container.jpg", GL_RGB, GL_CLAMP_TO_EDGE, GL_NEAREST);
+        //textureHandler.AddTexture("..\\Resources\\awesomeface.png", GL_RGBA, GL_REPEAT);
     }
     catch (const OpenGLException& exc)
     {
@@ -64,10 +64,10 @@ int32_t main(int32_t argc, char* argv[])
     constexpr std::array<GLfloat, 32> vertices =
     {
         // positions            // color            // texture coordinates
-         0.5f,  0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,     0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom rigth
-        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+         0.5f,  0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   0.55f, 0.55f, // top right
+         0.5f, -0.5f, 0.0f,     0.0f, 1.0f, 0.0f,   0.55f, 0.45f, // bottom rigth
+        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,   0.45f, 0.45f, // bottom left
+        -0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 0.0f,   0.45f, 0.55f  // top left
     };
     vertexDataHandler.AddBufferObject(vertices, GL_ARRAY_BUFFER);
 
@@ -85,7 +85,7 @@ int32_t main(int32_t argc, char* argv[])
     // Set uniforms for textures render
     shaderProgram.Use();
     glUniform1i(shaderProgram.GetUniformLocation("texture1"), 0);
-    glUniform1i(shaderProgram.GetUniformLocation("texture2"), 1);
+    //glUniform1i(shaderProgram.GetUniformLocation("texture2"), 1);
 
     // Render loop
     while (window.IsOpen())
