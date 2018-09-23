@@ -23,6 +23,7 @@
     <ProjectGuid>{73C07A2C-1FE0-49EF-ABAB-397FEEEB8CAF}</ProjectGuid>
     <RootNamespace>Textures</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>basictextures</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -134,9 +135,6 @@
     <ClInclude Include="..\..\common\texturehandler.h" />
     <ClInclude Include="..\..\common\vertexdatahandler.h" />
     <ClInclude Include="..\..\common\window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\container.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Textures", "Textures\Textures.vcxproj", "{73C07A2C-1FE0-49EF-ABAB-397FEEEB8CAF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basictextures", "basictextures\basictextures.vcxproj", "{73C07A2C-1FE0-49EF-ABAB-397FEEEB8CAF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flippedface", "flippedface\flippedface.vcxproj", "{4787C2AC-394A-48D9-9326-F5BE937FD78E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multiplefaces", "multiplefaces\multiplefaces.vcxproj", "{94A1C819-6835-44FF-A074-51CDDAF22903}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,22 @@ Global
 		{73C07A2C-1FE0-49EF-ABAB-397FEEEB8CAF}.Release|x64.Build.0 = Release|x64
 		{73C07A2C-1FE0-49EF-ABAB-397FEEEB8CAF}.Release|x86.ActiveCfg = Release|Win32
 		{73C07A2C-1FE0-49EF-ABAB-397FEEEB8CAF}.Release|x86.Build.0 = Release|Win32
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Debug|x64.ActiveCfg = Debug|x64
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Debug|x64.Build.0 = Debug|x64
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Debug|x86.ActiveCfg = Debug|Win32
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Debug|x86.Build.0 = Debug|Win32
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Release|x64.ActiveCfg = Release|x64
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Release|x64.Build.0 = Release|x64
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Release|x86.ActiveCfg = Release|Win32
+		{4787C2AC-394A-48D9-9326-F5BE937FD78E}.Release|x86.Build.0 = Release|Win32
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Debug|x64.ActiveCfg = Debug|x64
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Debug|x64.Build.0 = Debug|x64
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Debug|x86.ActiveCfg = Debug|Win32
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Debug|x86.Build.0 = Debug|Win32
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x64.ActiveCfg = Release|x64
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x64.Build.0 = Release|x64
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x86.ActiveCfg = Release|Win32
+		{94A1C819-6835-44FF-A074-51CDDAF22903}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
