@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Users\alex\third-party\include;C:\Users\alex\source\repos\OpenGL\OpenGL\common;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>C:\Users\alex\third-party\include;C:\Users\alex\source\repos\OpenGL\common;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Users\alex\third-party\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -122,17 +122,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\glad.c" />
-    <ClCompile Include="..\common\shaderprogram.cpp" />
-    <ClCompile Include="..\common\vertexdatahandler.cpp" />
-    <ClCompile Include="..\common\window.cpp" />
+    <ClCompile Include="..\..\common\glad.c" />
+    <ClCompile Include="..\..\common\shaderprogram.cpp" />
+    <ClCompile Include="..\..\common\vertexdatahandler.cpp" />
+    <ClCompile Include="..\..\common\window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\helpers.h" />
-    <ClInclude Include="..\common\shaderprogram.h" />
-    <ClInclude Include="..\common\vertexdatahandler.h" />
-    <ClInclude Include="..\common\window.h" />
+    <ClInclude Include="..\..\common\helpers.h" />
+    <ClInclude Include="..\..\common\shaderprogram.h" />
+    <ClInclude Include="..\..\common\vertexdatahandler.h" />
+    <ClInclude Include="..\..\common\window.h" />
     <ClInclude Include="glslwithuniforms.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

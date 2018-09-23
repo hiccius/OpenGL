@@ -18,30 +18,30 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\glad.c">
+    <ClCompile Include="..\..\common\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\shaderprogram.cpp">
+    <ClCompile Include="..\..\common\shaderprogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\window.cpp">
+    <ClCompile Include="..\..\common\vertexdatahandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\vertexdatahandler.cpp">
+    <ClCompile Include="..\..\common\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\helpers.h">
+    <ClInclude Include="..\..\common\helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\shaderprogram.h">
+    <ClInclude Include="..\..\common\shaderprogram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\window.h">
+    <ClInclude Include="..\..\common\vertexdatahandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\vertexdatahandler.h">
+    <ClInclude Include="..\..\common\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
