@@ -6,7 +6,7 @@
 class CTextureHandler
 {
 public:
-    void AddTexture(const std::string& textureLocation, GLenum textureFormat);
+    void AddTexture(const std::string& textureLocation, GLenum textureFormat, const GLint wrappingOption);
     void ActiveTextures();
 
 private:
