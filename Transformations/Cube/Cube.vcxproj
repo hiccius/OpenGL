@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\common\glad.c" />
+    <ClCompile Include="..\..\common\projectionmatrix.cpp" />
     <ClCompile Include="..\..\common\shaderprogram.cpp" />
     <ClCompile Include="..\..\common\texturehandler.cpp" />
     <ClCompile Include="..\..\common\vertexdatahandler.cpp" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\helpers.h" />
+    <ClInclude Include="..\..\common\projectionmatrix.h" />
     <ClInclude Include="..\..\common\shaderprogram.h" />
     <ClInclude Include="..\..\common\stb_image.h" />
     <ClInclude Include="..\..\common\texturehandler.h" />

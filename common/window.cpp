@@ -41,6 +41,8 @@ bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title) noe
 }
 
 
+/// TODO: this needs to be called to see something
+/// Consider include it in constructor or add a default
 bool CWindow::SetProjectionMatrix(EProjection projectionType, float fieldOfView) noexcept
 {
     try

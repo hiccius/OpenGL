@@ -16,10 +16,20 @@
 
 int32_t main(int32_t argc, char* argv[])
 {
+    constexpr int32_t windowWidth = 800;
+    constexpr int32_t windowHeight = 600;
+    constexpr float fieldOfView = 45.0f;
+
     CWindow window;
-    if (!window.SetUp(800, 600, "LearnOpenGL"))
+    if (!window.SetUp(windowWidth, windowHeight, "LearnOpenGL"))
     {
         std::cout << "Failed to create GLFW window" << std::endl;
+        return -1;
+    }
+
+    if (!window.SetProjectionMatrix(EProjection::PerspectiveConstant, fieldOfView))
+    {
+        std::cout << "Failed to create projection matrix" << std::endl;
         return -1;
     }
 
@@ -116,9 +126,6 @@ int32_t main(int32_t argc, char* argv[])
     glm::mat4 viewMatrix{ 1.0f };
     viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
 
-    glm::mat4 projectionMatrix{ 1.0f };
-    projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
     // Set uniforms for textures render
     shaderProgram.Use();
     glUniform1i(shaderProgram.GetUniformLocation("texture1"), 0);
@@ -153,7 +160,7 @@ int32_t main(int32_t argc, char* argv[])
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("view"), 1, GL_FALSE,
             glm::value_ptr(viewMatrix));
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("projection"), 1, GL_FALSE,
-            glm::value_ptr(projectionMatrix));
+            window.GetProjectionMatrixValuePtr());
 
         // Render container
         vertexDataHandler.DrawArrays(36);
