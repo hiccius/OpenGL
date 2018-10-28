@@ -162,7 +162,7 @@ int32_t main(int32_t argc, char* argv[])
         float radius = 10.0f;
         float cameraXPosition = sin(glfwGetTime()) * radius;
         float cameraZPosition = cos(glfwGetTime()) * radius;
-        glm::mat4 viewMatrix = glm::lookAt(glm::vec3(cameraXPosition, 0.0f, cameraZPosition),
+        glm::mat4 viewMatrix = glm::lookAt(glm::vec3(cameraXPosition, 5.0f, cameraZPosition),
                                            glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("view"), 1, GL_FALSE,
