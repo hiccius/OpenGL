@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstring>
+#include <string>
 
 
 class CStringLiteral
@@ -50,4 +50,31 @@ template <typename T>
 T limitValue(T value, T min, T max)
 {
     return value > max ? max : (value < min ? min : value);
+}
+
+
+/* Inspired by https://stackoverflow.com/a/48368508 */
+template <typename T>
+struct lambda_traits : lambda_traits<decltype(&T::operator())>
+{ };
+
+template <typename T, typename R, typename... Args>
+struct lambda_traits<R(T::*)(Args...) const>
+{
+    using pointer = R (*)(Args...);
+
+    static pointer lambdaToPointer(T&& t)
+    {
+        static T fn = std::forward<T>(t);
+        return [](Args... args)
+        {
+            return fn(args...);
+        };
+    }
+};
+
+template <typename T>
+typename lambda_traits<T>::pointer lambdaToPointer(T&& t)
+{
+    return lambda_traits<T>::lambdaToPointer(std::forward<T>(t));
 }

@@ -1,13 +1,16 @@
 #include "window.h"
 
+#include "helpers.h"
 
-CWindow::CWindow() noexcept
+CWindow::CWindow() noexcept :
+    _window{ nullptr }, _initWidth{ 0 }, _initHeight{ 0 },
+    _defaultProjection{ 1.0f }, _projectionMatrix{ nullptr }
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // for Mac OS X
 }
 
 
@@ -27,15 +30,40 @@ bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title) noe
     }
     else
     {
+        _initWidth = width;
+        _initHeight = height;
+
         glfwMakeContextCurrent(_window);
+        glfwSetWindowPos(_window, 100, 100);
+
         return true;
     }
 }
 
 
-void CWindow::SetResizeCallback(GLFWframebuffersizefun callback) const noexcept
+bool CWindow::SetProjectionMatrix(EProjection projectionType, float fieldOfView) noexcept
 {
-    glfwSetFramebufferSizeCallback(_window, callback);
+    try
+    {
+        _projectionMatrix = IProjectionMatrix::Create(projectionType, _initWidth, _initHeight, fieldOfView);
+        return true;
+    }
+    catch (const OpenGLException&)
+    {
+        return false;
+    }
+}
+
+
+void CWindow::SetResizeCallback(GLFWframebuffersizefun callback) noexcept
+{
+    auto wrappedCallback = lambdaToPointer([this, callback](GLFWwindow* window, int newWidth, int newHeight)
+    {
+        UpdateProjectionMatrix(newWidth, newHeight);
+        callback(window, newWidth, newHeight);
+    });
+
+    glfwSetFramebufferSizeCallback(_window, wrappedCallback);
 }
 
 
@@ -64,4 +92,26 @@ void CWindow::RedrawAndPoll() const noexcept
 {
     glfwSwapBuffers(_window);
     glfwPollEvents();
+}
+
+
+void CWindow::UpdateProjectionMatrix(int newWidth, int newHeight) noexcept
+{
+    if (_projectionMatrix)
+    {
+        _projectionMatrix->Calculate(newWidth, newHeight);
+    }
+}
+
+
+glm::f32* CWindow::GetProjectionMatrixValuePtr() noexcept
+{
+    if (_projectionMatrix)
+    {
+        return _projectionMatrix->GetMatrixValuePtr();
+    }
+    else
+    {
+        return glm::value_ptr(_defaultProjection);
+    }
 }
