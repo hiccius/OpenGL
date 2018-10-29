@@ -18,13 +18,13 @@ public:
 
     bool IsOpen() const noexcept;
 
+    bool PollKey(int32_t key) const noexcept;
     void PollCloseKey(int32_t key) const noexcept;
     void RedrawAndPoll() const noexcept;
 
     glm::f32* GetProjectionMatrixValuePtr() noexcept;
 
 private:
-    bool PollKey(int32_t key) const noexcept;
     void UpdateProjectionMatrix(int newWidth, int newHeight) noexcept;
 
     GLFWwindow* _window;

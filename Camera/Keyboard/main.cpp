@@ -130,17 +130,26 @@ int32_t main(int32_t argc, char* argv[])
     // Cube positions
     std::array<glm::vec3, 10> cubePositions =
     {
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  2.0f, -5.0f),
+        glm::vec3(0.0f,  0.0f,  0.0f),
+        glm::vec3(2.0f,  2.0f, -5.0f),
         glm::vec3(-1.5f, -2.2f, -2.5f),
         glm::vec3(-3.8f, -2.0f, -2.3f),
-        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(2.4f, -0.4f, -3.5f),
         glm::vec3(-1.7f,  3.0f, -5.5f),
-        glm::vec3( 1.3f, -2.0f, -2.5f),
-        glm::vec3( 1.5f,  2.0f, -2.5f),
-        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(1.3f, -2.0f, -2.5f),
+        glm::vec3(1.5f,  2.0f, -2.5f),
+        glm::vec3(1.5f,  0.2f, -1.5f),
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
+
+    // Camera initial values
+    glm::vec3 positionCamera = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 frontCamera = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 upCamera = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    // Delta time
+    float deltaTime = 0.0f;
+    float lastFrameTime = 0.0f;
 
     // Render loop
     while (window.IsOpen())
@@ -159,11 +168,24 @@ int32_t main(int32_t argc, char* argv[])
         shaderProgram.Use();
 
         // Apply transformations
-        float radius = 10.0f;
-        float cameraXPosition = sin(static_cast<float>(glfwGetTime())) * radius;
-        float cameraZPosition = cos(static_cast<float>(glfwGetTime())) * radius;
-        glm::mat4 viewMatrix = glm::lookAt(glm::vec3(cameraXPosition, 5.0f, cameraZPosition),
-                                           glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        float movementSpeed = 0.75f * deltaTime;
+        if (window.PollKey(GLFW_KEY_W))
+        {
+            positionCamera += movementSpeed * frontCamera;
+        }
+        if (window.PollKey(GLFW_KEY_S))
+        {
+            positionCamera -= movementSpeed * frontCamera;
+        }
+        if (window.PollKey(GLFW_KEY_A))
+        {
+            positionCamera -= movementSpeed * glm::normalize(glm::cross(frontCamera, upCamera));
+        }
+        if (window.PollKey(GLFW_KEY_D))
+        {
+            positionCamera += movementSpeed * glm::normalize(glm::cross(frontCamera, upCamera));
+        }
+        glm::mat4 viewMatrix = glm::lookAt(positionCamera, positionCamera + frontCamera, upCamera);
 
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("view"), 1, GL_FALSE,
             glm::value_ptr(viewMatrix));
@@ -187,6 +209,12 @@ int32_t main(int32_t argc, char* argv[])
 
         // Poll events and redraw window
         window.RedrawAndPoll();
+
+        // Update frame times
+        float currentFrameTime = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrameTime - lastFrameTime;
+        lastFrameTime = currentFrameTime;
+        std::cout << deltaTime << std::endl;
     }
 
     return 0;
