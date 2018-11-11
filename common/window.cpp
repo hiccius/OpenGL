@@ -69,6 +69,23 @@ void CWindow::SetResizeCallback(GLFWframebuffersizefun callback) noexcept
 }
 
 
+void CWindow::SetInputMode(int mode, int value)
+{
+    glfwSetInputMode(_window, mode, value);
+}
+
+
+void CWindow::SetMousePositionCallback(GLFWcursorposfun callback) noexcept
+{
+    auto wrappedCallback = lambdaToPointer([this, callback](GLFWwindow* window, double xPosition, double yPosition)
+    {
+        callback(window, xPosition, yPosition);
+    });
+
+    glfwSetCursorPosCallback(_window, callback);
+}
+
+
 bool CWindow::IsOpen() const noexcept
 {
     return !glfwWindowShouldClose(_window);

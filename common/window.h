@@ -16,6 +16,9 @@ public:
     bool SetProjectionMatrix(EProjection projectionType, float fieldOfView) noexcept;
     void SetResizeCallback(GLFWframebuffersizefun callback) noexcept;
 
+    void SetInputMode(int mode, int value);
+    void SetMousePositionCallback(GLFWcursorposfun callback) noexcept;
+
     bool IsOpen() const noexcept;
 
     bool PollKey(int32_t key) const noexcept;
