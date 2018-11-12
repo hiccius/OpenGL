@@ -11,11 +11,13 @@
 #include "projectionmatrix.h"
 
 
-float lastX = 400.0f;
-float lastY = 300.0f;
+double lastX = 400.0f;
+double lastY = 300.0f;
+
 bool firstMouse = true;
-float yaw = -90.0f;
-float pitch = 0;
+
+double yaw = -90.0f;
+double pitch = 0;
 
 glm::vec3 frontCamera = glm::vec3(0.0f, 0.0f, -1.0f);
 
@@ -171,30 +173,33 @@ int32_t main(int32_t argc, char* argv[])
             firstMouse = false;
         }
 
-        float xOffset = xPosition - lastX;
-        float yOffset = lastY - yPosition;
+        double xOffset = xPosition - lastX;
+        double yOffset = yPosition - lastY;
 
         lastX = xPosition;
         lastY = yPosition;
 
-        float sensitivity = 0.05f;
+        double sensitivity = 0.05f;
         xOffset *= sensitivity;
         yOffset *= sensitivity;
 
         yaw   += xOffset;
-        pitch += yOffset;
+        pitch -= yOffset;
 
-        pitch = limitValue(pitch, -89.0f, 89.0f);
+        pitch = limitValue(pitch, -89.0, 89.0);
+
+        double pitchRadians = glm::radians(pitch);
+        double yawRadians   = glm::radians(yaw);
 
         glm::vec3 front;
-        float pitchRadians = glm::radians(pitch);
-        float yawRadians   = glm::radians(yaw);
-        front.x = cos(pitchRadians) * cos(yawRadians);
-        front.y = sin(pitchRadians);
-        front.z = cos(pitchRadians) * sin(yawRadians);
+        front.x = static_cast<float>(cos(pitchRadians) * cos(yawRadians));
+        front.y = static_cast<float>(sin(pitchRadians));
+        front.z = static_cast<float>(cos(pitchRadians) * sin(yawRadians));
 
         frontCamera = glm::normalize(front);
     });
+
+    window.SetMouseScrollCallback();
 
     // Render loop
     while (window.IsOpen())

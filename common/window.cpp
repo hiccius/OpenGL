@@ -2,6 +2,7 @@
 
 #include "helpers.h"
 
+
 CWindow::CWindow() noexcept :
     _window{ nullptr }, _initWidth{ 0 }, _initHeight{ 0 },
     _defaultProjection{ 1.0f }, _projectionMatrix{ nullptr }
@@ -82,7 +83,18 @@ void CWindow::SetMousePositionCallback(GLFWcursorposfun callback) noexcept
         callback(window, xPosition, yPosition);
     });
 
-    glfwSetCursorPosCallback(_window, callback);
+    glfwSetCursorPosCallback(_window, wrappedCallback);
+}
+
+
+void CWindow::SetMouseScrollCallback() noexcept
+{
+    auto wrappedCallback = lambdaToPointer([this](GLFWwindow* window, double xOffset, double yOffset)
+    {
+        _projectionMatrix->ModifyInitFovDegrees(static_cast<float>(-yOffset));
+    });
+
+    glfwSetScrollCallback(_window, wrappedCallback);
 }
 
 

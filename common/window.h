@@ -18,6 +18,7 @@ public:
 
     void SetInputMode(int mode, int value);
     void SetMousePositionCallback(GLFWcursorposfun callback) noexcept;
+    void SetMouseScrollCallback() noexcept;
 
     bool IsOpen() const noexcept;
 

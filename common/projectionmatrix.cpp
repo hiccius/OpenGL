@@ -18,6 +18,15 @@ TProjectionMatrixPtr IProjectionMatrix::Create(EProjection aProjection, int aIni
 }
 
 
+void IProjectionMatrix::ModifyInitFovDegrees(float aDeltaFovDegrees) noexcept
+{
+    _initFovDegrees += aDeltaFovDegrees;
+    _initFovDegrees = limitValue(_initFovDegrees, 1.0f, 60.0f);
+
+    UpdateProjectionMatrix();
+}
+
+
 glm::f32* IProjectionMatrix::GetMatrixValuePtr() noexcept
 {
     return glm::value_ptr(_matrix);
@@ -32,22 +41,34 @@ float IProjectionMatrix::CalculateProportionalFovRadians(float newRatio) const n
 
 void CPerspectiveProportional::Calculate(int newWidth, int newHeight) noexcept
 {
-    float newAspectRatio = static_cast<float>(newWidth) / static_cast<float>(newHeight);
+    _currentAspectRatio = static_cast<float>(newWidth) / static_cast<float>(newHeight);
+    UpdateProjectionMatrix();
+}
 
+
+void CPerspectiveProportional::UpdateProjectionMatrix() noexcept
+{
     float newFovRadians;
-    if (newAspectRatio >= initAspectRatio)
+    if (_currentAspectRatio >= _initAspectRatio)
         newFovRadians = glm::radians(_initFovDegrees);
     else
-        newFovRadians = CalculateProportionalFovRadians(initAspectRatio / newAspectRatio);
+        newFovRadians = CalculateProportionalFovRadians(_initAspectRatio / _currentAspectRatio);
 
-    _matrix = glm::perspective(newFovRadians, newAspectRatio, 0.1f, 100.0f);
+    _matrix = glm::perspective(newFovRadians, _currentAspectRatio, 0.1f, 100.0f);
 }
 
 
 void CPerspectiveConstant::Calculate(int newWidth, int newHeight) noexcept
 {
-    float newAspectRatio = static_cast<float>(newWidth) / static_cast<float>(newHeight);
-    float newFovRadians = CalculateProportionalFovRadians(newHeight / _initHeight);
+    _currentAspectRatio = static_cast<float>(newWidth) / static_cast<float>(newHeight);
+    _currentHeight = newHeight;
 
-    _matrix = glm::perspective(newFovRadians, newAspectRatio, 0.1f, 100.0f);
+    UpdateProjectionMatrix();
+}
+
+
+void CPerspectiveConstant::UpdateProjectionMatrix() noexcept
+{
+    float newFovRadians = CalculateProportionalFovRadians(_currentHeight / _initHeight);
+    _matrix = glm::perspective(newFovRadians, _currentAspectRatio, 0.1f, 100.0f);
 }
