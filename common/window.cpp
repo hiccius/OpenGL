@@ -5,7 +5,7 @@
 
 CWindow::CWindow() noexcept :
     _window{ nullptr }, _initWidth{ 0 }, _initHeight{ 0 },
-    _defaultProjection{ 1.0f }, _projectionMatrix{ nullptr }
+    _defaultProjection{ 1.0f }, _projection{ nullptr }
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -44,11 +44,11 @@ bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title) noe
 
 /// TODO: this needs to be called to see something
 /// Consider include it in constructor or add a default
-bool CWindow::SetProjectionMatrix(EProjection projectionType, float fieldOfView) noexcept
+bool CWindow::SetProjection(EProjection projectionType, float fieldOfView) noexcept
 {
     try
     {
-        _projectionMatrix = IProjectionMatrix::Create(projectionType, _initWidth, _initHeight, fieldOfView);
+        _projection = IProjection::Create(projectionType, _initWidth, _initHeight, fieldOfView);
         return true;
     }
     catch (const OpenGLException&)
@@ -62,7 +62,7 @@ void CWindow::SetResizeCallback(GLFWframebuffersizefun callback) noexcept
 {
     auto wrappedCallback = lambdaToPointer([this, callback](GLFWwindow* window, int newWidth, int newHeight)
     {
-        UpdateProjectionMatrix(newWidth, newHeight);
+        UpdateProjection(newWidth, newHeight);
         callback(window, newWidth, newHeight);
     });
 
@@ -91,7 +91,7 @@ void CWindow::SetMouseScrollCallback() noexcept
 {
     auto wrappedCallback = lambdaToPointer([this](GLFWwindow* window, double xOffset, double yOffset)
     {
-        _projectionMatrix->ModifyInitFovDegrees(static_cast<float>(-yOffset));
+        _projection->ModifyInitFovDegrees(static_cast<float>(-yOffset));
     });
 
     glfwSetScrollCallback(_window, wrappedCallback);
@@ -126,20 +126,20 @@ void CWindow::RedrawAndPoll() const noexcept
 }
 
 
-void CWindow::UpdateProjectionMatrix(int newWidth, int newHeight) noexcept
+void CWindow::UpdateProjection(int newWidth, int newHeight) noexcept
 {
-    if (_projectionMatrix)
+    if (_projection)
     {
-        _projectionMatrix->Calculate(newWidth, newHeight);
+        _projection->Calculate(newWidth, newHeight);
     }
 }
 
 
 glm::f32* CWindow::GetProjectionMatrixValuePtr() noexcept
 {
-    if (_projectionMatrix)
+    if (_projection)
     {
-        return _projectionMatrix->GetMatrixValuePtr();
+        return _projection->GetMatrixValuePtr();
     }
     else
     {

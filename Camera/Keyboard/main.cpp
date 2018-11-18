@@ -8,7 +8,7 @@
 #include "shaderprogram.h"
 #include "vertexdatahandler.h"
 #include "texturehandler.h"
-#include "projectionmatrix.h"
+#include "projection.h"
 
 
 int32_t main(int32_t argc, char* argv[])
@@ -24,7 +24,7 @@ int32_t main(int32_t argc, char* argv[])
         return -1;
     }
 
-    if (!window.SetProjectionMatrix(EProjection::PerspectiveProportional, fieldOfView))
+    if (!window.SetProjection(EProjection::PerspectiveProportional, fieldOfView))
     {
         std::cout << "Failed to create projection matrix" << std::endl;
         return -1;

@@ -6,8 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class IProjectionMatrix;
-using TProjectionMatrixPtr = std::unique_ptr<IProjectionMatrix>;
+class IProjection;
+using TProjectionPtr = std::unique_ptr<IProjection>;
 
 enum class EProjection
 {
@@ -15,13 +15,13 @@ enum class EProjection
     PerspectiveConstant
 };
 
-class IProjectionMatrix
+class IProjection
 {
 public:
-    static TProjectionMatrixPtr Create(EProjection aProjection, int aInitWidth, int aInitHeight,
-                                       float aInitFovDegrees);
+    static TProjectionPtr Create(EProjection aProjection, int aInitWidth, int aInitHeight,
+                                 float aInitFovDegrees);
 
-    IProjectionMatrix(int aInitWidth, int aInitHeight, float aInitFovDegrees) noexcept
+    IProjection(int aInitWidth, int aInitHeight, float aInitFovDegrees) noexcept
         : _initWidth{ static_cast<float>(aInitWidth) }, _initHeight{ static_cast<float>(aInitHeight) },
           _initFovDegrees{ aInitFovDegrees },
           _currentAspectRatio{ static_cast<float>(aInitWidth) / static_cast<float>(aInitHeight) },
@@ -29,7 +29,7 @@ public:
                                     static_cast<float>(aInitWidth) / static_cast<float>(aInitHeight), 0.1f, 100.0f) }
     {}
 
-    virtual ~IProjectionMatrix() noexcept {}
+    virtual ~IProjection() noexcept {}
 
     void ModifyInitFovDegrees(float aDeltaFovDegrees) noexcept;
 
@@ -38,7 +38,7 @@ public:
     glm::f32* GetMatrixValuePtr() noexcept;
 
 protected:
-    virtual void UpdateProjectionMatrix() = 0;
+    virtual void UpdateProjection() = 0;
     float CalculateProportionalFovRadians(float newRatio) const noexcept;
 
     glm::mat4 _matrix;
@@ -51,35 +51,35 @@ protected:
 };
 
 
-class CPerspectiveProportional : public IProjectionMatrix
+class CPerspectiveProportional : public IProjection
 {
 public:
     CPerspectiveProportional(int aInitWidth, int aInitHeight, float aInitFov) noexcept
-        : IProjectionMatrix{aInitWidth, aInitHeight, aInitFov},
+        : IProjection{aInitWidth, aInitHeight, aInitFov},
           _initAspectRatio{ static_cast<float>(aInitWidth) / static_cast<float>(aInitHeight) }
     {}
 
     virtual void Calculate(int newWidth, int newHeight) noexcept override final;
 
 private:
-    virtual void UpdateProjectionMatrix() noexcept override final;
+    virtual void UpdateProjection() noexcept override final;
 
     float _initAspectRatio;
 };
 
 
-class CPerspectiveConstant : public IProjectionMatrix
+class CPerspectiveConstant : public IProjection
 {
 public:
     CPerspectiveConstant(int aInitWidth, int aInitHeight, float aInitFov) noexcept
-        : IProjectionMatrix{ aInitWidth, aInitHeight, aInitFov },
+        : IProjection{ aInitWidth, aInitHeight, aInitFov },
           _currentHeight{aInitHeight}
     {}
 
     virtual void Calculate(int newWidth, int newHeight) noexcept override final;
 
 private:
-    virtual void UpdateProjectionMatrix() noexcept override final;
+    virtual void UpdateProjection() noexcept override final;
 
     int _currentHeight;
 };
