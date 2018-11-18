@@ -49,7 +49,25 @@ private:
 template <typename T>
 T limitValue(T value, T min, T max)
 {
-    return value > max ? max : (value < min ? min : value);
+    if (value > max)
+    {
+        return max;
+    }
+    else if (value < min)
+    {
+        return min;
+    }
+    else
+    {
+        return value;
+    }
+}
+
+
+template <typename T>
+T limitValue(T value, std::pair<T, T> limits)
+{
+    return limitValue(value, limits.first, limits.second);
 }
 
 

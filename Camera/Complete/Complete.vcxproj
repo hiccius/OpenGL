@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\common\camera.cpp" />
     <ClCompile Include="..\..\common\glad.c" />
     <ClCompile Include="..\..\common\projection.cpp" />
     <ClCompile Include="..\..\common\shaderprogram.cpp" />

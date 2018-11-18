@@ -5,6 +5,7 @@
 
 #include "helpers.h"
 #include "window.h"
+#include "camera.h"
 #include "shaderprogram.h"
 #include "vertexdatahandler.h"
 #include "texturehandler.h"
@@ -15,11 +16,6 @@ double lastX = 400.0f;
 double lastY = 300.0f;
 
 bool firstMouse = true;
-
-double yaw = -90.0f;
-double pitch = 0;
-
-glm::vec3 frontCamera = glm::vec3(0.0f, 0.0f, -1.0f);
 
 
 int32_t main(int32_t argc, char* argv[])
@@ -46,6 +42,9 @@ int32_t main(int32_t argc, char* argv[])
     {
         glViewport(0, 0, width, height);
     });
+
+    // Camera object
+    CCamera camera;
 
     // Load GLAD
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
@@ -153,18 +152,13 @@ int32_t main(int32_t argc, char* argv[])
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
-    // Camera initial values
-    glm::vec3 positionCamera = glm::vec3(0.0f, 0.0f, 3.0f);
-    //glm::vec3 frontCamera = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 upCamera = glm::vec3(0.0f, 1.0f, 0.0f);
-
     // Declare frame times
     float deltaTime = 0.0f;
     float lastFrameTime = 0.0f;
 
     // Capture mouse
     window.SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    window.SetMousePositionCallback([](GLFWwindow* window, double xPosition, double yPosition)
+    window.SetMousePositionCallback([&camera](GLFWwindow* window, double xPosition, double yPosition)
     {
         if (firstMouse)
         {
@@ -183,20 +177,7 @@ int32_t main(int32_t argc, char* argv[])
         xOffset *= sensitivity;
         yOffset *= sensitivity;
 
-        yaw   += xOffset;
-        pitch -= yOffset;
-
-        pitch = limitValue(pitch, -89.0, 89.0);
-
-        double pitchRadians = glm::radians(pitch);
-        double yawRadians   = glm::radians(yaw);
-
-        glm::vec3 front;
-        front.x = static_cast<float>(cos(pitchRadians) * cos(yawRadians));
-        front.y = static_cast<float>(sin(pitchRadians));
-        front.z = static_cast<float>(cos(pitchRadians) * sin(yawRadians));
-
-        frontCamera = glm::normalize(front);
+        camera.ChangeLookDirection(yOffset, xOffset);
     });
 
     window.SetMouseScrollCallback();
@@ -221,24 +202,23 @@ int32_t main(int32_t argc, char* argv[])
         float movementSpeed = 0.75f * deltaTime;
         if (window.PollKey(GLFW_KEY_W))
         {
-            positionCamera += movementSpeed * frontCamera;
+            camera.Move(CCamera::EMoveDirection::Forward, movementSpeed);
         }
         if (window.PollKey(GLFW_KEY_S))
         {
-            positionCamera -= movementSpeed * frontCamera;
+            camera.Move(CCamera::EMoveDirection::Backward, movementSpeed);
         }
         if (window.PollKey(GLFW_KEY_A))
         {
-            positionCamera -= movementSpeed * glm::normalize(glm::cross(frontCamera, upCamera));
+            camera.Move(CCamera::EMoveDirection::Left, movementSpeed);
         }
         if (window.PollKey(GLFW_KEY_D))
         {
-            positionCamera += movementSpeed * glm::normalize(glm::cross(frontCamera, upCamera));
+            camera.Move(CCamera::EMoveDirection::Right, movementSpeed);
         }
-        glm::mat4 viewMatrix = glm::lookAt(positionCamera, positionCamera + frontCamera, upCamera);
 
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("view"), 1, GL_FALSE,
-            glm::value_ptr(viewMatrix));
+            glm::value_ptr(camera.CreateViewMatrix()));
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("projection"), 1, GL_FALSE,
             window.GetProjectionMatrixValuePtr());
 
