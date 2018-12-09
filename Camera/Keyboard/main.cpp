@@ -31,10 +31,7 @@ int32_t main(int32_t argc, char* argv[])
     }
 
     // Set window coordinates and adjust when resizing
-    window.SetResizeCallback([](GLFWwindow* window, int width, int height)
-    {
-        glViewport(0, 0, width, height);
-    });
+    window.SetResizeCallback();
 
     // Load GLAD
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))

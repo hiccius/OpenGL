@@ -1,14 +1,15 @@
 #include "camera.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "helpers.h"
 
 
-void CCamera::ChangeLookDirection(double deltaPitch, double deltaYaw)
+void CCamera::ChangeLookDirection(double deltaPitch, double deltaYaw) noexcept
 {
-    _yaw   += deltaYaw;
-    _pitch += deltaPitch;
+    _yaw   += deltaYaw * _lookDirectionSensitivity;
+    _pitch += deltaPitch * _lookDirectionSensitivity;
 
     _pitch = limitValue(_pitch, _pitchLimits);
 
@@ -24,8 +25,9 @@ void CCamera::ChangeLookDirection(double deltaPitch, double deltaYaw)
 }
 
 
-void CCamera::Move(EMoveDirection moveDirection, float speed)
+void CCamera::Move(EMoveDirection moveDirection, float speed) noexcept
 {
+    speed *= _movementSensitivity;
     switch (moveDirection)
     {
     case EMoveDirection::Forward:
@@ -44,7 +46,8 @@ void CCamera::Move(EMoveDirection moveDirection, float speed)
 }
 
 
-glm::mat4 CCamera::CreateViewMatrix()
+glm::f32* CCamera::GetViewMatrixValuePtr() noexcept
 {
-    return glm::lookAt(_position, _position + _front, _up);
+    _viewMatrix = glm::lookAt(_position, _position + _front, _up);
+    return glm::value_ptr(_viewMatrix);
 }

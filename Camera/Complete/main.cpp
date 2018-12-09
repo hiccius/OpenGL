@@ -5,17 +5,10 @@
 
 #include "helpers.h"
 #include "window.h"
-#include "camera.h"
 #include "shaderprogram.h"
 #include "vertexdatahandler.h"
 #include "texturehandler.h"
 #include "projection.h"
-
-
-double lastX = 400.0f;
-double lastY = 300.0f;
-
-bool firstMouse = true;
 
 
 int32_t main(int32_t argc, char* argv[])
@@ -38,13 +31,7 @@ int32_t main(int32_t argc, char* argv[])
     }
 
     // Set window coordinates and adjust when resizing
-    window.SetResizeCallback([](GLFWwindow* window, int width, int height)
-    {
-        glViewport(0, 0, width, height);
-    });
-
-    // Camera object
-    CCamera camera;
+    window.SetResizeCallback();
 
     // Load GLAD
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
@@ -152,34 +139,9 @@ int32_t main(int32_t argc, char* argv[])
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
-    // Declare frame times
-    float deltaTime = 0.0f;
-    float lastFrameTime = 0.0f;
-
     // Capture mouse
     window.SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    window.SetMousePositionCallback([&camera](GLFWwindow* window, double xPosition, double yPosition)
-    {
-        if (firstMouse)
-        {
-            lastX = xPosition;
-            lastY = yPosition;
-            firstMouse = false;
-        }
-
-        double xOffset = xPosition - lastX;
-        double yOffset = yPosition - lastY;
-
-        lastX = xPosition;
-        lastY = yPosition;
-
-        double sensitivity = 0.05f;
-        xOffset *= sensitivity;
-        yOffset *= sensitivity;
-
-        camera.ChangeLookDirection(yOffset, xOffset);
-    });
-
+    window.SetMousePositionCallback();
     window.SetMouseScrollCallback();
 
     // Render loop
@@ -199,26 +161,13 @@ int32_t main(int32_t argc, char* argv[])
         shaderProgram.Use();
 
         // Apply transformations
-        float movementSpeed = 0.75f * deltaTime;
-        if (window.PollKey(GLFW_KEY_W))
-        {
-            camera.Move(CCamera::EMoveDirection::Forward, movementSpeed);
-        }
-        if (window.PollKey(GLFW_KEY_S))
-        {
-            camera.Move(CCamera::EMoveDirection::Backward, movementSpeed);
-        }
-        if (window.PollKey(GLFW_KEY_A))
-        {
-            camera.Move(CCamera::EMoveDirection::Left, movementSpeed);
-        }
-        if (window.PollKey(GLFW_KEY_D))
-        {
-            camera.Move(CCamera::EMoveDirection::Right, movementSpeed);
-        }
+        window.PollMovementKey(CCamera::EMoveDirection::Forward,  GLFW_KEY_W);
+        window.PollMovementKey(CCamera::EMoveDirection::Backward, GLFW_KEY_S);
+        window.PollMovementKey(CCamera::EMoveDirection::Left,     GLFW_KEY_A);
+        window.PollMovementKey(CCamera::EMoveDirection::Right,    GLFW_KEY_D);
 
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("view"), 1, GL_FALSE,
-            glm::value_ptr(camera.CreateViewMatrix()));
+            window.GetViewMatrixValuePtr());
         glUniformMatrix4fv(shaderProgram.GetUniformLocation("projection"), 1, GL_FALSE,
             window.GetProjectionMatrixValuePtr());
 
@@ -239,11 +188,6 @@ int32_t main(int32_t argc, char* argv[])
 
         // Poll events and redraw window
         window.RedrawAndPoll();
-
-        // Update frame times
-        float currentFrameTime = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrameTime - lastFrameTime;
-        lastFrameTime = currentFrameTime;
     }
 
     return 0;

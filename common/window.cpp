@@ -1,11 +1,19 @@
 #include "window.h"
 
+#include <functional>
+
 #include "helpers.h"
 
 
+bool    CWindow::_firstMouse{ true };
+double  CWindow::_mouseXPosition{ 0.0 };
+double  CWindow::_mouseYPosition{ 0.0 };
+std::unique_ptr<IProjection> CWindow::_projection{ nullptr };
+CCamera CWindow::_camera;
+
 CWindow::CWindow() noexcept :
     _window{ nullptr }, _initWidth{ 0 }, _initHeight{ 0 },
-    _defaultProjection{ 1.0f }, _projection{ nullptr }
+    _defaultProjection{ 1.0f }
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -34,6 +42,9 @@ bool CWindow::SetUp(int32_t width, int32_t height, const std::string& title) noe
         _initWidth = width;
         _initHeight = height;
 
+        _mouseXPosition = _initWidth / 2;
+        _mouseYPosition = _initHeight / 2;
+
         glfwMakeContextCurrent(_window);
         glfwSetWindowPos(_window, 100, 100);
 
@@ -58,15 +69,16 @@ bool CWindow::SetProjection(EProjection projectionType, float fieldOfView) noexc
 }
 
 
-void CWindow::SetResizeCallback(GLFWframebuffersizefun callback) noexcept
+void CWindow::SetResizeCallback() noexcept
 {
-    auto wrappedCallback = lambdaToPointer([this, callback](GLFWwindow* window, int newWidth, int newHeight)
-    {
-        UpdateProjection(newWidth, newHeight);
-        callback(window, newWidth, newHeight);
-    });
+    glfwSetFramebufferSizeCallback(_window, &ResizeCallback);
+}
 
-    glfwSetFramebufferSizeCallback(_window, wrappedCallback);
+
+void CWindow::ResizeCallback(GLFWwindow* window, int width, int height)
+{
+    UpdateProjection(width, height);
+    glViewport(0, 0, width, height);
 }
 
 
@@ -76,25 +88,40 @@ void CWindow::SetInputMode(int mode, int value)
 }
 
 
-void CWindow::SetMousePositionCallback(GLFWcursorposfun callback) noexcept
+void CWindow::SetMousePositionCallback() noexcept
 {
-    auto wrappedCallback = lambdaToPointer([this, callback](GLFWwindow* window, double xPosition, double yPosition)
-    {
-        callback(window, xPosition, yPosition);
-    });
+    glfwSetCursorPosCallback(_window, &MousePositionCallback);
+}
 
-    glfwSetCursorPosCallback(_window, wrappedCallback);
+
+void CWindow::MousePositionCallback(GLFWwindow* window, double xPosition, double yPosition)
+{
+    if (_firstMouse)
+    {
+        _mouseXPosition = xPosition;
+        _mouseYPosition = yPosition;
+        _firstMouse = false;
+    }
+
+    double xOffset = xPosition - _mouseXPosition;
+    double yOffset = yPosition - _mouseYPosition;
+
+    _mouseXPosition = xPosition;
+    _mouseYPosition = yPosition;
+
+    _camera.ChangeLookDirection(-yOffset, xOffset);
 }
 
 
 void CWindow::SetMouseScrollCallback() noexcept
 {
-    auto wrappedCallback = lambdaToPointer([this](GLFWwindow* window, double xOffset, double yOffset)
-    {
-        _projection->ModifyInitFovDegrees(static_cast<float>(-yOffset));
-    });
+    glfwSetScrollCallback(_window, &MouseScrollCallback);
+}
 
-    glfwSetScrollCallback(_window, wrappedCallback);
+
+void CWindow::MouseScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+{
+    _projection->ModifyInitFovDegrees(static_cast<float>(-yOffset));
 }
 
 
@@ -119,10 +146,23 @@ void CWindow::PollCloseKey(int32_t key) const noexcept
 }
 
 
-void CWindow::RedrawAndPoll() const noexcept
+void CWindow::PollMovementKey(CCamera::EMoveDirection moveDirection, int32_t key) noexcept
+{
+    if (PollKey(key))
+    {
+        _camera.Move(moveDirection, _deltaFrameTime);
+    }
+}
+
+
+void CWindow::RedrawAndPoll() noexcept
 {
     glfwSwapBuffers(_window);
     glfwPollEvents();
+
+    float currentFrameTime = static_cast<float>(glfwGetTime());
+    _deltaFrameTime = currentFrameTime - _lastFrameTime;
+    _lastFrameTime = currentFrameTime;
 }
 
 
@@ -145,4 +185,10 @@ glm::f32* CWindow::GetProjectionMatrixValuePtr() noexcept
     {
         return glm::value_ptr(_defaultProjection);
     }
+}
+
+
+glm::f32* CWindow::GetViewMatrixValuePtr() noexcept
+{
+    return _camera.GetViewMatrixValuePtr();
 }
