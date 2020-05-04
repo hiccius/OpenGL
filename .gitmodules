@@ -1,0 +1,7 @@
+[submodule "third-party/GLFW"]
+	path = third-party/GLFW
+	url = https://github.com/glfw/glfw.git
+	branch = 3.3-stable
+[submodule "third-party/GLAD"]
+	path = third-party/GLAD
+	url = https://github.com/Dav1dde/glad.git
