@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(1-Basics)
+project(01-basics)
 
-set(EXTRA_INCLUDES ${EXTRA_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR}/common)
-set(EXTRA_SOURCES ${EXTRA_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/common/window.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/common/shader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/common/shaderprogram.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/common/vertexdatahandler.cpp)
-add_subdirectory(11-Triangle)
+set(CMAKE_CXX_STANDARD 17)
+
+add_subdirectory(utils)
+set(EXTRA_INCLUDES ${EXTRA_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR}/utils/include)
+set(EXTRA_LIBS ${EXTRA_LIBS} utils)
+
+add_subdirectory(01-triangle)
