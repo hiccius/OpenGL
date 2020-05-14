@@ -5,4 +5,4 @@ project(01-triangle)
 add_executable(triangle main.cpp)
 
 target_link_libraries(triangle utils)
-target_compile_options(triangle PRIVATE -Wall -Wextra -pedantic-errors -Werror)
+target_compile_options(triangle PRIVATE ${COMPILER_OPTIONS})
