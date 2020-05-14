@@ -14,4 +14,3 @@ add_library(utils
 
 target_link_libraries(utils PUBLIC OpenGLThirdParty)
 target_include_directories(utils PUBLIC include)
-target_compile_options(utils PRIVATE ${COMPILER_OPTIONS})
