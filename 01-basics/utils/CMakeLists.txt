@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(utils)
+project(OpenGLUtils VERSION 0.0.1 LANGUAGES CXX)
+
+set_property(SOURCE ${EXTRA_SOURCES}
+             PROPERTY GENERATED TRUE)
 
 add_library(utils
     src/shader.cpp
@@ -9,5 +12,6 @@ add_library(utils
     src/window.cpp
     ${EXTRA_SOURCES})
 
-target_include_directories(utils PUBLIC include ${EXTRA_INCLUDES})
-target_compile_options(utils PUBLIC -Wall -Wextra -pedantic-errors -Werror)
+target_link_libraries(utils PUBLIC OpenGLThirdParty)
+target_include_directories(utils PUBLIC include)
+target_compile_options(utils PRIVATE -Wall -Wextra -pedantic-errors -Werror)
