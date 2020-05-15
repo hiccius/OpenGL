@@ -1,6 +1,5 @@
 #include "window.hpp"
 
-#include <GLFW/glfw3.h>
 #include "helpers.hpp"
 
 
@@ -39,9 +38,15 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle)
 
     glfwMakeContextCurrent(_window);
     //glfwSetWindowPos(_window, 100, 100);
+
+    // Set window coordinates and adjust when resizing
+    SetResizeCallback([](GLFWwindow*, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    });
 }
 
-void CWindow::SetResizeCallback(ResizeCallback aCallback) noexcept
+void CWindow::SetResizeCallback(ResizeCallback aCallback) const noexcept
 {
     glfwSetFramebufferSizeCallback(_window, aCallback);
 }
@@ -56,7 +61,7 @@ bool CWindow::PollKey(int aKey) const noexcept
     return glfwGetKey(_window, aKey) == GLFW_PRESS;
 }
 
-void CWindow::PollCloseKey(int aKey) noexcept
+void CWindow::PollCloseKey(int aKey) const noexcept
 {
     if (PollKey(aKey))
     {
@@ -64,7 +69,13 @@ void CWindow::PollCloseKey(int aKey) noexcept
     }
 }
 
-void CWindow::RedrawAndPoll() noexcept
+void CWindow::ClearColor(float aX, float aY, float aZ, float aA) const noexcept
+{
+    glClearColor(aX, aY, aZ, aA);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void CWindow::RedrawAndPoll() const noexcept
 {
     glfwSwapBuffers(_window);
     glfwPollEvents();

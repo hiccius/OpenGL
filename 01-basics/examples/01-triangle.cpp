@@ -1,10 +1,9 @@
-#include <glad/glad.h>
 #include <iostream>
 
-#include "window.hpp"
-#include "shader.hpp"
-#include "glslprograms.hpp"
 #include "helpers.hpp"
+#include "gladhelpers.hpp"
+#include "window.hpp"
+#include "glslprograms.hpp"
 #include "shaderprogram.hpp"
 #include "vertexdatahandler.ipp"
 
@@ -15,23 +14,11 @@ int main()
     try
     {
         window.SetUp(800, 600, "LearnOpenGL");
+        LoadGLAD();
     }
     catch (const OpenGLException& exc)
     {
         std::cerr << exc.what() << std::endl;
-        return -1;
-    }
-
-    // Set window coordinates and adjust when resizing
-    window.SetResizeCallback([](GLFWwindow*, int width, int height)
-    {
-        glViewport(0, 0, width, height);
-    });
-
-    // Load GLAD
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
-    {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
@@ -78,11 +65,10 @@ int main()
     while (window.IsOpen())
     {
         // Poll escape key to close
-        window.PollCloseKey(GLFW_KEY_ESCAPE);
+        window.PollCloseKey(Keys::Escape);
 
         // Render
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        window.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         shaderProgram.Use();
         vertexDataHandler.DrawArrays(3);
 
