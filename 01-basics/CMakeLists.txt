@@ -10,3 +10,8 @@ endif()
 
 add_subdirectory(utils)
 add_subdirectory(examples)
+
+add_custom_target(01-basics ALL
+                  COMMAND ${CMAKE_COMMAND} -E copy_directory
+                          ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+                          ${CMAKE_CURRENT_BINARY_DIR}/shaders)

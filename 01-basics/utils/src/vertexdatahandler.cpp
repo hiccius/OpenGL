@@ -13,6 +13,7 @@ CVertexDataHandler::~CVertexDataHandler() noexcept
 {
     glDeleteVertexArrays(1, &_vaoId);
     glDeleteBuffers(1, &_vboId);
+    glDeleteBuffers(1, &_eboId);
 }
 
 void CVertexDataHandler::AddAttribute(unsigned int aComponents, unsigned int aStride, unsigned int aOffset) noexcept
@@ -27,4 +28,10 @@ void CVertexDataHandler::DrawArrays(std::size_t aNumberVertices) const noexcept
 {
     glBindVertexArray(_vaoId);
     glDrawArrays(GL_TRIANGLES, 0, aNumberVertices);
+}
+
+void CVertexDataHandler::DrawElements(std::size_t aNumberVertices) const noexcept
+{
+    glBindVertexArray(_vaoId);
+    glDrawElements(GL_TRIANGLES, aNumberVertices, GL_UNSIGNED_INT, 0);
 }

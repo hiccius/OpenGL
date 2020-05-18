@@ -17,12 +17,12 @@ void CShaderProgram::Link(const CShader& aVertexShader, const CShader& aFragment
 {
     if (aVertexShader.GetId() == 0)
     {
-        throw OpenGLException("SHADER::VERTEX::NEEDS_TO_BE_COMPILED");
+        throw OpenGLException{"SHADER::VERTEX::NEEDS_TO_BE_COMPILED"};
     }
 
     if (aFragmentShader.GetId() == 0)
     {
-        throw OpenGLException("SHADER::FRAGMENT::NEEDS_TO_BE_COMPILED");
+        throw OpenGLException{"SHADER::FRAGMENT::NEEDS_TO_BE_COMPILED"};
     }
 
     glAttachShader(_id, aVertexShader.GetId());
@@ -42,7 +42,7 @@ void CShaderProgram::Link(const CShader& aVertexShader, const CShader& aFragment
 
         glGetProgramInfoLog(_id, infoLogSize, nullptr, infoLog.data());
 
-        throw OpenGLException("SHADER::PROGRAM::LINKING_FAILED\n" + infoLog);
+        throw OpenGLException{"SHADER::PROGRAM::LINKING_FAILED\n" + infoLog};
     }
 }
 

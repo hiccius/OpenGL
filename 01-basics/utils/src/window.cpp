@@ -25,7 +25,7 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle)
 
     if (!_window)
     {
-        throw OpenGLException("Failed to create GLFW window");
+        throw OpenGLException{"Failed to create GLFW window"};
     }
 
     /*
