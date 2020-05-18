@@ -23,32 +23,22 @@ int main()
     }
 
     // Shader program
-    CShader vertexShader{CShader::Type::VertexShader, vertexShaderSource.data()};
-    CShader fragmentShader{CShader::Type::FragmentShader, fragmentShaderSource.data()};
+    CShaderProgram shaderProgram;
     try
     {
+        CShader vertexShader{CShader::Type::VertexShader, vertexShaderSource.data()};
+        CShader fragmentShader{CShader::Type::FragmentShader, fragmentShaderOrangeSource.data()};
+
         vertexShader.Compile();
         fragmentShader.Compile();
+
+        shaderProgram.Link(vertexShader, fragmentShader);
     }
     catch (const OpenGLException& exc)
     {
         std::cerr << exc.what() << std::endl;
         return -1;
     }
-
-    CShaderProgram shaderProgram;
-    try
-    {
-        shaderProgram.Link(vertexShader, fragmentShader);
-    }
-    catch (const OpenGLException& exc)
-    {
-        std::cout << exc.what() << std::endl;
-        return -1;
-    }
-
-    vertexShader.Delete();
-    fragmentShader.Delete();
 
     // Vertex data
     CVertexDataHandler vertexDataHandler;

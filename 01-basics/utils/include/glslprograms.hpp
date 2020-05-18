@@ -12,7 +12,7 @@ static constexpr std::string_view vertexShaderSource{
     "gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"  "\n"
 "}"};
 
-static constexpr std::string_view fragmentShaderSource{
+static constexpr std::string_view fragmentShaderOrangeSource{
 "#version 410 core"                             "\n"
 "out vec4 fragColor;"                           "\n"
 "void main()"                                   "\n"
@@ -20,13 +20,12 @@ static constexpr std::string_view fragmentShaderSource{
     "fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0);"  "\n"
 "}"};
 
-/*
-static constexpr std::string_view fragmentShaderSourceYellow =
-"#version 440 core"                             "\n"
+static constexpr std::string_view fragmentShaderYellowSource =
+"#version 410 core"                             "\n"
 "out vec4 fragColor;"                           "\n"
 "void main()"                                   "\n"
 "{"                                             "\n"
     "fragColor = vec4(1.0f, 1.0f, 0.2f, 1.0);"  "\n"
-"};";
-*/
+"}";
+
 #endif // GLSLSPROGRAMS_HPP
