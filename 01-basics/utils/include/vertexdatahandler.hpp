@@ -15,7 +15,7 @@ public:
     template<std::size_t N>
     void AddElementBufferObject(int (&aIndices)[N]) noexcept;
 
-    void AddAttribute(unsigned int aComponenets, unsigned int aStride, unsigned int aOffset) noexcept;
+    void AddAttribute(unsigned int aComponents, unsigned int aStride, unsigned int aOffset) noexcept;
 
     void DrawArrays(std::size_t aNumberOfVertices) const noexcept;
     void DrawElements(std::size_t aNumberOfVertices) const noexcept;
