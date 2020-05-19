@@ -4,4 +4,4 @@ The examples in this chapter implement basic OpenGL.
 
 ### Examples
 #### 1. A Basic Triangle
-![Image](01-basics/images/01-triangle.png)
+![](images/01-triangle.png)
