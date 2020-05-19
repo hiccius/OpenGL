@@ -19,3 +19,6 @@ target_link_libraries(05-colored_triangle PRIVATE utils)
 
 add_executable(06-changing_triangle 06-changing_triangle.cpp)
 target_link_libraries(06-changing_triangle PRIVATE utils)
+
+add_executable(07-rainbow_triangle 07-rainbow_triangle.cpp)
+target_link_libraries(07-rainbow_triangle PRIVATE utils)
