@@ -46,6 +46,24 @@ void CShaderProgram::Link(const CShader& aVertexShader, const CShader& aFragment
     }
 }
 
+void CShaderProgram::SetUniform(const std::string& aName, float aX, float aY, float aZ, float aW)
+{
+    int uniformLocation = GetUniformLocation(aName);
+    glUniform4f(uniformLocation, aX, aY, aZ, aW);
+}
+
+int CShaderProgram::GetUniformLocation(const std::string& aName) const
+{
+    int uniformLocation = glGetUniformLocation(_id, aName.c_str());
+
+    if (uniformLocation < 0)
+    {
+        throw OpenGLException{"SHADER::PROGRAM::UNIFORM_LOCATION_NOT_FOUND: '" + aName + "'"};
+    }
+
+    return uniformLocation;
+}
+
 void CShaderProgram::Use() const noexcept
 {
     glUseProgram(_id);

@@ -18,8 +18,10 @@ public:
     void SetResizeCallback(ResizeCallback aCallback) const noexcept;
     bool IsOpen() const noexcept;
     void PollCloseKey(int aCloseKey) const noexcept;
-    void ClearColor(float aX, float aY, float aZ, float aA) const noexcept;
+    void ClearColor(float aX, float aY, float aZ, float aW) const noexcept;
     void RedrawAndPoll() const noexcept;
+
+    double GetTime() const noexcept; // TODO: does it make sense here?
 
 private:
     bool PollKey(int aKey) const noexcept;

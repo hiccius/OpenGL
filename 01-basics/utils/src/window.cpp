@@ -69,9 +69,9 @@ void CWindow::PollCloseKey(int aKey) const noexcept
     }
 }
 
-void CWindow::ClearColor(float aX, float aY, float aZ, float aA) const noexcept
+void CWindow::ClearColor(float aX, float aY, float aZ, float aW) const noexcept
 {
-    glClearColor(aX, aY, aZ, aA);
+    glClearColor(aX, aY, aZ, aW);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -79,4 +79,9 @@ void CWindow::RedrawAndPoll() const noexcept
 {
     glfwSwapBuffers(_window);
     glfwPollEvents();
+}
+
+double CWindow::GetTime() const noexcept
+{
+    return glfwGetTime();
 }
