@@ -22,3 +22,6 @@ target_link_libraries(06-changing_triangle PRIVATE utils)
 
 add_executable(07-rainbow_triangle 07-rainbow_triangle.cpp)
 target_link_libraries(07-rainbow_triangle PRIVATE utils)
+
+add_executable(08-flipped_moved_triangle 08-flipped_moved_triangle.cpp)
+target_link_libraries(08-flipped_moved_triangle PRIVATE utils)
