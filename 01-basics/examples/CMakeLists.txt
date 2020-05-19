@@ -13,3 +13,6 @@ target_link_libraries(03-two_independent_triangles PRIVATE utils)
 
 add_executable(04-rectangle 04-rectangle.cpp)
 target_link_libraries(04-rectangle PRIVATE utils)
+
+add_executable(05-colored_triangle 05-colored_triangle.cpp)
+target_link_libraries(05-colored_triangle PRIVATE utils)

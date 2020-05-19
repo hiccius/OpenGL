@@ -25,8 +25,8 @@ int main()
     CShaderProgram shaderProgram;
     try
     {
-        CShader vertexShader{"04-shader.vert"};
-        CShader fragmentShader{"04-shader.frag"};
+        CShader vertexShader{"05-shader.vert"};
+        CShader fragmentShader{"05-shader.frag"};
 
         vertexShader.Compile();
         fragmentShader.Compile();
@@ -43,24 +43,12 @@ int main()
     CVertexDataHandler vertexDataHandler;
     float vertices[] =
     {
-         0.5f,  0.5f, 0.0f, // top right
-         0.5f, -0.5f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f  // top left
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.0f,  0.5f, 0.0f
     };
     vertexDataHandler.AddVectorBufferObject(vertices);
-
-    int indices[] =
-    {
-        0, 1, 3,
-        1, 2, 3
-    };
-    vertexDataHandler.AddElementBufferObject(indices);
-
     vertexDataHandler.AddAttribute(3, 3, 0);
-
-    // Polygon mode
-    FillShape(false);
 
     // Render loop
     while (window.IsOpen())
@@ -72,7 +60,7 @@ int main()
         window.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         shaderProgram.Use();
-        vertexDataHandler.DrawElements(6);
+        vertexDataHandler.DrawArrays(3);
 
         // Poll events and redraw window
         window.RedrawAndPoll();
