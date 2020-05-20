@@ -7,8 +7,29 @@
 #include "vertexdatahandler.ipp"
 
 
-int main()
+int main(int argc, char* args[])
 {
+    bool fill{true};
+    if (argc == 2)
+    {
+        std::string_view option{args[1]};
+        if (option == "--no-fill")
+        {
+            fill = false;
+        }
+        else if (option == "--help")
+        {
+            std::cout.setf(std::ios_base::left, std::ios_base::adjustfield);
+            std::cout << "Usage: " << args[0] << " [options]\n\n";
+            std::cout << "Options:\n";
+            std::cout << std::setw(15) << "  --no-fill";
+            std::cout << "Draw shape in wireframe mode\n";
+            std::cout << std::setw(15) << "  --help";
+            std::cout << "Displays this message\n\n";
+            return 0;
+        }
+    }
+
     CWindow window;
     try
     {
@@ -60,7 +81,7 @@ int main()
     vertexDataHandler.AddAttribute(3, 3, 0);
 
     // Polygon mode
-    FillShape(false);
+    FillShape(fill);
 
     // Render loop
     while (window.IsOpen())
