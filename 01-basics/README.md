@@ -17,8 +17,8 @@ The examples can be executed one by one without needing to pass any arguments, t
 Implementation of a simple triangle usign a basic vertex shader that draws 3 vertices (defined in a **VBO** and the corresponding attributes in a **VAO**) and a fragment shader that colours the resulting triangle in orange.
 
 <div align="center">
-<img src="images/01-triangle.png" height="450"><br>
-<sup><strong>Fig 1: </strong> A basic (and orange!) triangle</sup>
+  <img src="images/01-triangle.png" height="450"><br>
+  <sup><strong>Fig 1: </strong> A basic (and orange!) triangle</sup>
 </div>
 
 
@@ -26,8 +26,8 @@ Implementation of a simple triangle usign a basic vertex shader that draws 3 ver
 Similar to the previous example but with two tiangles drawn as 6 vertices defined in a single VBO with the attributes specified in a VAO.
 
 <div align="center">
-<img src="images/02-two_triangles.png" height="450"><br>
-<sup><strong>Fig 2: </strong> Two basic (and orange!) triangles</sup>
+  <img src="images/02-two_triangles.png" height="450"><br>
+  <sup><strong>Fig 2: </strong> Two basic (and orange!) triangles</sup>
 </div>
 
 
@@ -35,8 +35,8 @@ Similar to the previous example but with two tiangles drawn as 6 vertices define
 In this example each tringle has its vertices defined in a different VBO with a VAO for each. Two shader programs are used, each working with one of the VBOs through their respective VAOs. The two shader programs are linked against the same **vertex shader** but have different **fragment shaders**, one sets the color orange for the first triangle while the other colours the second one in yellow.
 
 <div align="center">
-<img src="images/03-two_independent_triangles.png" height="450"><br>
-<sup><strong>Fig 3: </strong> An orange and a yellow triangle</sup>
+  <img src="images/03-two_independent_triangles.png" height="450"><br>
+  <sup><strong>Fig 3: </strong> An orange and a yellow triangle</sup>
 </div>
 
 
@@ -62,8 +62,8 @@ This example specifies the colour of the triangle in the vertex shader and passe
   <sup><strong>Fig 5: </strong> A dark red triangle</sup>
 </div>
 
-### 6. A chamaleonic triangle
-Here the concept of **uniforms** is introduced and it is applied to change the level of green in the triangle over time.
+### 6. A chameleonic triangle
+Here the concept of **uniforms** is introduced and applied to change the level of green in the triangle over time.
 
 <div align="center">
   <img src="images/06-changing_triangle.gif" height="450"><br>
@@ -71,7 +71,25 @@ Here the concept of **uniforms** is introduced and it is applied to change the l
 </div>
 
 ### 7. A rainbow triangle
+In this example, a color for each vertex is defined in the VBO. With the help of another attribute in the VAO a triangle with different colours is drawn. This example proves how the vertex attributes are interpolated so each and every pixel out of the rasterizer can have an appropriate value.
 
-### 8. 
+<div align="center">
+  <img src="images/07-rainbow_triangle.png" height="450"><br>
+  <sup><strong>Fig 7: </strong> A rainbow triangle</sup>
+</div>
+
+### 8. A 'tipsy' triangle
+Here, the triangle from the previous example is modified after the **vertex shader** applies some changes: it negates the value of the *y* component of the input vertices and applies an offset to the *x* component read from an **uniform**.
+
+<div align="center">
+  <img src="images/08-drunk_triangle.png" height="450"><br>
+  <sup><strong>Fig 8: </strong> A drunk triangle</sup>
+</div>
 
 ### 9. A position-dependant-colored triangle
+In the last example of this chapter the color of the triangle is defined in the fragment shader directly from the position of each vertex. Because the bottom left corner of the image contains components with a negative value that get 'clamped' to 0 (the value is limited between 0 and 1), the output color of that area is completely black.
+
+<div align="center">
+  <img src="images/09-position_dependant_colored_triangle.png" height="450"><br>
+  <sup><strong>Fig 9: </strong> A triangle with not much color</sup>
+</div>
