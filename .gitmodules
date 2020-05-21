@@ -5,3 +5,6 @@
 [submodule "third-party/GLAD"]
 	path = third-party/GLAD
 	url = https://github.com/Dav1dde/glad.git
+[submodule "third-party/STB"]
+	path = third-party/STB
+	url = https://github.com/nothings/stb.git
