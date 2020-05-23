@@ -6,3 +6,4 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(third-party)
 add_subdirectory(01-basics)
+add_subdirectory(02-textures)
