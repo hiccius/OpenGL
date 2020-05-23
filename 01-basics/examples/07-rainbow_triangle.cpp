@@ -15,7 +15,7 @@ int main()
         window.SetUp(800, 600, "LearnOpenGL");
         LoadGLAD();
     }
-    catch(const OpenGLException& exc)
+    catch (const OpenGLException& exc)
     {
         std::cerr << exc.what() << std::endl;
         return -1;
