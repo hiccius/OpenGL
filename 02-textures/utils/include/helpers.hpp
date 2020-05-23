@@ -9,12 +9,12 @@ class OpenGLException : public std::exception
 {
 public:
     OpenGLException(const std::string& context, const std::string& errorString) noexcept
-        : _context{context}, _errorString{errorString}
-    {};
+        : _context{context}, _errorString{errorString}, _fullError{"ERROR" + GetContext() + " - " + GetError()}
+    {}
 
     virtual const char* what() const noexcept final
     {
-        return std::string{"ERROR" + GetContext() + " - " + GetError()}.c_str();
+        return _fullError.c_str();
     }
 
     std::string GetContext() const noexcept
@@ -30,6 +30,7 @@ public:
 private:
     std::string _context;
     std::string _errorString;
+    std::string _fullError;
 };
 
 
