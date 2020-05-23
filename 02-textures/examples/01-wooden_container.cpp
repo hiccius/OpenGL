@@ -5,7 +5,7 @@
 #include "window.hpp"
 #include "shaderprogram.hpp"
 #include "vertexdatahandler.ipp"
-#include "texturehandler.hpp"
+#include "texture.hpp"
 
 
 int main()
@@ -41,16 +41,17 @@ int main()
     }
 
     // Texture data
-    CTextureHandler textureHandler;
+    CTexture containerTexture;
     try
     {
-        textureHandler.SetWrappingMode(WrappingMode::Repeat);
-        textureHandler.SetFilteringMode(FilteringMode::Linear);
-        textureHandler.GenerateTexture("container.jpg");
+        containerTexture.SetWrappingMode(WrappingMode::Repeat);
+        containerTexture.SetFilteringMode(FilteringMode::Linear);
+        containerTexture.GenerateTexture("container.jpg");
     }
     catch (const OpenGLException& exc)
     {
         std::cerr << exc.what() << std::endl;
+        return -1;
     }
 
     // Vertex data
@@ -84,8 +85,9 @@ int main()
         // Render
         window.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+        containerTexture.ActivateAndBind();
+
         shaderProgram.Use();
-        textureHandler.BindTexture();
         vertexDataHandler.DrawElements(6);
 
         // Poll events and redraw window

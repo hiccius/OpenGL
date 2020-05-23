@@ -8,7 +8,7 @@ set_property(SOURCE ${EXTRA_SOURCES}
 add_library(utils_02
     src/shader.cpp
     src/shaderprogram.cpp
-    src/texturehandler.cpp
+    src/texture.cpp
     src/vertexdatahandler.cpp
     src/window.cpp
     ${EXTRA_SOURCES})
