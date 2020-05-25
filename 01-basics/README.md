@@ -71,7 +71,7 @@ Here the concept of **uniforms** is introduced and applied to change the level o
 </div>
 
 ### 7. A rainbow triangle
-In this example, a colour for each vertex is defined in the VBO. With the help of another attribute in the VAO, a triangle with different colours is drawn. This example proves how the vertex attributes are interpolated so each and every pixel out of the rasterizer can have an appropriate value.
+In this example, a colour for each vertex is defined in the VBO. With the help of another attribute in the VAO, a triangle with different colours is drawn. This example proves how the vertex attributes' values are interpolated so each and every pixel out of the rasterizer can have an appropriate value.
 
 <div align="center">
   <img src="images/07-rainbow_triangle.png" height="450"><br>
