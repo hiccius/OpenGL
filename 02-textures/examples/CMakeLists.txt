@@ -10,3 +10,6 @@ target_link_libraries(02-happy_container PRIVATE utils_02)
 
 add_executable(03-reversed_face 03-reversed_face.cpp)
 target_link_libraries(03-reversed_face PRIVATE utils_02)
+
+add_executable(04-multiple_faces 04-multiple_faces.cpp)
+target_link_libraries(04-multiple_faces PRIVATE utils_02)

@@ -30,6 +30,8 @@ private:
 namespace WrappingMode
 {
     static constexpr int Repeat = GL_REPEAT;
+    static constexpr int Mirror = GL_MIRRORED_REPEAT;
+    static constexpr int ClampedEdge = GL_CLAMP_TO_EDGE;
 }
 
 namespace FilteringMode
