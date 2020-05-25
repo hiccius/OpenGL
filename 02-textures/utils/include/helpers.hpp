@@ -58,4 +58,16 @@ inline std::filesystem::path GetFullPath(const std::filesystem::path& localPath)
     }
 }
 
+template<
+    typename T,
+    typename = std::enable_if_t<std::is_arithmetic_v<T>>
+>
+auto GetNumericModifier(T& aValue) noexcept
+{
+    return [&aValue](const T& aDelta)
+           {
+               aValue += aDelta;
+           };
+}
+
 #endif // HELPERS_HPP

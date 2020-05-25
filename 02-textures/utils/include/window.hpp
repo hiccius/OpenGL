@@ -21,6 +21,9 @@ public:
     void ClearColor(float aX, float aY, float aZ, float aW) const noexcept;
     void RedrawAndPoll() const noexcept;
 
+    template<typename Callable, typename... T>
+    void PollCallbackKey(int aKey, Callable&& aCallback, T&&... args) const noexcept;
+
     double GetTime() const noexcept; // TODO: does it make sense here?
 
 private:
@@ -32,6 +35,8 @@ private:
 namespace Key
 {
     static constexpr int Escape = GLFW_KEY_ESCAPE;
+    static constexpr int Up     = GLFW_KEY_UP;
+    static constexpr int Down   = GLFW_KEY_DOWN;
 };
 
 #endif // WINDOW_HPP

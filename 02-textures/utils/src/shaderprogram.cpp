@@ -52,6 +52,12 @@ void CShaderProgram::SetUniform(const std::string& aName, float aX, float aY, fl
     glUniform4f(uniformLocation, aX, aY, aZ, aW);
 }
 
+void CShaderProgram::SetUniform(const std::string& aName, float aValue)
+{
+    int uniformLocation = GetUniformLocation(aName);
+    glUniform1f(uniformLocation, aValue);
+}
+
 void CShaderProgram::SetUniform(const std::string& aName, int aValue)
 {
     int uniformLocation = GetUniformLocation(aName);
