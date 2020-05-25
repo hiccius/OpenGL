@@ -13,3 +13,6 @@ target_link_libraries(03-reversed_face PRIVATE utils_02)
 
 add_executable(04-multiple_faces 04-multiple_faces.cpp)
 target_link_libraries(04-multiple_faces PRIVATE utils_02)
+
+add_executable(05-zoomed_textures 05-zoomed_textures.cpp)
+target_link_libraries(05-zoomed_textures PRIVATE utils_02)

@@ -37,6 +37,7 @@ namespace WrappingMode
 namespace FilteringMode
 {
     static constexpr int Linear = GL_LINEAR;
+    static constexpr int Nearest = GL_NEAREST;
 }
 
 #endif // TEXTURE_HPP
