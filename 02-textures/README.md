@@ -56,6 +56,6 @@ This example only uses the center of the textures for the whole rectangle by cha
 In this example, the weight applied for each texture when mixed in the **fragment shader** is an uniform. The value can be modified by pressing <kbd>&#9650;</kbd> and <kbd>&#9660;</kbd>.
 
 <div align="center">
-  <img src="images/06-texture_transitions.png" height="450"><br>
+  <img src="images/06-texture_transitions.gif" height="450"><br>
   <sup><strong>Fig. 6: </strong> Texture transitions</sup>
 </div>
