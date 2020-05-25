@@ -66,13 +66,18 @@ void CShaderProgram::SetUniform(const std::string& aName, int aValue)
 
 int CShaderProgram::GetUniformLocation(const std::string& aName) const
 {
-    int uniformLocation = glGetUniformLocation(_id, aName.c_str());
+    if (auto cached{_uniformsCache.find(aName)}; cached != _uniformsCache.end())
+    {
+        return cached->second;
+    }
 
+    int uniformLocation = glGetUniformLocation(_id, aName.c_str());
     if (uniformLocation < 0)
     {
         throw OpenGLException{"SHADER_PROGRAM", "Location of uniform '" + aName + "' not found"};
     }
 
+    _uniformsCache[aName] = uniformLocation;
     return uniformLocation;
 }
 

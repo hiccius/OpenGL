@@ -26,6 +26,7 @@ private:
     int GetUniformLocation(const std::string& aName) const;
 
     unsigned int _id;
+    mutable std::map<std::string, int> _uniformsCache;
 };
 
 #endif // SHADERPROGRAM_HPP
