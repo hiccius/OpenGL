@@ -26,7 +26,7 @@ int main()
     CShaderProgram shaderProgram;
     try
     {
-        CShader vertexShader{"01-shader.vert"};
+        CShader vertexShader{"03-shader.vert"};
         CShader fragmentShader{"03-shader.frag"};
 
         vertexShader.Compile();
