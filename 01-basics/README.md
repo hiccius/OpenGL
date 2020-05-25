@@ -4,7 +4,7 @@ This section covers chapters *5. Hello Triangle* and *6. Shaders* of [LearnOpenG
 
 The examples in this chapter implement basic **OpenGL** functions. 
 
-- They set up a window (including a resize callback and a key to exit the program), load the appropiate functions to initialise the environment and implement a simple **render loop**. 
+- In the examples, a window is set up (including a resize callback and a key to exit the program), the appropiate functions to initialise the environment are loaded and a simple **render loop** is implemented. 
 
 - Each of the examples compile a **vertex shader** and a **fragment shader** and link them into a **shader program**. These  shaders work with **input** and **output** variables and **uniforms** to apply simple modifications over the graphics pipeline. 
 
