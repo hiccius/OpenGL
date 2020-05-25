@@ -8,7 +8,7 @@ out vec4 fragColor;
 
 void main()
 {
-	fragColor = mix(texture(texture1, textureCoordinate),
-	                texture(texture2, vec2(1.0f - textureCoordinate.x, textureCoordinate.y)),
-					0.2f);
+    fragColor = mix(texture(texture1, textureCoordinate),
+                    texture(texture2, vec2(1.0f - textureCoordinate.x, textureCoordinate.y)),
+                    0.2f);
 }
