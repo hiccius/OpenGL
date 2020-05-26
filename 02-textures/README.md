@@ -1,6 +1,6 @@
 ## Chapter 2 - Textures
 ### Content Summary
-This section covers chapters *7. Textures* of [LearnOpenGL](https://learnopengl.com).
+This section covers chapter *7. Textures* of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this chapter introduce how to work with textures in OpenGL. 
 
