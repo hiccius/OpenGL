@@ -2,7 +2,7 @@
 ### Content Summary
 This section covers chapter *7. Textures* of [LearnOpenGL](https://learnopengl.com).
 
-The examples in this chapter introduce how to work with textures in OpenGL. 
+The examples in this chapter introduce how to work with **textures** in OpenGL. 
 
 - Images are loaded to generate texture images that are then bound to **texture objects**. To set up the texture objects, the appropriate functions to configure **wrapping** and **filtering** modes and generate its **mipmap** levels are called. Then the texture coordinates for each vertex are included in the **VBO** along with the attribute's details in the **VAO**.
 
