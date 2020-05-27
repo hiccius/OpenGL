@@ -145,8 +145,6 @@ int main()
     CPerspective projection{45.0f, aspect, 0.1f, 100.0f, true};
     shaderProgram.SetUniform("projection", static_cast<const CMatrix&>(projection));
 
-    glEnable(GL_DEPTH_TEST);
-
     // Render loop
     while (window.IsOpen())
     {
@@ -155,7 +153,6 @@ int main()
 
         // Render
         window.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_DEPTH_BUFFER_BIT);
 
         containerTexture.ActivateAndBind();
         faceTexture.ActivateAndBind();
