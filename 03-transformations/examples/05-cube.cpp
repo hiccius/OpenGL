@@ -10,9 +10,9 @@
 
 int main()
 {
-    static constexpr int screenHeight{800};
-    static constexpr int screenWidth{600};
-    static constexpr float aspect{static_cast<float>(screenHeight) / screenWidth};
+    constexpr int screenHeight{800};
+    constexpr int screenWidth{600};
+    constexpr float aspect{static_cast<float>(screenHeight) / screenWidth};
 
     CWindow window;
     try

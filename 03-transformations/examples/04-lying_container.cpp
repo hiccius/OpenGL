@@ -10,8 +10,8 @@
 
 int main()
 {
-    static constexpr int screenHeight{800};
-    static constexpr int screenWidth{600};
+    constexpr int screenHeight{800};
+    constexpr int screenWidth{600};
 
     CWindow window;
     try
