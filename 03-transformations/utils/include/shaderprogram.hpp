@@ -25,7 +25,7 @@ public:
 
     void Use() const noexcept;
 
-private:
+//private:
     int GetUniformLocation(const std::string& aName) const;
 
     unsigned int _id;
