@@ -12,11 +12,12 @@ int main()
 {
     static constexpr int screenHeight{800};
     static constexpr int screenWidth{600};
+    static constexpr float aspect{static_cast<float>(screenHeight) / screenWidth};
 
     CWindow window;
     try
     {
-        window.SetUp(screenHeight, screenWidth, "LearnOpenGL");
+        window.SetUp(screenHeight, screenWidth, "LearnOpenGL", true);
         LoadGLAD();
     }
     catch (const OpenGLException& exc)
@@ -88,34 +89,63 @@ int main()
     // Vertex data
     CVertexDataHandler vertexDataHandler;
     float vertices[] =
-    {   // positions            // colors           // texture coordinates
-         0.5f,  0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-         0.5f, -0.5f, 0.0f,     0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-        -0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+    {
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
     vertexDataHandler.AddVectorBufferObject(vertices);
 
-    int indices[] =
-    {
-        0, 1, 3,
-        1, 2, 3
-    };
-    vertexDataHandler.AddElementBufferObject(indices);
-
-    vertexDataHandler.AddAttribute(3, 8, 0);
-    vertexDataHandler.AddAttribute(2, 8, 6);
+    vertexDataHandler.AddAttribute(3, 5, 0);
+    vertexDataHandler.AddAttribute(2, 5, 3);
 
     // Transformations
-    CMatrix model, view;
-    model.Rotate(-55.0f, 1.0f, 0.0f, 0.0f, true);
+    CMatrix view;
     view.Translate(0.0f, 0.0f, -3.0f);
-    shaderProgram.SetUniform("model", model);
     shaderProgram.SetUniform("view", view);
 
-    static constexpr float aspect{static_cast<float>(screenHeight) / screenWidth};
     CPerspective projection{45.0f, aspect, 0.1f, 100.0f, true};
     shaderProgram.SetUniform("projection", static_cast<const CMatrix&>(projection));
+
+    glEnable(GL_DEPTH_TEST);
 
     // Render loop
     while (window.IsOpen())
@@ -125,10 +155,15 @@ int main()
 
         // Render
         window.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_DEPTH_BUFFER_BIT);
 
         containerTexture.ActivateAndBind();
         faceTexture.ActivateAndBind();
-        vertexDataHandler.DrawElements(6);
+
+        CMatrix model;
+        model.Rotate(window.GetTime() * 50.0f, 0.5f, 1.0f, 0.0f, true);
+        shaderProgram.SetUniform("model", model);
+        vertexDataHandler.DrawArrays(36);
 
         // Poll events and redraw window
         window.RedrawAndPoll();

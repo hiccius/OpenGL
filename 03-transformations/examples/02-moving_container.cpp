@@ -140,13 +140,13 @@ int main(int argc, char* args[])
         CMatrix transformations;
         if (orbit)
         {
-            transformations.Rotate(static_cast<float>(window.GetTime()), Axis::Z);
+            transformations.Rotate(static_cast<float>(window.GetTime()), 0.0f, 0.0f, 1.0f);
             transformations.Translate(0.5f, -0.5f, 0.0f);
         }
         else
         {
             transformations.Translate(0.5f, -0.5f, 0.0f);
-            transformations.Rotate(static_cast<float>(window.GetTime()), Axis::Z);
+            transformations.Rotate(static_cast<float>(window.GetTime()), 0.0f, 0.0f, 1.0f);
         }
         shaderProgram.SetUniform("transform", transformations);
 

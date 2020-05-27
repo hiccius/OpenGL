@@ -106,7 +106,7 @@ int main()
 
     // Transformations
     CMatrix transformations;
-    transformations.Rotate(90.0f, Axis::Z, true);
+    transformations.Rotate(90.0f, 0.0f, 0.0f, 1.0f, true);
     transformations.Scale(0.5f, 0.5f, 0.5f);
     shaderProgram.SetUniform("transform", transformations);
 

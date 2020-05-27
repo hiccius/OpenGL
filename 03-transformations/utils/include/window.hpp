@@ -14,7 +14,7 @@ public:
     CWindow() noexcept;
     ~CWindow() noexcept;
 
-    void SetUp(int aWidth, int aHeight, std::string_view aTitle);
+    void SetUp(int aWidth, int aHeight, std::string_view aTitle, bool aEnableDepthTest = false);
     void SetResizeCallback(ResizeCallback aCallback) const noexcept;
     bool IsOpen() const noexcept;
     void PollCloseKey(int aCloseKey) const noexcept;
@@ -30,6 +30,7 @@ private:
     bool PollKey(int aKey) const noexcept;
 
     GLFWwindow* _window;
+    bool        _depthTest;
 };
 
 namespace Key

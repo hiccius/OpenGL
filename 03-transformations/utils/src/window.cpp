@@ -19,7 +19,7 @@ CWindow::~CWindow() noexcept
     glfwTerminate();
 }
 
-void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle)
+void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle, bool aEnableDepthTest)
 {
     _window = glfwCreateWindow(aWidth, aHeight, aTitle.data(), nullptr, nullptr);
 
@@ -44,6 +44,12 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle)
     {
         glViewport(0, 0, width, height);
     });
+
+    _depthTest = aEnableDepthTest;
+    if (_depthTest)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
 }
 
 void CWindow::SetResizeCallback(ResizeCallback aCallback) const noexcept
@@ -72,7 +78,9 @@ void CWindow::PollCloseKey(int aKey) const noexcept
 void CWindow::ClearColor(float aX, float aY, float aZ, float aW) const noexcept
 {
     glClearColor(aX, aY, aZ, aW);
-    glClear(GL_COLOR_BUFFER_BIT);
+
+    auto clearMask = GL_COLOR_BUFFER_BIT || _depthTest ? GL_DEPTH_BUFFER_BIT : 0;
+    glClear(clearMask);
 }
 
 void CWindow::RedrawAndPoll() const noexcept

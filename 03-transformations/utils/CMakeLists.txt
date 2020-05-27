@@ -7,6 +7,7 @@ set_property(SOURCE ${EXTRA_SOURCES}
 
 add_library(utils_03
     src/matrix.cpp
+    src/projection.cpp
     src/shader.cpp
     src/shaderprogram.cpp
     src/texture.cpp

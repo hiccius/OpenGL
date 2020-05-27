@@ -118,7 +118,7 @@ int main()
 
         CMatrix rotateTransforms;
         rotateTransforms.Translate(0.5f, -0.5f, 0.0f);
-        rotateTransforms.Rotate(static_cast<float>(window.GetTime()), Axis::Z);
+        rotateTransforms.Rotate(static_cast<float>(window.GetTime()), 0.0f, 0.0f, 1.0f);
         shaderProgram.SetUniform("transform", rotateTransforms);
         vertexDataHandler.DrawElements(6);
 

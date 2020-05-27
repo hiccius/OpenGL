@@ -13,3 +13,6 @@ target_link_libraries(03-dancing_containers PRIVATE utils_03)
 
 add_executable(04-lying_container 04-lying_container.cpp)
 target_link_libraries(04-lying_container PRIVATE utils_03)
+
+add_executable(05-cube 05-cube.cpp)
+target_link_libraries(05-cube PRIVATE utils_03)
