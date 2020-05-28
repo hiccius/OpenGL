@@ -45,6 +45,13 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle, bool aEnab
         glViewport(0, 0, width, height);
     });
 
+    // Load GLAD
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
+    {
+        throw OpenGLException{"GLAD_LOADER", "Failed to initialize GLAD"};
+    }
+
+    // Enable depth test if required
     _depthTest = aEnableDepthTest;
     if (_depthTest)
     {
@@ -79,7 +86,7 @@ void CWindow::ClearColor(float aX, float aY, float aZ, float aW) const noexcept
 {
     glClearColor(aX, aY, aZ, aW);
 
-    auto clearMask = GL_COLOR_BUFFER_BIT || _depthTest ? GL_DEPTH_BUFFER_BIT : 0;
+    auto clearMask = GL_COLOR_BUFFER_BIT | (_depthTest ? GL_DEPTH_BUFFER_BIT : 0);
     glClear(clearMask);
 }
 

@@ -17,7 +17,6 @@ int main()
     try
     {
         window.SetUp(screenHeight, screenWidth, "LearnOpenGL");
-        LoadGLAD();
     }
     catch (const OpenGLException& exc)
     {

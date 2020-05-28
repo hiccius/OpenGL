@@ -36,7 +36,6 @@ int main(int argc, char* args[])
     try
     {
         window.SetUp(800, 600, "LearnOpenGL");
-        LoadGLAD();
     }
     catch (const OpenGLException& exc)
     {
