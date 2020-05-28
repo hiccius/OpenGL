@@ -3,6 +3,8 @@
 
 #include <exception>
 #include <filesystem>
+#include <string_view>
+#include <ostream>
 
 
 class OpenGLException : public std::exception
@@ -33,6 +35,32 @@ private:
     std::string _fullError;
 };
 
+inline std::pair<bool, bool> CommandOption(std::string_view optionKeyword,
+                                           std::string_view optionDescription,
+                                           int argc, char* argv[], std::ostream& out)
+{
+    if (argc == 2)
+    {
+        std::string_view option{argv[1]};
+        if (option == "--" + std::string{optionKeyword})
+        {
+            return std::make_pair(false, true);
+        }
+        else if (option == "--help")
+        {
+            out.setf(std::ios_base::left, std::ios_base::adjustfield);
+            out << "Usage: " << argv[0] << " [option]\n\n";
+            out << "Options:\n";
+            out << std::setw(15) << "  --" + std::string{optionKeyword};
+            out << optionDescription << "\n";
+            out << std::setw(15) << "  --help";
+            out << "Displays this message\n\n";
+            return std::make_pair(true, false);
+        }
+    }
+
+    return std::make_pair(false, false);
+}
 
 inline std::filesystem::path GetFullPath(const std::filesystem::path& localPath)
 {

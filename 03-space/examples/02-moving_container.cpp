@@ -11,25 +11,11 @@
 
 int main(int argc, char* argv[])
 {
-    bool orbit{false};
-    if (argc == 2)
+    auto [exit, orbit] = CommandOption("orbit", "The container orbits instead of rotate",
+                                       argc, argv, std::cout);
+    if (exit)
     {
-        std::string_view option{argv[1]};
-        if (option == "--orbit")
-        {
-            orbit = true;
-        }
-        else if (option == "--help")
-        {
-            std::cout.setf(std::ios_base::left, std::ios_base::adjustfield);
-            std::cout << "Usage: " << argv[0] << " [option]\n\n";
-            std::cout << "Options:\n";
-            std::cout << std::setw(15) << "  --orbit";
-            std::cout << "The container orbits instead of rotate\n";
-            std::cout << std::setw(15) << "  --help";
-            std::cout << "Displays this message\n\n";
-            return 0;
-        }
+        return 0;
     }
 
     CWindow window;

@@ -16,25 +16,11 @@ int main(int argc, char* argv[])
     constexpr int screenWidth{600};
     constexpr float aspect{static_cast<float>(screenHeight) / screenWidth};
 
-    bool rotate{false};
-    if (argc == 2)
+    auto [exit, rotate] = CommandOption("rotate", "Rotate every third container",
+                                        argc, argv, std::cout);
+    if (exit)
     {
-        std::string_view option{argv[1]};
-        if (option == "--rotate")
-        {
-            rotate = true;
-        }
-        else if (option == "--help")
-        {
-            std::cout.setf(std::ios_base::left, std::ios_base::adjustfield);
-            std::cout << "Usage: " << argv[0] << " [option]\n\n";
-            std::cout << "Options:\n";
-            std::cout << std::setw(15) << "  --rotate";
-            std::cout << "Rotate every third container\n";
-            std::cout << std::setw(15) << "  --help";
-            std::cout << "Displays this message\n\n";
-            return 0;
-        }
+        return 0;
     }
 
     CWindow window;
