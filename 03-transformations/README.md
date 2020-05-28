@@ -1,10 +1,19 @@
-## Chapter 3 - Transformations
+## Chapter 3 - Space
 ### Content Summary
-This section covers chapters *8. Transformations* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *8. Transformations*, *9. Coordinate System* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
-The examples in this chapter show how to **transform** objects in OpenGL. 
+The examples in this section show how to perform **space transformations** on objects in OpenGL. 
 
 - The concept of transformation matrices is introduced to apply **translations**, **rotations** and **scaling**. These **matrix objects** are passed to the **fragment shader** as **uniforms** to modify the generated objects.
+
+- These transformations are used to convert from the **local space** to the **screen space** in the **vertex shader**. Three type of matrices are applied with their corresponding intermediate space: 
+  - The **model** matrix to convert to the **world space**.
+  - The **view** matrix to convert to the **view space**.
+  - The **projection** matrix to convert to the **clip space**.
+    - There are two types of projections: **orthographic** (accurate dimensions) and **perspective** (realistic).
+  - The final transformation is a **viewport transform** to the **screen space.
+  
+ - The concept of **depth testing** uisng the **Z-buffer** (or **depth buffer**) is also introduced to understand how OpenGL decides to display which fragments depending on their position and how some of them are hidden by others.
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only example supporting an optional argument is [2. A moving container](#2-a-moving-container). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
@@ -16,7 +25,6 @@ In this example, the container from the previous chapter appears reduced to half
   <img src="images/01-fallen_container.png" height="450"><br>
   <sup><strong>Fig. 1: </strong> The container fell on its side</sup>
 </div>
-
 
 #### 2. A moving container
 This example applies a **rotation** on the *Z* axis that varies over time and then a **translation** to move the container to the bottom right corner of the screen. Executing this example with the option ```--orbit``` applies the **translation before** the **rotation** and the container looks like it is orbiting around the centre.
