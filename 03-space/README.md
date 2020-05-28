@@ -2,21 +2,21 @@
 ### Content Summary
 This section covers chapters *8. Transformations*, *9. Coordinate System* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
-The examples in this section show how to perform **space transformations** on objects in OpenGL. 
+The examples in this section show how to perform **space transformations** on objects in OpenGL.
 
 - The concept of transformation matrices is introduced to apply **translations**, **rotations** and **scaling**. These **matrix objects** are passed to the **fragment shader** as **uniforms** to modify the generated objects.
 
-- These transformations are used to convert from the **local space** to the **screen space** in the **vertex shader**. Three type of matrices are applied with their corresponding intermediate space: 
+- These transformations are used to convert from the **local space** to the **screen space** in the **vertex shader**. Three type of matrices are applied with their corresponding intermediate space:
   - The **model** matrix to convert to the **world space**.
   - The **view** matrix to convert to the **view space**.
   - The **projection** matrix to convert to the **clip space**.
     - There are two types of projections: **orthographic** (accurate dimensions) and **perspective** (realistic).
   - The final transformation is a **viewport transform** to the **screen space.
-  
- - The concept of **depth testing** uisng the **Z-buffer** (or **depth buffer**) is also introduced to understand how OpenGL decides to display which fragments depending on their position and how some of them are hidden by others.
+
+ - The concept of **depth testing** using the **Z-buffer** (or **depth buffer**) is also introduced to understand how OpenGL decides to display which fragments depending on their position and how some of them are hidden by others.
 
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only example supporting an optional argument is [2. A moving container](#2-a-moving-container). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. A moving container](#2-a-moving-container) and [6. Some more 3D containers](#6-some-more-3D-containers). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. A fallen container
 In this example, the container from the previous chapter appears reduced to half the size after applying a **scaling** transformations and turned to the left after a **rotation**.
@@ -40,10 +40,38 @@ This example applies a **rotation** on the *Z* axis that varies over time and th
 </div>
 
 #### 3. Two dancing containers
-This example draws the containers two times. The one on the bottom right corner is the previous rotating container, while the second one is beign **scaled** with different values over time before a translation to the top left corner of the screen is applied to it.
+This example draws the containers two times. The one on the bottom right corner is the previous rotating container, while the second one is being **scaled** with different values over time before a translation to the top left corner of the screen is applied to it.
 
 <div align="center">
   <img src="images/03-dancing_containers.gif" height="450"><br>
   <sup><strong>Fig. 3: </strong> Two containers having a party</sup>
 </div>
 
+#### 4. A (flat) container lying *somewhere*
+In this example, a **model**, a **view** and a **projection** matrix are created and passed to the vertex shaders as uniforms to apply transformations on the container used in previous examples.
+
+<div align="center">
+  <img src="images/04-lying_container.png" height="450"><br>
+  <sup><strong>Fig. 4: </strong> The container was flat all along!</sup>
+</div>
+
+#### 5. A real 3D container
+This example builds a real 3D container with 6 faces and makes it rotate by modifying the **model** matrix over time.
+
+<div align="center">
+  <img src="images/05-cube.gif" height="450"><br>
+  <sup><strong>Fig. 5: </strong> A rotating 3D container</sup>
+</div>
+
+#### 6. Some more 3D containers
+In this example, the previous object is rendered 10 times in different positions by applying a different **model** matrix each time. If the example is executed with the option ```--rotate```, 4 of the cubes have their model matrix modified over time to rotate.
+
+<div align="center">
+  <img src="images/06-multiple_cubes.png" height="450"><br>
+  <sup><strong>Fig. 6.1: </strong> A container reunion in 3D</sup>
+</div>
+
+<div align="center">
+  <img src="images/06-multiple_cubes_rotating.gif" height="450"><br>
+  <sup><strong>Fig. 6.2: </strong> Some containers can never stand still</sup>
+</div>
