@@ -18,16 +18,7 @@ int main()
         window.SetUp(800, 600, "LearnOpenGL");
 
         // Shader program
-        CShaderProgram shaderProgram;
-        {
-            CShader vertexShader{"01-shader.vert"};
-            CShader fragmentShader{"01-shader.frag"};
-
-            vertexShader.Compile();
-            fragmentShader.Compile();
-
-            shaderProgram.Link(vertexShader, fragmentShader);
-        }
+        CShaderProgram shaderProgram{CShaderProgram::Build("01-shader.vert", "01-shader.frag")};
 
         // Load textures
         CTexture containerTexture;

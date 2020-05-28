@@ -6,6 +6,21 @@
 #include "matrix.hpp"
 
 
+CShaderProgram CShaderProgram::Build(std::string_view aVertexShader, std::string_view aFragmentShader)
+{
+    CShaderProgram shaderProgram;
+
+    CShader vertexShader{aVertexShader};
+    CShader fragmentShader{aFragmentShader};
+
+    vertexShader.Compile();
+    fragmentShader.Compile();
+
+    shaderProgram.Link(vertexShader, fragmentShader);
+
+    return shaderProgram;
+}
+
 CShaderProgram::CShaderProgram() noexcept
     : _id{glCreateProgram()}
 {}

@@ -27,8 +27,8 @@ private:
 
     Type             _type;
     unsigned int     _shaderId{0};
-    std::string_view _sourceCode;
     std::string      _sourceCodeContent;
+    std::string_view _sourceCode;
 };
 
 #endif // SHADER_HPP

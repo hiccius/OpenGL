@@ -9,6 +9,8 @@ class CMatrix;
 class CShaderProgram
 {
 public:
+    static CShaderProgram Build(std::string_view aVertexShader, std::string_view aFragmentShader);
+
     CShaderProgram() noexcept;
     ~CShaderProgram() noexcept;
     CShaderProgram(CShaderProgram&& aOther) noexcept;
