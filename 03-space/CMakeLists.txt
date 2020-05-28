@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(03-transformations)
+project(03-space)
 
 if(APPLE)
     add_compile_options(-Wall -Wextra -pedantic-errors -Werror)
@@ -13,7 +13,7 @@ add_compile_definitions(PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 add_subdirectory(utils)
 add_subdirectory(examples)
 
-add_custom_target(03-transformations ALL
+add_custom_target(03-space ALL
                   COMMAND ${CMAKE_COMMAND} -E copy_directory
                           ${CMAKE_CURRENT_SOURCE_DIR}/shaders
                           ${CMAKE_CURRENT_BINARY_DIR}/shaders
