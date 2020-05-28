@@ -12,11 +12,25 @@ CShaderProgram::CShaderProgram() noexcept
 
 CShaderProgram::~CShaderProgram() noexcept
 {
-    glDeleteProgram(_id);
+    if (_id)
+    {
+        glDeleteProgram(_id);
+    }
+}
+
+CShaderProgram::CShaderProgram(CShaderProgram&& aOther) noexcept
+    : _id{aOther._id}, _uniformsCache{aOther._uniformsCache}
+{
+    aOther._id = 0;
 }
 
 void CShaderProgram::Link(const CShader& aVertexShader, const CShader& aFragmentShader)
 {
+    if (_id == 0)
+    {
+        throw OpenGLException{"SHADER_PROGRAM", "Not initialised"};
+    }
+
     if (aVertexShader.GetId() == 0)
     {
         throw OpenGLException{"SHADER_PROGRAM", "Vertex shader needs to be compiled"};
@@ -74,6 +88,11 @@ void CShaderProgram::SetUniform(const std::string& aName, const CMatrix& aValue)
 
 int CShaderProgram::GetUniformLocation(const std::string& aName) const
 {
+    if (_id == 0)
+    {
+        throw OpenGLException{"SHADER_PROGRAM", "Not initialised"};
+    }
+
     if (auto cached{_uniformsCache.find(aName)}; cached != _uniformsCache.end())
     {
         return cached->second;
@@ -89,7 +108,12 @@ int CShaderProgram::GetUniformLocation(const std::string& aName) const
     return uniformLocation;
 }
 
-void CShaderProgram::Use() const noexcept
+void CShaderProgram::Use() const
 {
+    if (_id == 0)
+    {
+        throw OpenGLException{"SHADER_PROGRAM", "Not initialised"};
+    }
+
     glUseProgram(_id);
 }

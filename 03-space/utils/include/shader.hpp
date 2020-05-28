@@ -14,6 +14,7 @@ public:
 
     CShader(Type aType, std::string_view aSourceCode) noexcept;
     CShader(const std::filesystem::path& aSourceFileName);
+    CShader(CShader&& aOther) noexcept;
     ~CShader() noexcept;
 
     void Compile();

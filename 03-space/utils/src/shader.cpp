@@ -31,6 +31,13 @@ CShader::CShader(const std::filesystem::path& aSourceFileName)
     }
 }
 
+CShader::CShader(CShader&& aOther) noexcept
+    : _type{aOther._type}, _shaderId{aOther._shaderId},
+      _sourceCodeContent{aOther._sourceCodeContent}, _sourceCode{_sourceCodeContent}
+{
+    _shaderId = 0;
+}
+
 CShader::~CShader() noexcept
 {
     Delete();

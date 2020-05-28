@@ -11,6 +11,7 @@ class CShaderProgram
 public:
     CShaderProgram() noexcept;
     ~CShaderProgram() noexcept;
+    CShaderProgram(CShaderProgram&& aOther) noexcept;
 
     void Link(const CShader& aVertexShader, const CShader& aFragmentShader);
 
@@ -23,7 +24,7 @@ public:
     void SetUniform(const std::string& aName, int aValue);
     void SetUniform(const std::string& aName, const CMatrix& aValue);
 
-    void Use() const noexcept;
+    void Use() const;
 
 private:
     int GetUniformLocation(const std::string& aName) const;
