@@ -9,12 +9,12 @@
 #include "matrix.hpp"
 
 
-int main(int argc, char* args[])
+int main(int argc, char* argv[])
 {
     bool orbit{false};
     if (argc == 2)
     {
-        std::string_view option{args[1]};
+        std::string_view option{argv[1]};
         if (option == "--orbit")
         {
             orbit = true;
@@ -22,7 +22,7 @@ int main(int argc, char* args[])
         else if (option == "--help")
         {
             std::cout.setf(std::ios_base::left, std::ios_base::adjustfield);
-            std::cout << "Usage: " << args[0] << " [options]\n\n";
+            std::cout << "Usage: " << argv[0] << " [option]\n\n";
             std::cout << "Options:\n";
             std::cout << std::setw(15) << "  --orbit";
             std::cout << "The container orbits instead of rotate\n";
