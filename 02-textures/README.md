@@ -19,7 +19,6 @@ This example gives a rectangle the appearence of a wooden container by attaching
   <sup><strong>Fig. 1: </strong> A funky wooden container</sup>
 </div>
 
-
 #### 2. A happy container
 The container from the previous example is mixed with another texture with the help of the concept of **texture units**.
 
