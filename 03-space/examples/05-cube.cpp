@@ -115,7 +115,7 @@ int main()
             faceTexture.ActivateAndBind();
 
             CMatrix model;
-            model.Rotate(window.GetTime() * 50.0f, 0.5f, 1.0f, 0.0f, true);
+            model.Rotate(static_cast<float>(window.GetTime()) * 50.0f, 0.5f, 1.0f, 0.0f, true);
             shaderProgram.SetUniform("model", model);
             vertexDataHandler.DrawArrays(36);
 

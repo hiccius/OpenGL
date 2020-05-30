@@ -80,7 +80,7 @@ int main()
             vertexDataHandler.DrawElements(6);
 
             CMatrix scaleTransforms;
-            float scaleValue = std::sin(window.GetTime());
+            float scaleValue = static_cast<float>(std::sin(window.GetTime()));
             scaleTransforms.Translate(-0.5f, 0.5f, 0.0f);
             scaleTransforms.Scale(scaleValue, scaleValue, 0.0f);
             shaderProgram.SetUniform("transform", scaleTransforms);

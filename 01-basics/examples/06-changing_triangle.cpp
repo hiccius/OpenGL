@@ -61,7 +61,7 @@ int main()
         window.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         // Triangle
-        float greenValue = std::sin(window.GetTime()) / 2.0f + 0.5f;
+        float greenValue = static_cast<float>(std::sin(window.GetTime()) / 2.0 + 0.5);
         shaderProgram.Use();
         shaderProgram.SetUniform("ourColor", 0.0f, greenValue, 0.0f, 1.0f);
         vertexDataHandler.DrawArrays(3);

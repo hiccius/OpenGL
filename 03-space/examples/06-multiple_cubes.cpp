@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
                 const auto& [x, y, z] = cubePositions[i];
 
                 model.Translate(x, y, z);
-                float rotationAngle = 20.0f * (rotate && (i % 3 == 0) ? window.GetTime() : i);
+                float rotationAngle = static_cast<float>(20.0 * (rotate && (i % 3 == 0) ? window.GetTime() : i));
                 model.Rotate(rotationAngle, 1.0f, 0.3f, 0.5f, true);
 
                 shaderProgram.SetUniform("model", model);
