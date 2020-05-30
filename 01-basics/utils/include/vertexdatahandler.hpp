@@ -17,8 +17,8 @@ public:
 
     void AddAttribute(unsigned int aComponents, unsigned int aStride, unsigned int aOffset) noexcept;
 
-    void DrawArrays(std::size_t aNumberOfVertices) const noexcept;
-    void DrawElements(std::size_t aNumberOfVertices) const noexcept;
+    void DrawArrays(int aNumberOfVertices) const noexcept;
+    void DrawElements(int aNumberOfVertices) const noexcept;
 
 private:
     unsigned int _vboId;

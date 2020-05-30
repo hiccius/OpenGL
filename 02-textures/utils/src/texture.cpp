@@ -52,7 +52,12 @@ void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
 
         int width, height, colorChannels;
         stbi_set_flip_vertically_on_load(true);
-        auto* data = reinterpret_cast<std::byte*>(stbi_load(resourceFilePath.c_str(), &width, &height, &colorChannels, 0));
+#ifdef _WIN32
+        const char* resourceFilePathCStr{resourceFilePath.string().c_str()};
+#else
+        const char* resourceFilePathCStr{resourceFilePath.c_str()};
+#endif // _WIN32 
+        auto* data = reinterpret_cast<std::byte*>(stbi_load(resourceFilePathCStr, &width, &height, &colorChannels, 0));
         if (data)
         {
             int format = GetImageFormat(aTextureFile.extension());

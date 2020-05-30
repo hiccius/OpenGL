@@ -24,13 +24,13 @@ void CVertexDataHandler::AddAttribute(unsigned int aComponents, unsigned int aSt
     ++_lastAttributeIndex;
 }
 
-void CVertexDataHandler::DrawArrays(std::size_t aNumberVertices) const noexcept
+void CVertexDataHandler::DrawArrays(int aNumberVertices) const noexcept
 {
     glBindVertexArray(_vaoId);
     glDrawArrays(GL_TRIANGLES, 0, aNumberVertices);
 }
 
-void CVertexDataHandler::DrawElements(std::size_t aNumberVertices) const noexcept
+void CVertexDataHandler::DrawElements(int aNumberVertices) const noexcept
 {
     glBindVertexArray(_vaoId);
     glDrawElements(GL_TRIANGLES, aNumberVertices, GL_UNSIGNED_INT, 0);
