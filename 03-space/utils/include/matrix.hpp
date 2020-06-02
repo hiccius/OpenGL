@@ -17,7 +17,6 @@ public:
 protected:
     CMatrix(glm::mat4&& aMatrix) noexcept;
 
-private:
     glm::mat4 _matrix;
 };
 
