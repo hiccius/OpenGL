@@ -2,10 +2,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-CMatrix::CMatrix() noexcept
-    : _matrix{1.0f}
-{}
-
 CMatrix::CMatrix(glm::mat4&& aMatrix) noexcept
     : _matrix{std::move(aMatrix)}
 {}

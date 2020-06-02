@@ -5,7 +5,6 @@
 #include <sstream>
 #include "helpers.hpp"
 
-
 std::map<CShader::Type, std::pair<std::string_view, int>> CShader::TypeCodes
 {
     { Type::VertexShader,   { "Vertex",   GL_VERTEX_SHADER   } },

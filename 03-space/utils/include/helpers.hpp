@@ -6,7 +6,6 @@
 #include <string_view>
 #include <ostream>
 
-
 class OpenGLException : public std::exception
 {
 public:

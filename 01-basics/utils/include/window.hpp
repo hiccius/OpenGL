@@ -21,7 +21,7 @@ public:
     void ClearColor(float aX, float aY, float aZ, float aW) const noexcept;
     void RedrawAndPoll() const noexcept;
 
-    double GetTime() const noexcept; // TODO: does it make sense here?
+    double GetTime() const noexcept;
 
 private:
     bool PollKey(int aKey) const noexcept;

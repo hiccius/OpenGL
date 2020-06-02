@@ -24,7 +24,7 @@ public:
     template<typename Callable, typename... T>
     void PollCallbackKey(int aKey, Callable&& aCallback, T&&... args) const noexcept;
 
-    double GetTime() const noexcept; // TODO: does it make sense here?
+    double GetTime() const noexcept;
 
 private:
     bool PollKey(int aKey) const noexcept;

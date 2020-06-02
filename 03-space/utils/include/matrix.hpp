@@ -3,11 +3,10 @@
 
 #include <glm/glm.hpp>
 
-
 class CMatrix
 {
 public:
-    CMatrix() noexcept;
+    constexpr CMatrix() noexcept : _matrix{1.0f} {}
 
     void Translate(float aX, float aY, float aZ) noexcept;
     void Rotate(float aAngle, float aX, float aY, float aZ, bool aDegrees = false) noexcept;

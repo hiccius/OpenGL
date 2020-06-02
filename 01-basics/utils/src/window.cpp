@@ -6,8 +6,8 @@
 CWindow::CWindow() noexcept
 {
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -28,16 +28,7 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle)
         throw OpenGLException{"Failed to create GLFW window"};
     }
 
-    /*
-    _initWidth = width;
-    _initHeight = height;
-
-    _mouseXPosition = _initWidth / 2;
-    _mouseYPosition = _initHeight / 2;
-    */
-
     glfwMakeContextCurrent(_window);
-    //glfwSetWindowPos(_window, 100, 100);
 
     // Set window coordinates and adjust when resizing
     SetResizeCallback([](GLFWwindow*, int width, int height)

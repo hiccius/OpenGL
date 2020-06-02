@@ -19,3 +19,9 @@ target_link_libraries(05-cube PRIVATE utils_03)
 
 add_executable(06-multiple_cubes 06-multiple_cubes.cpp)
 target_link_libraries(06-multiple_cubes PRIVATE utils_03)
+
+add_executable(07-rotating_camera 07-rotating_camera.cpp)
+target_link_libraries(07-rotating_camera PRIVATE utils_03)
+
+add_executable(08-free_camera 08-free_camera.cpp)
+target_link_libraries(08-free_camera PRIVATE utils_03)

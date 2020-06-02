@@ -2,7 +2,6 @@
 
 #include <glad/glad.h>
 
-
 template<std::size_t N>
 void CVertexDataHandler::AddVectorBufferObject(float (&aVertices)[N]) noexcept
 {

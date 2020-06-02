@@ -8,7 +8,8 @@
 #include "shaderprogram.hpp"
 #include "vertexdatahandler.ipp"
 #include "texture.hpp"
-#include "projection.hpp"
+#include "matrixderived.hpp"
+
 
 int main(int argc, char* argv[])
 {
@@ -108,7 +109,7 @@ int main(int argc, char* argv[])
         view.Translate(0.0f, 0.0f, -3.0f);
         shaderProgram.SetUniform("view", view);
 
-        CPerspective projection{45.0f, aspect, 0.1f, 100.0f, true};
+        CPerspectiveMatrix projection{45.0f, aspect, 0.1f, 100.0f, true};
         shaderProgram.SetUniform("projection", static_cast<const CMatrix&>(projection));
 
         constexpr std::array<std::array<float, 3>, 10> cubePositions{{

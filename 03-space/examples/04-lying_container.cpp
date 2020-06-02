@@ -6,7 +6,8 @@
 #include "shaderprogram.hpp"
 #include "vertexdatahandler.ipp"
 #include "texture.hpp"
-#include "projection.hpp"
+#include "matrixderived.hpp"
+
 
 int main()
 {
@@ -71,7 +72,7 @@ int main()
         shaderProgram.SetUniform("model", model);
         shaderProgram.SetUniform("view", view);
 
-        CPerspective projection{45.0f, aspect, 0.1f, 100.0f, true};
+        CPerspectiveMatrix projection{45.0f, aspect, 0.1f, 100.0f, true};
         shaderProgram.SetUniform("projection", static_cast<const CMatrix&>(projection));
 
         // Render loop

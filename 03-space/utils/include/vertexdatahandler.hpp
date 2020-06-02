@@ -3,7 +3,6 @@
 
 #include <cstddef>
 
-
 class CVertexDataHandler
 {
 public:

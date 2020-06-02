@@ -5,7 +5,6 @@
 #include <map>
 #include <filesystem>
 
-
 class CShader
 {
 public:

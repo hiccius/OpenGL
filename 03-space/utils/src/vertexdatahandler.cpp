@@ -2,7 +2,6 @@
 
 #include <glad/glad.h>
 
-
 CVertexDataHandler::CVertexDataHandler() noexcept
 {
     glGenVertexArrays(1, &_vaoId);

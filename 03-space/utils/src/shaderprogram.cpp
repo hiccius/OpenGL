@@ -5,7 +5,6 @@
 #include "helpers.hpp"
 #include "matrix.hpp"
 
-
 CShaderProgram CShaderProgram::Build(std::string_view aVertexShader, std::string_view aFragmentShader)
 {
     CShaderProgram shaderProgram;

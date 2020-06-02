@@ -2,7 +2,6 @@
 #define GLADHELPERS_HPP
 
 #include <glad/glad.h>
-
 #include "helpers.hpp"
 
 void FillShape(bool fill)
