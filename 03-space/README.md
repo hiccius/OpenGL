@@ -1,6 +1,6 @@
 ## Chapter 3 - Space
 ### Content Summary
-This section covers chapters *8. Transformations*, *9. Coordinate System* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *8. Transformations*, *9. Coordinate System* and *10. Camera* of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show how to perform **space transformations** on objects in OpenGL.
 
@@ -15,8 +15,12 @@ The examples in this section show how to perform **space transformations** on ob
 
  - The concept of **depth testing** using the **Z-buffer** (or **depth buffer**) is also introduced to understand how OpenGL decides to display which fragments depending on their position and how some of them are hidden by others.
 
+ - Even there is no concept of **camera** in OpenGL, the examples show how it can be simulated with the **view** matrix by moving the **world space** in the opposite direction. This can be achieved by using a **LookAt** matrix defined with **position**, **target** and **orientation** vectors. **Euler's angles** (**pitch**, **yaw** and **roll**) help defining the direction vector.
+
+ - It is also shown how a **zooming** effect can be simulated modifying the **Field of View (FoV)** of the **perspective** matrix.
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. A moving container](#2-a-moving-container) and [6. Some more 3D containers](#6-some-more-3D-containers). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. A moving container](#2-a-moving-container), [6. Some more 3D containers](#6-some-more-3D-containers) and [8. A free camera](#9-a-camera-implementation). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. A fallen container
 In this example, the container from the previous chapter appears reduced to half the size after applying a **scaling** transformations and turned to the left after a **rotation**.
@@ -74,4 +78,25 @@ In this example, the previous object is rendered 10 times in different positions
 <div align="center">
   <img src="images/06-multiple_cubes_rotating.gif" height="450"><br>
   <sup><strong>Fig. 6.2: </strong> Some containers can never stand still</sup>
+</div>
+
+#### 7. Moving around
+A 'camera' rotating around the scene of the previous example is simulated when the position of a **LookAt** matrix used as **view** matrix changes over time.
+
+<div align="center">
+  <img src="images/07-rotating_camera.gif" height="450"><br>
+  <sup><strong>Fig. 7: </strong> Looking around the scene</sup>
+</div>
+
+#### 8. A free camera
+This example implements a 'camera' that can be controlled with the **mouse** and **keyboard** and flies freely around the scene with a **zooming** option also available. If the example is executed with the option ```--fps```, the height of the 'camera' remains constant.
+
+<div align="center">
+  <img src="images/08-free_camera.gif" height="450"><br>
+  <sup><strong>Fig. 8.1: </strong> A free camera between containers</sup>
+</div>
+
+<div align="center">
+  <img src="images/08-fps_camera.gif" height="450"><br>
+  <sup><strong>Fig. 8.2: </strong> A step closer to an FPS</sup>
 </div>
