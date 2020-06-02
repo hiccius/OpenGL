@@ -12,17 +12,26 @@
 #include "camera.hpp"
 
 
-int main()
+int main(int argc, char* argv[])
 {
     constexpr int screenHeight{800};
     constexpr int screenWidth{600};
     constexpr double aspect{static_cast<double>(screenHeight) / screenWidth};
 
+    // Command options
+    auto [exit, fps] = CommandOption("fps",
+                                     "The camera simulates a FPS camera (constant height)",
+                                     argc, argv, std::cout);
+    if (exit)
+    {
+        return 0;
+    }
+
     try
     {
         // Init window
         CWindow window;
-        CCamera camera{0.1, 2.5, aspect};
+        CCamera camera{0.1, 2.5, aspect, fps};
         window.SetUp(screenHeight, screenWidth, "LearnOpenGL", true, &camera);
         window.SetMouseControl();
 

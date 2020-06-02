@@ -40,6 +40,11 @@ void CCamera::Move(Direction aDirection, double aSpeed) noexcept
         break;
     }
 
+    if (_fpsStyle)
+    {
+        _position.y = 0.0f;
+    }
+
     _viewMatrix.reset();
 }
 
