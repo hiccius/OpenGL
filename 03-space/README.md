@@ -89,7 +89,7 @@ A 'camera' rotating around the scene of the previous example is simulated when t
 </div>
 
 #### 8. A free camera
-This example implements a 'camera' that can be controlled with the **mouse** and **keyboard** (<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> keys) and flies freely around the scene with a **zooming** option also available. If the example is executed with the option ```--fps```, the height of the 'camera' remains constant.
+This example implements a 'camera' that can be controlled with the **mouse** and **keyboard** (<kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> keys) and flies freely around the scene with a **zooming** option also available. If the example is executed with the option ```--fps```, the height of the 'camera' remains constant.
 
 <div align="center">
   <img src="images/08-free_camera.gif" height="450"><br>
