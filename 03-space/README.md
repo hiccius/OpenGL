@@ -20,7 +20,7 @@ The examples in this section show how to perform **space transformations** on ob
  - It is also shown how a **zooming** effect can be simulated modifying the **Field of View (FoV)** of the **perspective** matrix.
 
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. A moving container](#2-a-moving-container), [6. Some more 3D containers](#6-some-more-3D-containers) and [8. A free camera](#9-a-free-camera). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. A moving container](#2-a-moving-container), [6. Some more 3D containers](#6-some-more-3D-containers) and [8. A free camera](#8-a-free-camera). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. A fallen container
 In this example, the container from the previous chapter appears reduced to half the size after applying a **scaling** transformations and turned to the left after a **rotation**.
