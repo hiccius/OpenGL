@@ -1,0 +1,13 @@
+[submodule "third-party/GLFW"]
+	path = third-party/GLFW
+	url = https://github.com/glfw/glfw.git
+	branch = 3.3-stable
+[submodule "third-party/GLAD"]
+	path = third-party/GLAD
+	url = https://github.com/Dav1dde/glad.git
+[submodule "third-party/STB"]
+	path = third-party/STB
+	url = https://github.com/hiccius/stb.git
+[submodule "third-party/GLM"]
+	path = third-party/GLM
+	url = https://github.com/hiccius/glm.git
