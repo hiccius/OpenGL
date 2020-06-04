@@ -26,20 +26,8 @@ int main()
         window.SetMouseControl();
 
         // Shader programs
-        CShaderProgram objectShaderProgram;
-        CShaderProgram lightShaderProgram;
-        {
-            CShader vertexShader{"shader.vert"};
-            CShader objectFragmentShader{"01-objectshader.frag"};
-            CShader lightFragmentShader{"lightshader.frag"};
-
-            vertexShader.Compile();
-            objectFragmentShader.Compile();
-            lightFragmentShader.Compile();
-
-            objectShaderProgram.Link(vertexShader, objectFragmentShader);
-            lightShaderProgram.Link(vertexShader, lightFragmentShader);
-        }
+        auto objectShaderProgram{CShaderProgram::Build("01-objectshader.vert", "01-objectshader.frag")};
+        auto lightShaderProgram{CShaderProgram::Build("lightshader.vert", "lightshader.frag")};
 
         objectShaderProgram.Use();
         objectShaderProgram.SetUniform("model",       CMatrix{});
@@ -53,7 +41,7 @@ int main()
         lightShaderProgram.SetUniform("model", model);
 
         // Vertex data
-        float vertices[] =
+        constexpr float vertices[] =
         {
             -0.5f, -0.5f, -0.5f,
              0.5f, -0.5f, -0.5f,

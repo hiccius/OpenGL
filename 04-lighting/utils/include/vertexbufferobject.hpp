@@ -10,7 +10,7 @@ public:
     ~CVertexBufferObject() noexcept;
 
     template<std::size_t N>
-    void AddVertexData(float (&aVertices)[N]) const noexcept;
+    void AddVertexData(const float (&aVertices)[N]) const noexcept;
 
 private:
     unsigned int _id;
