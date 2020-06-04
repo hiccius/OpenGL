@@ -12,8 +12,8 @@ void main()
     float ambientStrength = 0.1f;
     vec3 ambient = ambientStrength * lightColor;
 
-    float diffuseStrength = max(dot(normalize(normal), normalize(lightPosition - fragPos)), 0.0f);
-    vec3 diffuse = diffuseStrength * lightColor;
+    float diffuseImpact = max(dot(normalize(normal), normalize(lightPosition - fragPos)), 0.0f);
+    vec3 diffuse = diffuseImpact * lightColor;
 
     fragColor = vec4((ambient + diffuse) * objectColor, 1.0f);
 }
