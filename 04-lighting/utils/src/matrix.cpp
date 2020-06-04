@@ -11,6 +11,11 @@ void CMatrix::Translate(float aX, float aY, float aZ) noexcept
     _matrix = glm::translate(_matrix, glm::vec3{aX, aY, aZ});
 }
 
+void CMatrix::Translate(const float (&aVector)[3]) noexcept
+{
+    _matrix = glm::translate(_matrix, glm::vec3{*aVector});
+}
+
 void CMatrix::Rotate(float aAngle, float aX, float aY, float aZ, bool aDegrees) noexcept
 {
     _matrix = glm::rotate(_matrix, aDegrees ? glm::radians(aAngle) : aAngle, glm::vec3{aX, aY, aZ});

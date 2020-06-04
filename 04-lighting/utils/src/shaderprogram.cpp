@@ -106,6 +106,12 @@ void CShaderProgram::SetUniform(const std::string& aName, const CMatrix& aValue)
     glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, aValue.GetAddress());
 }
 
+void CShaderProgram::SetUniform(const std::string& aName, const float (&aVector)[3])
+{
+    int uniformLocation = GetUniformLocation(aName);
+    glUniform3fv(uniformLocation, 1, aVector);
+}
+
 int CShaderProgram::GetUniformLocation(const std::string& aName) const
 {
     if (_id == 0)

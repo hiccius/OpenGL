@@ -24,6 +24,7 @@ public:
     void SetUniform(const std::string& aName, float aValue);
     void SetUniform(const std::string& aName, int aValue);
     void SetUniform(const std::string& aName, const CMatrix& aValue);
+    void SetUniform(const std::string& aName, const float (&aVector)[3]);
 
     void Use() const;
 

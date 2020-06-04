@@ -9,6 +9,7 @@ public:
     constexpr CMatrix() noexcept : _matrix{1.0f} {}
 
     void Translate(float aX, float aY, float aZ) noexcept;
+    void Translate(const float (&aVector)[3]) noexcept;
     void Rotate(float aAngle, float aX, float aY, float aZ, bool aDegrees = false) noexcept;
     void Scale(float aFactor) noexcept;
     void Scale(float aX, float aY, float aZ) noexcept;
