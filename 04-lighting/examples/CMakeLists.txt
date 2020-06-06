@@ -10,3 +10,6 @@ target_link_libraries(02-phong PRIVATE utils_04)
 
 add_executable(03-view_space 03-view_space.cpp)
 target_link_libraries(03-view_space PRIVATE utils_04)
+
+add_executable(04-gouraud 04-gouraud.cpp)
+target_link_libraries(04-gouraud PRIVATE utils_04)
