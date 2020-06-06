@@ -28,12 +28,12 @@ This example simply sets up the scene that will be used on the following example
 This example shows the **Phong lighting model** in action with its **ambient**, **diffuse** and **specular** components applied to the cube. Executing this example with the option ```--orbit``` changes the position of the light over time and the lighting effects can be seen more clearly.
 
 <div align="center">
-  <img src="images/02-phong_side.png" height="450"><br>
+  <img src="images/02-phong_above.png" height="450"><br>
   <sup><strong>Fig. 2.1: </strong> The top of a brightened-up cube </sup>
 </div>
 <br>
 <div align="center">
-  <img src="images/02-phong_above.png" height="450"><br>
+  <img src="images/02-phong_side.png" height="450"><br>
   <sup><strong>Fig. 2.2: </strong> One side of a brightened-up cube </sup>
 </div>
 <br>
@@ -46,7 +46,7 @@ This example shows the **Phong lighting model** in action with its **ambient**, 
 In this example, the calculations are done in the **view space** instead of the **world space** and there is no doubt that the visible results are exactly the same.
 
 <div align="center">
-  <img src="images/03-view-space.png" height="450"><br>
+  <img src="images/03-view_space.png" height="450"><br>
   <sup><strong>Fig. 3: </strong> Same old, same old </sup>
 </div>
 
@@ -54,7 +54,7 @@ In this example, the calculations are done in the **view space** instead of the 
 This example implements the **Gouraud shading**, which is nothing more than the Phong lighting model calculated in the **vertex shader** instead of the fragment shader. It shows how the results are less realistic (although the calculations are done more efficiently) as there is a visible stripe in the union between the fragments of the cube.
 
 <div align="center">
-  <img src="images/04-goraud.png" height="450"><br>
+  <img src="images/04-gouraud.png" height="450"><br>
   <sup><strong>Fig. 4: </strong> Something odd is happening here </sup>
 </div>
 
