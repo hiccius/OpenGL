@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include "shader.hpp"
+#include "customtypes.hpp"
 
 class CMatrix;
 
@@ -24,7 +25,7 @@ public:
     void SetUniform(const std::string& aName, float aValue);
     void SetUniform(const std::string& aName, int aValue);
     void SetUniform(const std::string& aName, const CMatrix& aValue);
-    void SetUniform(const std::string& aName, const float (&aVector)[3]);
+    void SetUniform(const std::string& aName, const RawFloatVector3& aVector);
 
     void Use() const;
 

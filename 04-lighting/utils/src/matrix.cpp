@@ -1,6 +1,7 @@
 #include "matrix.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 CMatrix::CMatrix(glm::mat4&& aMatrix) noexcept
     : _matrix{std::move(aMatrix)}
@@ -11,9 +12,9 @@ void CMatrix::Translate(float aX, float aY, float aZ) noexcept
     _matrix = glm::translate(_matrix, glm::vec3{aX, aY, aZ});
 }
 
-void CMatrix::Translate(const float (&aVector)[3]) noexcept
+void CMatrix::Translate(const RawFloatVector3& aVector) noexcept
 {
-    _matrix = glm::translate(_matrix, glm::vec3{*aVector});
+    _matrix = glm::translate(_matrix, glm::make_vec3(aVector));
 }
 
 void CMatrix::Rotate(float aAngle, float aX, float aY, float aZ, bool aDegrees) noexcept

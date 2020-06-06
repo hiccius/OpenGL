@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "matrixderived.hpp"
+#include "customtypes.hpp"
 
 class CCamera
 {
@@ -29,6 +30,8 @@ public:
 
     const CViewMatrix&          GetViewMatrix() noexcept;
     const CPerspectiveMatrix&   GetPerspectiveMatrix() noexcept;
+
+    const RawFloatVector3& GetPositionVector() const noexcept;
 
 private:
     const double _sensitivity;
