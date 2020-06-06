@@ -35,10 +35,7 @@ int main()
         objectShaderProgram.SetUniform("lightColor",  1.0f, 1.0f, 1.0f);
 
         lightShaderProgram.Use();
-        CMatrix model;
-        model.Translate(1.2f, 1.0f, 2.0f);
-        model.Scale(0.2f);
-        lightShaderProgram.SetUniform("model", model);
+        lightShaderProgram.SetUniform("model", CMatrix{}.Translate(1.2f, 1.0f, 2.0f).Scale(0.2f));
 
         // Vertex data
         constexpr float vertices[] =

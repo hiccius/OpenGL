@@ -38,10 +38,7 @@ int main()
         objectShaderProgram.SetUniform("worldLightPos", lightPosition);
 
         lightShaderProgram.Use();
-        CMatrix model;
-        model.Translate(lightPosition);
-        model.Scale(0.2f);
-        lightShaderProgram.SetUniform("model", model);
+        lightShaderProgram.SetUniform("model", CMatrix{}.Translate(lightPosition).Scale(0.2f));
 
         // Vertex data
         constexpr float vertices[] =
