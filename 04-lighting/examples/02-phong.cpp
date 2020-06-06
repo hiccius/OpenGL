@@ -12,11 +12,20 @@
 #include "vertexbufferobject.ipp"
 
 
-int main()
+int main(int argc, char* argv[])
 {
     constexpr int screenHeight{800};
     constexpr int screenWidth{600};
     constexpr double aspect{static_cast<double>(screenHeight) / screenWidth};
+
+    // Command options
+    auto [exit, orbitLight] = CommandOption("orbit",
+                                            "The light source orbits above the container",
+                                            argc, argv, std::cout);
+    if (exit)
+    {
+        return 0;
+    }
 
     try
     {
@@ -30,19 +39,10 @@ int main()
         auto objectShaderProgram{CShaderProgram::Build("02-objectshader.vert", "02-objectshader.frag")};
         auto lightShaderProgram{CShaderProgram::Build("lightshader.vert", "lightshader.frag")};
 
-        const float lightPosition[]{1.2f, 1.0f, 2.0f};
-
         objectShaderProgram.Use();
         objectShaderProgram.SetUniform("model",         CMatrix{});
         objectShaderProgram.SetUniform("objectColor",   1.0f, 0.5f, 0.31f);
         objectShaderProgram.SetUniform("lightColor",    1.0f, 1.0f, 1.0f);
-        objectShaderProgram.SetUniform("lightPosition", lightPosition);
-
-        lightShaderProgram.Use();
-        CMatrix model;
-        model.Translate(lightPosition);
-        model.Scale(0.2f);
-        lightShaderProgram.SetUniform("model", model);
 
         // Vertex data
         constexpr float vertices[] =
@@ -101,6 +101,8 @@ int main()
         lightData.AddVertexBufferObject(&vbo);
         lightData.AddAttribute(3, 6, 0);
 
+        float lightPosition[]{1.2f, 1.0f, 2.0f};
+
         // Render loop
         while (window.IsOpen())
         {
@@ -112,14 +114,24 @@ int main()
             // Render
             window.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
+            if (orbitLight)
+            {
+                double angle{window.GetTime()};
+                lightPosition[0] = 2.5f * std::cos(angle);
+                lightPosition[2] = 2.5f * std::sin(angle);
+            }
+
             objectShaderProgram.Use();
-            objectShaderProgram.SetUniform("projection",  static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
-            objectShaderProgram.SetUniform("view",        static_cast<const CMatrix&>(camera.GetViewMatrix()));
+            objectShaderProgram.SetUniform("projection",    static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
+            objectShaderProgram.SetUniform("view",          static_cast<const CMatrix&>(camera.GetViewMatrix()));
+            objectShaderProgram.SetUniform("viewPosition",  camera.GetPositionVector());
+            objectShaderProgram.SetUniform("lightPosition", lightPosition);
             objectData.DrawArrays(36);
 
             lightShaderProgram.Use();
-            lightShaderProgram.SetUniform("projection",  static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
-            lightShaderProgram.SetUniform("view",        static_cast<const CMatrix&>(camera.GetViewMatrix()));
+            lightShaderProgram.SetUniform("projection", static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
+            lightShaderProgram.SetUniform("view",       static_cast<const CMatrix&>(camera.GetViewMatrix()));
+            lightShaderProgram.SetUniform("model",      CMatrix{}.Translate(lightPosition).Scale(0.2f));
             lightData.DrawArrays(36);
 
             // Poll events and redraw window
