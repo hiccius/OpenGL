@@ -15,7 +15,12 @@ public:
     CMatrix& Scale(float aFactor) noexcept;
     CMatrix& Scale(float aX, float aY, float aZ) noexcept;
 
+    CMatrix& Transpose() noexcept;
+    CMatrix& Inverse() noexcept;
+
     const float* GetAddress() const noexcept;
+
+    CMatrix operator*(const CMatrix& other) const noexcept;
 
 protected:
     CMatrix(glm::mat4&& aMatrix) noexcept;

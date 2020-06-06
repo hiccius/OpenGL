@@ -37,6 +37,25 @@ CMatrix& CMatrix::Scale(float aX, float aY, float aZ) noexcept
     return *this;
 }
 
+CMatrix& CMatrix::Transpose() noexcept
+{
+    _matrix = glm::transpose(_matrix);
+    return *this;
+}
+
+CMatrix& CMatrix::Inverse() noexcept
+{
+    _matrix = glm::inverse(_matrix);
+    return *this;
+}
+
+CMatrix CMatrix::operator*(const CMatrix& other) const noexcept
+{
+    CMatrix result;
+    result._matrix = _matrix * other._matrix;
+    return result;
+}
+
 const float* CMatrix::GetAddress() const noexcept
 {
     return &_matrix[0][0];
