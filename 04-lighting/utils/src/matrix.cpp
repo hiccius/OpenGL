@@ -7,29 +7,34 @@ CMatrix::CMatrix(glm::mat4&& aMatrix) noexcept
     : _matrix{std::move(aMatrix)}
 {}
 
-void CMatrix::Translate(float aX, float aY, float aZ) noexcept
+CMatrix& CMatrix::Translate(float aX, float aY, float aZ) noexcept
 {
     _matrix = glm::translate(_matrix, glm::vec3{aX, aY, aZ});
+    return *this;
 }
 
-void CMatrix::Translate(const RawFloatVector3& aVector) noexcept
+CMatrix& CMatrix::Translate(const RawFloatVector3& aVector) noexcept
 {
     _matrix = glm::translate(_matrix, glm::make_vec3(aVector));
+    return *this;
 }
 
-void CMatrix::Rotate(float aAngle, float aX, float aY, float aZ, bool aDegrees) noexcept
+CMatrix& CMatrix::Rotate(float aAngle, float aX, float aY, float aZ, bool aDegrees) noexcept
 {
     _matrix = glm::rotate(_matrix, aDegrees ? glm::radians(aAngle) : aAngle, glm::vec3{aX, aY, aZ});
+    return *this;
 }
 
-void CMatrix::Scale(float aFactor) noexcept
+CMatrix& CMatrix::Scale(float aFactor) noexcept
 {
     _matrix = glm::scale(_matrix, glm::vec3{aFactor});
+    return *this;
 }
 
-void CMatrix::Scale(float aX, float aY, float aZ) noexcept
+CMatrix& CMatrix::Scale(float aX, float aY, float aZ) noexcept
 {
     _matrix = glm::scale(_matrix, glm::vec3{aX, aY, aZ});
+    return *this;
 }
 
 const float* CMatrix::GetAddress() const noexcept
