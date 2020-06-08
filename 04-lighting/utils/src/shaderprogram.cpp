@@ -112,6 +112,12 @@ void CShaderProgram::SetUniform(const std::string& aName, const RawFloatVector3&
     glUniform3fv(uniformLocation, 1, &aVector[0]);
 }
 
+void CShaderProgram::SetUniform(const std::string& aName, const std::array<float, 3>& aArray)
+{
+    int uniformLocation = GetUniformLocation(aName);
+    glUniform3fv(uniformLocation, 1, aArray.data());
+}
+
 int CShaderProgram::GetUniformLocation(const std::string& aName) const
 {
     if (_id == 0)

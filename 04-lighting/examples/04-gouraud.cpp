@@ -30,7 +30,7 @@ int main()
         auto objectShaderProgram{CShaderProgram::Build("04-objectshader.vert", "04-objectshader.frag")};
         auto lightShaderProgram{CShaderProgram::Build("lightshader.vert", "lightshader.frag")};
 
-        const float lightPosition[]{1.2f, 1.0f, 2.0f};
+        constexpr std::array<float, 3> lightPosition{1.2f, 1.0f, 2.0f};
 
         objectShaderProgram.Use();
         objectShaderProgram.SetUniform("model",         CMatrix{});

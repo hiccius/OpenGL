@@ -13,9 +13,9 @@ CMatrix& CMatrix::Translate(float aX, float aY, float aZ) noexcept
     return *this;
 }
 
-CMatrix& CMatrix::Translate(const RawFloatVector3& aVector) noexcept
+CMatrix& CMatrix::Translate(const std::array<float, 3>& aArray) noexcept
 {
-    _matrix = glm::translate(_matrix, glm::make_vec3(aVector));
+    _matrix = glm::translate(_matrix, glm::make_vec3(aArray.data()));
     return *this;
 }
 

@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
         lightData.AddVertexBufferObject(&vbo);
         lightData.AddAttribute(3, 6, 0);
 
-        float lightPosition[]{1.2f, 1.0f, 2.0f};
+        std::array<float, 3> lightPosition{1.2f, 1.0f, 2.0f};
 
         // Render loop
         while (window.IsOpen())
