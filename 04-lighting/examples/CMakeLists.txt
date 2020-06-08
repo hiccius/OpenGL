@@ -13,3 +13,9 @@ target_link_libraries(03-view_space PRIVATE utils_04)
 
 add_executable(04-gouraud 04-gouraud.cpp)
 target_link_libraries(04-gouraud PRIVATE utils_04)
+
+add_executable(05-materials 05-materials.cpp)
+target_link_libraries(05-materials PRIVATE utils_04)
+
+add_executable(06-cyan_plastic 06-cyan_plastic.cpp)
+target_link_libraries(06-cyan_plastic PRIVATE utils_04)
