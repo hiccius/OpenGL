@@ -19,3 +19,6 @@ target_link_libraries(05-materials PRIVATE utils_04)
 
 add_executable(06-cyan_plastic 06-cyan_plastic.cpp)
 target_link_libraries(06-cyan_plastic PRIVATE utils_04)
+
+add_executable(07-lighting_maps 07-lighting_maps.cpp)
+target_link_libraries(07-lighting_maps PRIVATE utils_04)
