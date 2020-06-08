@@ -36,9 +36,13 @@ void CTexture::SetWrappingMode(int aMode) noexcept
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, aMode);
 }
 
-void CTexture::SetFilteringMode(int aMode) noexcept
+void CTexture::SetMinifyFilteringMode(int aMode) noexcept
 {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, aMode);
+}
+
+void CTexture::SetMagnifyFilteringMode(int aMode) noexcept
+{
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, aMode);
 }
 
@@ -58,10 +62,15 @@ void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
         auto* data = reinterpret_cast<std::byte*>(stbi_load(resourceFilePathCStr, &width, &height, &colorChannels, 0));
         if (data)
         {
-            int format = GetImageFormat(aTextureFile.extension());
+            int format = GetImageFormat(colorChannels);
 
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, data);
             glGenerateMipmap(GL_TEXTURE_2D);
+
+            SetWrappingMode(WrappingMode::Repeat);
+            SetMinifyFilteringMode(FilteringMode::LinearMipmapLinear);
+            SetMagnifyFilteringMode(FilteringMode::Linear);
+
             stbi_image_free(data);
         }
         else
@@ -86,18 +95,15 @@ void CTexture::ActivateAndBind() const noexcept
     glBindTexture(GL_TEXTURE_2D, _id);
 }
 
-int CTexture::GetImageFormat(const std::filesystem::path& aExtension) const
+int CTexture::GetImageFormat(int aColorChannels) const
 {
-    if (aExtension == ".jpg")
+    switch(aColorChannels)
     {
+    case 3:
         return GL_RGB;
-    }
-    else if (aExtension == ".png")
-    {
+    case 4:
         return GL_RGBA;
-    }
-    else
-    {
-        throw OpenGLException{"IMAGE_TYPE", "Unsupported image type " + aExtension.string()};
+    default:
+        throw OpenGLException{"IMAGE_TYPE", std::to_string(aColorChannels) + " color channels are not supported"};
     }
 }
