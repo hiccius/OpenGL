@@ -1,6 +1,6 @@
 ## Chapter 4 - Lighting
 ### Content Summary
-This section covers chapters *12. Colors*, *13. Basic Lighting* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *12. Colors*, *13. Basic Lighting*, *14. Materials* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show how to apply **lighting** on objects in OpenGL.
 
@@ -12,6 +12,8 @@ The examples in this section show how to apply **lighting** on objects in OpenGL
   - **Specular** lighting: calculated as the dot product between the **light's reflection vector** around the normal vector of the surface and the **view direction** (origin in view space).
 
 - If the calculations are done in the view space, it is needed to translate the normal vectors from world space. To do this, a special matrix called the **normal matrix** (which is the **transpose of the inverse** of the view or view-model matrix) needs to be applied.
+
+- Different materials have different **ambient**, **diffuse** and **specular** color vectors. As well as different **shininess** (the way the light is scattered through the object's surface).
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only example supporting an optional argument is [2. The Phong lighting model](#2-the-phong-lighting-model). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
@@ -58,3 +60,18 @@ This example implements the **Gouraud shading**, which is nothing more than the 
   <sup><strong>Fig. 4: </strong> Something odd is happening here </sup>
 </div>
 
+#### 5. Disco lights
+In this example, the light color changes over time, with different values for its **ambient** and **diffuse** color vectors (they both share the same color but the ambient component is dimmer), while the light source's color also changes with them. It is visible how the cube reacts differently to a change in the lighting conditions.
+
+<div align="center">
+  <img src="images/05-disco_lights.gif" height="450"><br>
+  <sup><strong>Fig. 5: </strong> The cube reacts to different color lights </sup>
+</div>
+
+#### 6. A plastic cube
+This example shows how but the object's **ambient**, **diffuse** and **specular** components can be changed (while a white light) to make the material of the cube resemble cyan plastic.
+
+<div align="center">
+  <img src="images/06-cyan_plastic.png" height="450"><br>
+  <sup><strong>Fig. 6: </strong> This cube is made of cyan plastic (or at least looks like it) </sup>
+</div>
