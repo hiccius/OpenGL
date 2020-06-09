@@ -1,6 +1,6 @@
 ## Chapter 4 - Lighting
 ### Content Summary
-This section covers chapters *12. Colors*, *13. Basic Lighting*, *14. Materials* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *12. Colors*, *13. Basic Lighting*, *14. Materials*, *15. Lighting Maps* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show how to apply **lighting** on objects in OpenGL.
 
@@ -15,8 +15,10 @@ The examples in this section show how to apply **lighting** on objects in OpenGL
 
 - Different materials have different **ambient**, **diffuse** and **specular** color vectors, as well as different **shininess** (the way the light is scattered over the object's surface).
 
+- For objects with different materials that react differently to light, **lighting maps** (which are basically **textures** for lit scenes) are used. Usually a **diffuse map** is used for **ambient** and **diffuse** components, while a **specular map** (most of the times a black-and-white texture) is used for the **specular** component.
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only example supporting an optional argument is [2. The Phong lighting model](#2-the-phong-lighting-model). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. The Phong lighting model](#2-the-phong-lighting-model) and [7. Lighting maps](#7-lighting-maps). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. A dull scene
 This example simply sets up the scene that will be used on the following examples: an **orangish cube** that will be lighten-up in the following examples and a smaller **white cube** close and slightly above it that will represent the light source in those examples.
@@ -74,4 +76,25 @@ This example shows how the object's **ambient**, **diffuse** and **specular** co
 <div align="center">
   <img src="images/06-cyan_plastic.png" height="450"><br>
   <sup><strong>Fig. 6: </strong> This cube is made of cyan plastic (or at least looks like it) </sup>
+</div>
+
+#### 7. Lighting maps
+In this example, lighting maps are used to simulate a wooden container with a steel border. The color is set according to a **diffuse map** and the reflective properties of the steel are defined with a **specular map** containing white values for the most reflective parts. If the example is executed with the option ```--color```, a colored specular map is used for the steel border.
+
+<div align="center">
+  <img src="images/07-lighting_maps.png" height="450"><br>
+  <sup><strong>Fig. 7.1: </strong> Different materials reacting differently to light </sup>
+</div>
+<br>
+<div align="center">
+  <img src="images/07-specular_color.png" height="450"><br>
+  <sup><strong>Fig. 7.2: </strong> The steel here is not very realistic </sup>
+</div>
+
+#### 8. Emission maps
+An **emission map** is added to the container of the previous example, simulating a texture that 'glows' regardless of lighting conditions.
+
+<div align="center">
+  <img src="images/08-emission_maps.png" height="450"><br>
+  <sup><strong>Fig. 8: </strong> A movie reference </sup>
 </div>
