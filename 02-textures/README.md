@@ -9,7 +9,7 @@ The examples in this chapter introduce how to work with **textures** in OpenGL.
 - In the **fragment shader**, the texture object is **sampled** to obtain the color of each pixel. In order to load multiple textures, the concept of **texture unit** is introduced.
 
 ### Examples
-The examples can be executed one by one without needing to pass any arguments. They are not interactive except for the last one [6. Variable textures](#6-variable-textures). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments. They are not interactive except for the last one, [6. Variable textures](#6-variable-textures). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. A rainbow container
 This example gives a rectangle the appearence of a wooden container by attaching a texture to it. The texture is mixed with other values in the fragment shader to modify its look.
