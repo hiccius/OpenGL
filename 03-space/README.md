@@ -1,6 +1,6 @@
 ## Chapter 3 - Space
 ### Content Summary
-This section covers chapters *8. Transformations*, *9. Coordinate System* and *10. Camera* of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *8. Transformations*, *9. Coordinate Systems* and *10. Camera* of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show how to perform **space transformations** on objects in OpenGL.
 
