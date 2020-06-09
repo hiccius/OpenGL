@@ -12,11 +12,20 @@
 #include "vertexbufferobject.ipp"
 
 
-int main()
+int main(int argc, char* argv[])
 {
     constexpr int screenHeight{800};
     constexpr int screenWidth{600};
     constexpr double aspect{static_cast<double>(screenHeight) / screenWidth};
+
+    // Command options
+    auto [exit, coloredSpecular] = CommandOption("color",
+                                                 "The specular highlits are colored",
+                                                 argc, argv, std::cout);
+    if (exit)
+    {
+        return 0;
+    }
 
     try
     {
@@ -39,7 +48,7 @@ int main()
         objectShaderProgram.SetUniform("material.diffuse",      0);
 
         CTexture specularMap;
-        specularMap.GenerateTexture("container2_specular.png");
+        specularMap.GenerateTexture(coloredSpecular ? "container2_specular_color.png" : "container2_specular.png");
         specularMap.SetTextureUnitIndex(1);
         objectShaderProgram.SetUniform("material.specular",     1);
 
