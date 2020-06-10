@@ -32,6 +32,7 @@ public:
     const CPerspectiveMatrix&   GetPerspectiveMatrix() noexcept;
 
     const RawFloatVector3& GetPositionVector() const noexcept;
+    const RawFloatVector3& GetDirectionVector() const noexcept;
 
 private:
     const double _sensitivity;

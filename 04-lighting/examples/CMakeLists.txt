@@ -25,3 +25,15 @@ target_link_libraries(07-lighting_maps PRIVATE utils_04)
 
 add_executable(08-emission_maps 08-emission_maps.cpp)
 target_link_libraries(08-emission_maps PRIVATE utils_04)
+
+add_executable(09-directional_light 09-directional_light.cpp)
+target_link_libraries(09-directional_light PRIVATE utils_04)
+
+add_executable(10-point_light 10-point_light.cpp)
+target_link_libraries(10-point_light PRIVATE utils_04)
+
+add_executable(11-spotlight 11-spotlight.cpp)
+target_link_libraries(11-spotlight PRIVATE utils_04)
+
+add_executable(12-real_spotlight 12-real_spotlight.cpp)
+target_link_libraries(12-real_spotlight PRIVATE utils_04)

@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <string_view>
 #include <ostream>
+#include <cmath>
 
 class OpenGLException : public std::exception
 {
@@ -95,6 +96,15 @@ auto GetNumericModifier(T& aValue) noexcept
            {
                aValue += aDelta;
            };
+}
+
+template<
+    typename T,
+    typename = std::enable_if_t<std::is_arithmetic_v<T>>
+>
+T ToRadians(const T& aDegrees) noexcept
+{
+    return aDegrees * M_PI / 180.0;
 }
 
 #endif // HELPERS_HPP

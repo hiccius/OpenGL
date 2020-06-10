@@ -12,20 +12,11 @@
 #include "vertexbufferobject.ipp"
 
 
-int main(int argc, char* argv[])
+int main()
 {
     constexpr int screenHeight{800};
     constexpr int screenWidth{600};
     constexpr double aspect{static_cast<double>(screenHeight) / screenWidth};
-
-    // Command options
-    auto [exit, coloredSpecular] = CommandOption("color",
-                                                 "The specular highlits are colored",
-                                                 argc, argv, std::cout);
-    if (exit)
-    {
-        return 0;
-    }
 
     try
     {
@@ -36,11 +27,9 @@ int main(int argc, char* argv[])
         window.SetMouseControl();
 
         // Shader programs
-        auto objectShaderProgram{CShaderProgram::Build("07-objectshader.vert", "07-objectshader.frag")};
-        auto lightShaderProgram{CShaderProgram::Build("lightshader.vert", "lightshader.frag")};
+        auto objectShaderProgram{CShaderProgram::Build("09-objectshader.vert", "09-objectshader.frag")};
 
         objectShaderProgram.Use();
-        objectShaderProgram.SetUniform("model", CMatrix{});
 
         CTexture diffuseMap;
         diffuseMap.GenerateTexture("container2.png");
@@ -48,20 +37,16 @@ int main(int argc, char* argv[])
         objectShaderProgram.SetUniform("material.diffuse", 0);
 
         CTexture specularMap;
-        specularMap.GenerateTexture(coloredSpecular ? "container2_specular_color.png" : "container2_specular.png");
+        specularMap.GenerateTexture("container2_specular.png");
         specularMap.SetTextureUnitIndex(1);
         objectShaderProgram.SetUniform("material.specular", 1);
 
-        objectShaderProgram.SetUniform("material.shininess", 64.0f);
+        objectShaderProgram.SetUniform("material.shininess", 32.0f);
 
-        constexpr std::array<float, 3> lightPosition{1.2f, 1.0f, 2.0f};
-        objectShaderProgram.SetUniform("light.position",    lightPosition);
-        objectShaderProgram.SetUniform("light.ambient",     0.2f, 0.2f, 0.2f);
-        objectShaderProgram.SetUniform("light.diffuse",     0.5f, 0.5f, 0.5f);
-        objectShaderProgram.SetUniform("light.specular",    1.0f, 1.0f, 1.0f);
-
-        lightShaderProgram.Use();
-        lightShaderProgram.SetUniform("model", CMatrix{}.Translate(lightPosition).Scale(0.2f));
+        objectShaderProgram.SetUniform("light.direction",  -0.2f, -1.0f, -0.3f);
+        objectShaderProgram.SetUniform("light.ambient",     0.2f,  0.2f,  0.2f);
+        objectShaderProgram.SetUniform("light.diffuse",     0.5f,  0.5f,  0.5f);
+        objectShaderProgram.SetUniform("light.specular",    1.0f,  1.0f,  1.0f);
 
         // Vertex data
         constexpr float vertices[] =
@@ -118,9 +103,19 @@ int main(int argc, char* argv[])
         objectData.AddAttribute(3, 8, 3);
         objectData.AddAttribute(2, 8, 6);
 
-        CVertexDataHandler lightData;
-        lightData.AddVertexBufferObject(&vbo);
-        lightData.AddAttribute(3, 8, 0);
+        constexpr std::array<std::array<float, 3>, 10> cubePositions{
+        {
+            {  0.0f,  0.0f,   0.0f },
+            {  2.0f,  5.0f, -15.0f },
+            { -1.5f, -2.2f, - 2.5f },
+            { -3.8f, -2.0f, -12.3f },
+            {  2.4f, -0.4f, - 3.5f },
+            { -1.7f,  3.0f, - 7.5f },
+            {  1.3f, -2.0f, - 2.5f },
+            {  1.5f,  2.0f, - 2.5f },
+            {  1.5f,  0.2f, - 1.5f },
+            { -1.3f,  1.0f, - 1.5f }
+        }};
 
         // Render loop
         while (window.IsOpen())
@@ -139,12 +134,17 @@ int main(int argc, char* argv[])
             objectShaderProgram.SetUniform("projection",    static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
             objectShaderProgram.SetUniform("view",          static_cast<const CMatrix&>(camera.GetViewMatrix()));
             objectShaderProgram.SetUniform("viewPosition",  camera.GetPositionVector());
-            objectData.DrawArrays(36);
 
-            lightShaderProgram.Use();
-            lightShaderProgram.SetUniform("projection", static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
-            lightShaderProgram.SetUniform("view",       static_cast<const CMatrix&>(camera.GetViewMatrix()));
-            lightData.DrawArrays(36);
+            for (std::size_t i = 0; i < cubePositions.size(); ++i)
+            {
+                CMatrix model;
+                const auto& [x, y, z] = cubePositions[i];
+
+                model.Translate(x, y, z).Rotate(static_cast<float>(20.0 * i), 1.0f, 0.3f, 0.5f, true);
+                objectShaderProgram.SetUniform("model", model);
+                objectShaderProgram.SetUniform("normalMatrix", model.Inverse().Transpose());
+                objectData.DrawArrays(36);
+            }
 
             // Poll events and redraw window
             window.RedrawAndPoll();

@@ -82,3 +82,8 @@ const RawFloatVector3& CCamera::GetPositionVector() const noexcept
 {
     return reinterpret_cast<const RawFloatVector3&>(_position);
 }
+
+const RawFloatVector3& CCamera::GetDirectionVector() const noexcept
+{
+    return reinterpret_cast<const RawFloatVector3&>(_direction);
+}
