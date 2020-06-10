@@ -19,8 +19,8 @@ The examples in this section show how to apply **lighting** on objects in OpenGL
 
 - There are different types of **light casters** that can be simulated in OpenGL and affect the **diffuse** and **specular** components:
   - **Directional light**: the light comes from a **unique** direction and it only requires a **direction vector** to be calculated.
-  - **Point light**: the light comes form a source that illuminates in **all directions**. Usually the light **attenuates** with the inverse of the quadratic value of the **distance** between the fragment and the source following a specific formula.
-  - **Spotlight**: the light only illuminates in a **specific direction** and it can be defined with the **position** and **direction** of the source and a **cutoff angle** (everything outside the angle remains dark).
+  - **Point light**: the light comes form a source that illuminates in **all directions**. Usually the light **attenuates** with the inverse of the quadratic value of the **distance** between the fragment and the source.
+  - **Spotlight**: the light only illuminates in a **specific direction** and can also be defined with the **position** and **direction** of the source and a **cutoff angle** (everything outside the angle remains dark).
     - To simulate a **flashlight**, an **outer cutoff angle** can be defined to specify a **transition zone** where the light intensity decreases as it moves away from the centre.
 
 ### Examples
@@ -114,7 +114,7 @@ In this example, **directional light** is set up over a group of containers and 
 </div>
 
 #### 10. Point light
-This examples simulates the group of containers illuminated by a **point light**. The light intensity is **attenuated** for the containers that are farther away from the light source.
+This example simulates the group of containers illuminated by a **point light**. The light intensity is **attenuated** for the containers that are farther away from the light source.
 
 <div align="center">
   <img src="images/10-point_light.png" height="450"><br>
@@ -122,7 +122,7 @@ This examples simulates the group of containers illuminated by a **point light**
 </div>
 
 #### 11. Spotlight
-In this example, a **spotlight** with its source set as the camera (same position and direction vectors) is represented.
+In this example, a **spotlight** with its source set in the position of the camera (same position and direction vectors) is represented.
 
 <div align="center">
   <img src="images/11-spotlight.png" height="450"><br>
@@ -130,7 +130,7 @@ In this example, a **spotlight** with its source set as the camera (same positio
 </div>
 
 #### 12. Flashlight
-This example improves the last one and simulates a realistic **flashlight** setting a **smooth edge** for the spotlight by defining a **transition zone** between an inner and an outer **cutoff** angle.
+This example improves the last one and simulates a realistic **flashlight** setting a **smooth edge** for the spotlight by defining a **transition zone** between an inner and outer **cutoff angle**.
 
 <div align="center">
   <img src="images/12-flashlight.png" height="450"><br>
