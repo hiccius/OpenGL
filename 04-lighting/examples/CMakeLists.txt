@@ -35,5 +35,5 @@ target_link_libraries(10-point_light PRIVATE utils_04)
 add_executable(11-spotlight 11-spotlight.cpp)
 target_link_libraries(11-spotlight PRIVATE utils_04)
 
-add_executable(12-real_spotlight 12-real_spotlight.cpp)
-target_link_libraries(12-real_spotlight PRIVATE utils_04)
+add_executable(12-flashlight 12-flashlight.cpp)
+target_link_libraries(12-flashlight PRIVATE utils_04)
