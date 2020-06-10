@@ -52,7 +52,7 @@ void main()
     // spotlight
     float cosFragmentAngle = dot(-lightDirection, normalize(light.direction));
     float intensity = clamp((cosFragmentAngle - light.cosOuterCutOffAngle) /
-                            (light.cosCutOffAngle - light.cosOuterCutOffAngle)), 0.0f, 1.0f);
+                            (light.cosCutOffAngle - light.cosOuterCutOffAngle), 0.0f, 1.0f);
 
     // attenuation
     float lightDistance = length(light.position - fragPosition);
