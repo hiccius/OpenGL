@@ -1,6 +1,6 @@
 ## Chapter 4 - Lighting
 ### Content Summary
-This section covers chapters *12. Colors*, *13. Basic Lighting*, *14. Materials*, *15. Lighting Maps* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *12. Colors*, *13. Basic Lighting*, *14. Materials*, *15. Lighting Maps*, *16. Light Casters* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show how to apply **lighting** on objects in OpenGL.
 
@@ -16,6 +16,12 @@ The examples in this section show how to apply **lighting** on objects in OpenGL
 - Different materials have different **ambient**, **diffuse** and **specular** color vectors, as well as different **shininess** (the way the light is scattered over the object's surface).
 
 - For objects with different materials that react differently to light, **lighting maps** (which are basically **textures** for lit scenes) are used. Usually a **diffuse map** is used for **ambient** and **diffuse** components, while a **specular map** (most of the times a black-and-white texture) is used for the **specular** component.
+
+- There are different types of **light casters** that can be simulated in OpenGL and affect the **diffuse** and **specular** components:
+  - **Directional light**: the light comes from a **unique** direction and it only requires a **direction vector** to be calculated.
+  - **Point light**: the light comes form a source that illuminates in **all directions**. Usually the light **attenuates** with the inverse of the quadratic value of the **distance** between the fragment and the source following a specific formula.
+  - **Spotlight**: the light only illuminates in a **specific direction** and it can be defined with the **position** and **direction** of the source and a **cutoff angle** (everything outside the angle remains dark).
+    - To simulate a **flashlight**, an **outer cutoff angle** can be defined to specify a **transition zone** where the light intensity decreases as it moves away from the centre.
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [2. The Phong lighting model](#2-the-phong-lighting-model) and [7. Lighting maps](#7-lighting-maps). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
@@ -97,4 +103,36 @@ An **emission map** is added to the container of the previous example, simulatin
 <div align="center">
   <img src="images/08-emission_maps.png" height="450"><br>
   <sup><strong>Fig. 8: </strong> A movie reference </sup>
+</div>
+
+#### 9. Directional light
+In this example, **directional light** is set up over a group of containers and it can be seen how only some sides are illuminated.
+
+<div align="center">
+  <img src="images/09-directional_light.png" height="450"><br>
+  <sup><strong>Fig. 9: </strong> Light from above </sup>
+</div>
+
+#### 10. Point light
+This examples simulates the group of containers illuminated by a **point light**. The light intensity is **attenuated** for the containers that are farther away from the light source.
+
+<div align="center">
+  <img src="images/10-point_light.png" height="450"><br>
+  <sup><strong>Fig. 10: </strong> A lamp for the containers </sup>
+</div>
+
+#### 11. Spotlight
+In this example, a **spotlight** with its source set as the camera (same position and direction vectors) is represented.
+
+<div align="center">
+  <img src="images/11-spotlight.png" height="450"><br>
+  <sup><strong>Fig. 11: </strong> A spotlight </sup>
+</div>
+
+#### 12. Flashlight
+This example improves the last one and simulates a realistic **flashlight** setting a **smooth edge** for the spotlight by defining a **transition zone** between an inner and an outer **cutoff** angle.
+
+<div align="center">
+  <img src="images/12-flashlight.png" height="450"><br>
+  <sup><strong>Fig. 12: </strong> Uuuhh... spooky </sup>
 </div>
