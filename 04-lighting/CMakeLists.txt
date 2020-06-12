@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(04-lightning)
 
 if(APPLE)
-    add_compile_options(-Wall -Wextra -pedantic-errors -Werror)
+    add_compile_options(-Wall -Wextra -Werror)
 elseif(WIN32)
     add_compile_options(/W4)
 endif()
