@@ -11,3 +11,6 @@
 [submodule "third-party/GLM"]
 	path = third-party/GLM
 	url = https://github.com/hiccius/glm.git
+[submodule "third-party/assimp"]
+	path = third-party/assimp
+	url = https://github.com/assimp/assimp.git
