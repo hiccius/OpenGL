@@ -37,3 +37,6 @@ target_link_libraries(11-spotlight PRIVATE utils_04)
 
 add_executable(12-flashlight 12-flashlight.cpp)
 target_link_libraries(12-flashlight PRIVATE utils_04)
+
+add_executable(13-full_scene 13-full_scene.cpp 13-atmosphere.cpp)
+target_link_libraries(13-full_scene PRIVATE utils_04)

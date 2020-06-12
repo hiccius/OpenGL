@@ -6,6 +6,7 @@
 #include <string_view>
 #include <ostream>
 #include <cmath>
+#include <map>
 
 class OpenGLException : public std::exception
 {
@@ -34,6 +35,49 @@ private:
     std::string _errorString;
     std::string _fullError;
 };
+
+template<typename T>
+struct OptionDetails
+{
+    std::string_view description;
+    T                value;
+};
+
+template<typename T>
+using TCommandOptionMap = std::map<std::string_view, OptionDetails<T>>;
+
+template<typename T>
+std::pair<bool, T> CommandOption(TCommandOptionMap<T> aOptions, T aDefault,
+                                 int argc, char* argv[], std::ostream& aOut)
+{
+    if (argc == 2)
+    {
+        std::string_view option{argv[1]};
+        if (option.substr(0, 2) == "--")
+        {
+            if (auto result = aOptions.find(option.substr(2)); result != aOptions.end())
+            {
+                return std::make_pair(false, result->second.value);
+            }
+            else if (option == "--help")
+            {
+                aOut.setf(std::ios_base::left, std::ios_base::adjustfield);
+                aOut << "Usage: " << argv[0] << " [option]\n\n";
+                aOut << "Options:\n";
+                for (const auto& option : aOptions)
+                {
+                    aOut << std::setw(15) << "  --" + std::string{option.first};
+                    aOut << option.second.description << "\n";
+                }
+                aOut << std::setw(15) << "  --help";
+                aOut << "Displays this message\n\n";
+                return std::make_pair(true, aDefault);
+            }
+        }
+    }
+
+    return std::make_pair(false, aDefault);
+}
 
 inline std::pair<bool, bool> CommandOption(std::string_view optionKeyword,
                                            std::string_view optionDescription,
