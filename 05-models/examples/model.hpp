@@ -1,38 +1,31 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <iostream>
-#include <vector>
-#include <chrono>
-
-#include <assimp/Importer.hpp>
+#include <string_view>
+#include <map>
 #include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include "shaderprogram.hpp"
 #include "mesh.hpp"
+#include "texture.hpp"
 
-unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
+class CShaderProgram;
 
-class Model
+class CModel
 {
-    public:
-        Model(const char *path)
-        {
-            loadModel(path);
-        }
-        void Draw(CShaderProgram &shader);
-    private:
-        // model data
-        std::vector<Texture> textures_loaded;
-        std::vector<Mesh> meshes;
-        std::string directory;
+public:
+    CModel(const std::filesystem::path& aModelFile);
 
-        void loadModel(std::string path);
-        void processNode(aiNode *node, const aiScene *scene);
-        Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-        std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type,
-                                                  std::string typeName);
+    void Draw(CShaderProgram& aShaderProgram);
+
+private:
+    std::map<std::string, CTexture> _loadedTextures;
+    std::vector<CMesh>              _meshes;
+    std::filesystem::path           _folder;
+
+    void  ProcessNode(const aiNode* node, const aiScene* scene);
+    CMesh ProcessMesh(const aiMesh* mesh, const aiScene* scene);
+
+    std::vector<CTexture*> LoadMaterialTextures(const aiMaterial* material, aiTextureType aAssimpType,
+                                                CTexture::Type aType);
 };
 
 #endif // MODEL_HPP

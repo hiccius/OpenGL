@@ -38,7 +38,7 @@ int main()
 
         // Vertex data
         auto t1 = std::chrono::high_resolution_clock::now();
-        Model model{"05-models/resources/backpack/backpack.obj"};
+        CModel model{"backpack/backpack.obj"};
         auto t2 = std::chrono::high_resolution_clock::now();
 
         std::cout << "Load: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;

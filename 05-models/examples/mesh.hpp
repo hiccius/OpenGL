@@ -2,48 +2,34 @@
 #define MESH_HPP
 
 #include <vector>
-#include <glm/glm.hpp>
-#include "shaderprogram.hpp"
-
+#include <string>
+#include "vertexdatahandler.hpp"
+#include "vertexbufferobject.hpp"
 
 struct Vertex
 {
-    glm::vec3 position;
-    glm::vec3 normal;
-    glm::vec2 textureCoordinates;
+    const float position[3];
+    const float normal[3];
+    const float textureCoordinates[2];
 };
 
-struct Texture
-{
-    unsigned int    id;
-    std::string     type;
-    std::string     path;
-};
+class CTexture;
+class CShaderProgram;
 
-class Mesh
+class CMesh
 {
 public:
-    Mesh(std::vector<Vertex> aVertices, std::vector<unsigned int> aIndices, std::vector<Texture> aTextures)
-        : _vertices{aVertices}, _indices{aIndices}, _textures{aTextures}
-    {
-        SetupMesh();
-    }
+    CMesh(std::vector<Vertex>&& aVertices, std::vector<unsigned int>&& aIndices, std::vector<CTexture*>&& aTextures);
 
-    void Draw(CShaderProgram& shader);
+    void Draw(CShaderProgram& aShaderProgram);
 
 private:
-    void SetupMesh();
-
-    unsigned int VAO, VBO, EBO;
+    CVertexBufferObject _vbo;
+    CVertexDataHandler  _vertexDataHandler;
 
     std::vector<Vertex>         _vertices;
     std::vector<unsigned int>   _indices;
-    std::vector<Texture>        _textures;
+    std::vector<CTexture*>      _textures;
 };
-
-
-
-
-
 
 #endif // MESH_HPP
