@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.0)
 project(ThirdPartyLibs)
 
 set(ASSIMP_BUILD_TESTS OFF)
+set(BUILD_SHARED_LIBS OFF)
+set(ASSIMP_INJECT_DEBUG_POSTFIX OFF)
 add_subdirectory(assimp)
 add_subdirectory(GLAD)
 add_subdirectory(GLFW)
