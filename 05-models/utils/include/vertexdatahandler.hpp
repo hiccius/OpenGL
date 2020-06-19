@@ -12,6 +12,8 @@ public:
     CVertexDataHandler() noexcept;
     ~CVertexDataHandler() noexcept;
 
+    CVertexDataHandler(CVertexDataHandler&& aOther) noexcept;
+
     void AddVertexBufferObject(CVertexBufferObject* aVBO);
 
     template<std::size_t N>
@@ -26,8 +28,8 @@ public:
 
 private:
     CVertexBufferObject*    _vbo;
-    unsigned int            _eboId;
     unsigned int            _vaoId;
+    unsigned int            _eboId{0};
     unsigned int            _lastAttributeIndex{0};
 };
 

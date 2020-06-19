@@ -13,8 +13,30 @@ CVertexDataHandler::CVertexDataHandler() noexcept
 
 CVertexDataHandler::~CVertexDataHandler() noexcept
 {
-    glDeleteVertexArrays(1, &_vaoId);
-    glDeleteBuffers(1, &_eboId);
+    if (_vaoId != 0)
+    {
+        glDeleteVertexArrays(1, &_vaoId);
+    }
+
+    if (_eboId != 0)
+    {
+        glDeleteBuffers(1, &_eboId);
+    }
+}
+
+CVertexDataHandler::CVertexDataHandler(CVertexDataHandler&& aOther) noexcept
+{
+    _vaoId = aOther._vaoId;
+    aOther._vaoId = 0;
+
+    if (aOther._eboId != 0)
+    {
+        _eboId = aOther._eboId;
+        aOther._eboId = 0;
+    }
+
+    _lastAttributeIndex = aOther._lastAttributeIndex;
+    _vbo = aOther._vbo;
 }
 
 void CVertexDataHandler::AddVertexBufferObject(CVertexBufferObject* aVBO)

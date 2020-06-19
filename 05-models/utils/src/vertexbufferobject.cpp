@@ -9,5 +9,15 @@ CVertexBufferObject::CVertexBufferObject() noexcept
 
 CVertexBufferObject::~CVertexBufferObject() noexcept
 {
-    glDeleteBuffers(1, &_id);
+    if (_id != 0)
+    {
+        glDeleteBuffers(1, &_id);
+    }
+}
+
+CVertexBufferObject::CVertexBufferObject(CVertexBufferObject&& aOther) noexcept
+{
+    _id = aOther._id;
+
+    aOther._id = 0;
 }
