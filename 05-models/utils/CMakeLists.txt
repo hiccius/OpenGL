@@ -8,6 +8,8 @@ set_property(SOURCE ${EXTRA_SOURCES}
 add_library(utils_05
     src/camera.cpp
     src/matrix.cpp
+    src/mesh.cpp
+    src/model.cpp
     src/shader.cpp
     src/shaderprogram.cpp
     src/texture.cpp
