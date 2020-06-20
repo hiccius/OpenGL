@@ -2,7 +2,6 @@
 #define MESH_HPP
 
 #include <vector>
-#include <string>
 #include "vertexdatahandler.hpp"
 #include "vertexbufferobject.hpp"
 
@@ -14,14 +13,12 @@ struct Vertex
 };
 
 class CTexture;
-class CShaderProgram;
-
 class CMesh
 {
 public:
     CMesh(std::vector<Vertex>&& aVertices, std::vector<unsigned int>&& aIndices, std::vector<CTexture*>&& aTextures);
 
-    void Draw(CShaderProgram& aShaderProgram);
+    void Draw(unsigned int aNumberDiffuseUnits, unsigned int aNumberSpecularUnits) const;
 
 private:
     CVertexBufferObject _vbo;

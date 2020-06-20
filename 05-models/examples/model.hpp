@@ -1,30 +1,32 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <string_view>
 #include <map>
 #include <assimp/scene.h>
 #include "mesh.hpp"
 #include "texture.hpp"
 
 class CShaderProgram;
-
 class CModel
 {
 public:
     CModel(const std::filesystem::path& aModelFile);
 
-    void Draw(CShaderProgram& aShaderProgram);
+    void SetTextureUnitsUniforms(CShaderProgram& aShaderProgram);
+    void Draw() const;
 
 private:
     std::map<std::string, CTexture> _loadedTextures;
     std::vector<CMesh>              _meshes;
     std::filesystem::path           _folder;
 
-    void  ProcessNode(const aiNode* node, const aiScene* scene);
-    CMesh ProcessMesh(const aiMesh* mesh, const aiScene* scene);
+    std::size_t    _numberDiffuseUnits{0};
+    std::size_t    _numberSpecularUnits{0};
 
-    std::vector<CTexture*> LoadMaterialTextures(const aiMaterial* material, aiTextureType aAssimpType,
+    void  ProcessNode(const aiNode* aNode, const aiScene* aScene);
+    CMesh ProcessMesh(const aiMesh* aMesh, const aiScene* aScene);
+
+    std::vector<CTexture*> LoadMaterialTextures(const aiMaterial* aMaterial, aiTextureType aAssimpType,
                                                 CTexture::Type aType);
 };
 

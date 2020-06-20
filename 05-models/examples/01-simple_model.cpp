@@ -1,27 +1,26 @@
 #include <iostream>
-#include <vector>
-#include <chrono>
-#include <glm/glm.hpp>
-#include <glad/glad.h>
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include <stb_image.h>
 
 #include "shaderprogram.hpp"
 #include "window.hpp"
 #include "camera.hpp"
 #include "helpers.hpp"
+#include "gladhelpers.hpp"
 #include "model.hpp"
 
 
-int main()
+int main(int argc, char* argv[])
 {
     constexpr int screenHeight{800};
     constexpr int screenWidth{600};
     constexpr double aspect{static_cast<double>(screenHeight) / screenWidth};
+
+    // Command options
+    auto [exit, noFill] = CommandOption("no-fill", "Draw model in wireframe mode",
+                                        argc, argv, std::cout);
+    if (exit)
+    {
+        return 0;
+    }
 
     try
     {
@@ -37,13 +36,11 @@ int main()
         shaderProgram.SetUniform("model", CMatrix{});
 
         // Vertex data
-        auto t1 = std::chrono::high_resolution_clock::now();
         CModel model{"backpack/backpack.obj"};
-        auto t2 = std::chrono::high_resolution_clock::now();
+        model.SetTextureUnitsUniforms(shaderProgram);
 
-        std::cout << "Load: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;
+        FillShape(!noFill);
 
-        std::cout << "We are here" << std::endl;
         // Render loop
         while (window.IsOpen())
         {
@@ -59,11 +56,7 @@ int main()
             shaderProgram.SetUniform("projection",    static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
             shaderProgram.SetUniform("view",          static_cast<const CMatrix&>(camera.GetViewMatrix()));
 
-            t1 = std::chrono::high_resolution_clock::now();
-            model.Draw(shaderProgram);
-            t2 = std::chrono::high_resolution_clock::now();
-
-            std::cout << "Draw: " << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() << " us" << std::endl;
+            model.Draw();
 
             // Poll events and redraw window
             window.RedrawAndPoll();
