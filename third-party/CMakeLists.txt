@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 
 project(ThirdPartyLibs)
 
-set(ASSIMP_BUILD_TESTS OFF)
-set(BUILD_SHARED_LIBS OFF)
-set(ASSIMP_INJECT_DEBUG_POSTFIX OFF)
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "Assimp tests")
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Shared libraries")
+set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "Debug postfix")
 add_subdirectory(assimp)
 add_subdirectory(GLAD)
 add_subdirectory(GLFW)

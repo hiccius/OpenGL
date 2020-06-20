@@ -1,9 +1,12 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.3)
+
+set(CMAKE_POLICY_DEFAULT_CMP0063 NEW)
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
 project(OpenGL)
 
 set(CMAKE_CXX_STANDARD 17)
-cmake_policy(SET CMP0077 NEW)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_subdirectory(third-party)
 add_subdirectory(01-basics)
