@@ -6,7 +6,7 @@ The examples in this section show how to load **models** designed by other 3D ar
 
 - 3D artists use **3D modelling** tools to design models and apply textures to them (**uv-modelling**). OpenGL can read the generated vertex, normals and texture coordinates and draw these objects.
 
-- Models can be stored in different file types. **Assimp** (Open Asset Import Library) is a library that can work with many of them and load models into a generalised data structure:
+- Models can be stored in different file types. The **Open Asset Import Library (Assimp)** can work with many of them and load models into a generalised data structure:
     - The model is loaded in a **scene** object that points to a **root node**, an array of **mesh** objects and an array of **materials**.
     - Each **node** is composed of **mesh objects** (minimal drawable objects) and **child nodes**.
     - Each **mesh** contains **vertex** data, **normals**, **texture coordinates**, several **faces** (indices for the vertices) and an **index** to the **array of materials**.
