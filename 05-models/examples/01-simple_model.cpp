@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         window.SetMouseControl();
 
         // Shader programs
-        auto shaderProgram{CShaderProgram::Build("shader.vert", "shader.frag")};
+        auto shaderProgram{CShaderProgram::Build("01-shader.vert", "01-shader.frag")};
         shaderProgram.Use();
         shaderProgram.SetUniform("model", CMatrix{});
 
