@@ -8,6 +8,8 @@ The blocks and a brief description of each of them are:
   1. [The Basics](01-basics) - shaders, buffers and basic elements of OpenGL
   2. [Textures](02-textures) - textures applied on objects
   3. [Space](03-space) - space transformations of OpenGL objects
+  4. [Lighting](04-lighting) - different lights over OpenGL objects
+  5. [Model Loading](05-models) - importing external models in OpenGL
 
 For each block, an **_Utils_** library with my own implentation of helper classes and functions is used. The **_Utils_** library is incrementally extended and modified for each block, but the old versions remain on their blocks for documenting purposes and to allow me to make breaking changes without much hassle. Taking this into account, the **_Utils_** library of the last block is the most **complete and up-to-date** and includes every functionality of older versions.
 
