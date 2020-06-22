@@ -6,10 +6,10 @@ The examples in this section show how to load **models** designed by other 3D ar
 
 - 3D artists use **3D modelling** tools to design models and apply textures to them (**uv-modelling**). OpenGL can read the generated vertex, normals and texture coordinates and draw these objects.
 
-- Models can be stored in many different file types. **Assimp** (Open Asset Import Library) is a library that can work with many of them and load models into a general data structure:
+- Models can be stored in different file types. **Assimp** (Open Asset Import Library) is a library that can work with many of them and load models into a generalised data structure:
     - The model is loaded in a **scene** object that points to a **root node**, an array of **mesh** objects and an array of **materials**.
     - Each **node** is composed of **mesh objects** (minimal drawable objects) and **child nodes**.
-    - Each **mesh** contains **vertex** data, **normals**, **texture coordinates**, several **faces** (indices of the vertices) and and **index** to the **array of materials**.
+    - Each **mesh** contains **vertex** data, **normals**, **texture coordinates**, several **faces** (indices for the vertices) and an **index** to the **array of materials**.
     - The **material objects** contain the location of **lighting maps**.
 
 ### Examples
@@ -29,7 +29,7 @@ This example simply loads a model from a file and draws it. If the example is ex
 </div>
 
 #### 2. Model and light
-In this example, the previous model is drawn again but now with lighting conditions applied to it: **directional light**, a **point light** that orbits around the object and a **flashlight** from the location of the camera.
+In this example, the previous model is drawn again but now with lighting conditions applied: **directional light**, a **point light** that orbits around the object and a **flashlight** from the location of the camera.
 
 <div align="center">
   <img src="images/02-lighting.gif" height="450"><br>
