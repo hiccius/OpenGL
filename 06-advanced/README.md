@@ -8,8 +8,10 @@ The examples in this section show different *advanced* features of OpenGL.
     - The depth buffer values are in the range [0.0, 1.0]. From **view space** the conversion is done relatively to the **near (0.0)** and **far (1.0)** planes, usually proportional to **1/z** to give more precision to the objects that are closer to the viewer.
     - If the depth test cannot figure out which fragment is in front of the other, a glitch called **z-fighting** can appear. This can happen, for example, when two different shapes are in the same plane.
 
+- **Stencil testing** is used to discard fragments while rendering. It is done based on the content of the **stencil buffer** (usually an 8-bit buffer) and performed after the fragment is processed in the **fragment shader** but before **depth testing**. A common approach is to write to the buffer while rendering some objects and then conditionally render some fragments of the following objects.
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only example supporting an optional argument is [1. Depth testing](#1-depth-testing). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [1. Depth testing](#1-depth-testing), [2. Stencil testing](#1-stencil-testing). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Depth testing
 This example shows the effect of different settings related to **depth testing**. If the example is executed with the option ```--disable```, no depth testing is performed. When the option is ```--visible```, the depth value of each fragment is displayed as a colour with values closer to 0.0 appearing black and values closer to 1.0, white.
@@ -30,3 +32,14 @@ This example shows the effect of different settings related to **depth testing**
 </div>
 
 #### 2. Stencil testing
+In this example, **stencil testing** is used to to display **object outlining**, displaying a colored border over the two cubes from the previous example. The borders are drawn independently unless the example is executed with the option ```merge-borders```, in this case they are merged for the views in which both cubes overlap.
+
+<div align="center">
+  <img src="images/02-independent.png" height="450"><br>
+  <sup><strong>Fig. 1.1: </strong> To each of their own </sup>
+</div>
+<br>
+<div align="center">
+  <img src="images/02-merged.png" height="450"><br>
+  <sup><strong>Fig. 1.2: </strong> Merged borders </sup>
+</div>
