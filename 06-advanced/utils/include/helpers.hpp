@@ -92,12 +92,13 @@ inline std::pair<bool, bool> CommandOption(std::string_view optionKeyword,
         }
         else if (option == "--help")
         {
+            auto tabSize{optionKeyword.size() + 7};
             out.setf(std::ios_base::left, std::ios_base::adjustfield);
             out << "Usage: " << argv[0] << " [option]\n\n";
             out << "Options:\n";
-            out << std::setw(15) << "  --" + std::string{optionKeyword};
+            out << std::setw(tabSize) << "  --" + std::string{optionKeyword};
             out << optionDescription << "\n";
-            out << std::setw(15) << "  --help";
+            out << std::setw(tabSize) << "  --help";
             out << "Displays this message\n\n";
             return std::make_pair(true, false);
         }
