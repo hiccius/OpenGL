@@ -36,8 +36,13 @@ int main(int argc, char* argv[])
         // Init window
         CWindow window;
         CCamera camera{0.1, 2.5, aspect};
-        window.SetUp(screenHeight, screenWidth, "LearnOpenGL", depthBuffer != DepthBuffer::Disabled, &camera);
+        window.SetUp(screenHeight, screenWidth, "LearnOpenGL", &camera);
         window.SetMouseControl();
+
+        if (depthBuffer != DepthBuffer::Disabled)
+        {
+            window.SetDepthTest(true);
+        }
 
         // Shader programs
         auto shaderProgram{CShaderProgram::Build("shader.vert", "shader.frag")};

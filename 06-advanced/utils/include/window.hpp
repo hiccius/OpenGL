@@ -12,12 +12,23 @@ public:
     CWindow() noexcept;
     ~CWindow() noexcept;
 
-    void SetUp(int aWidth, int aHeight, std::string_view aTitle, bool aEnableDepthTest = false, CCamera* aCamera = nullptr);
+    void SetUp(int aWidth, int aHeight, std::string_view aTitle, CCamera* aCamera = nullptr);
     void SetMouseControl() const;
     bool IsOpen() const noexcept;
     void PollCloseKey(int aCloseKey) const noexcept;
     void PollMovementKeys(int aForwardKey, int aLeftKey, int aBackKey, int aRightKey) noexcept;
+
+    void SetDepthTest(bool aEnable) noexcept;
+    void SetDepthBufferWrite(bool aEnable) noexcept;
+
+    void SetStencilTest(bool aEnable) noexcept;
+    void SetStencilMask(uint8_t aMask) noexcept;
+    void SetStencilUpdate(int aStencilFail, int aDepthFail, int aAllPass) noexcept;
+    void SetStencilCondition(int aTestCondition, int aReference, uint8_t aMask) noexcept;
+    void ClearStencilBuffer() noexcept;
+
     void ClearColor(float aX, float aY, float aZ, float aW) const noexcept;
+
     void UpdateDeltaFrames() noexcept;
     void RedrawAndPoll() const noexcept;
 
@@ -32,6 +43,7 @@ private:
     GLFWwindow* _window;
     CCamera*    _camera;
     bool        _depthTest;
+    bool        _stencilTest;
     bool        _firstMouse;
     double      _xCursorLocation;
     double      _yCursorLocation;
@@ -49,5 +61,17 @@ namespace Key
     static constexpr int S      = GLFW_KEY_S;
     static constexpr int D      = GLFW_KEY_D;
 };
+
+namespace StencilAction
+{
+    static constexpr int Keep       = GL_KEEP;
+    static constexpr int Replace    = GL_REPLACE;
+}
+
+namespace StencilCondition
+{
+    static constexpr int Always     = GL_ALWAYS;
+    static constexpr int NotEqual   = GL_NOTEQUAL;
+}
 
 #endif // WINDOW_HPP

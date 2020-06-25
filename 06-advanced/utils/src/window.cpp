@@ -4,7 +4,7 @@
 #include "camera.hpp"
 
 CWindow::CWindow() noexcept
-    : _window{nullptr}, _depthTest{false}, _firstMouse{true}
+    : _window{nullptr}, _depthTest{false}, _stencilTest{false}, _firstMouse{true}
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -20,7 +20,7 @@ CWindow::~CWindow() noexcept
     glfwTerminate();
 }
 
-void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle, bool aEnableDepthTest, CCamera* aCamera)
+void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle, CCamera* aCamera)
 {
     _window = glfwCreateWindow(aWidth, aHeight, aTitle.data(), nullptr, nullptr);
     if (!_window)
@@ -44,13 +44,6 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle, bool aEnab
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
         throw OpenGLException{"GLAD_LOADER", "Failed to initialize GLAD"};
-    }
-
-    // Enable depth test if required
-    if (aEnableDepthTest)
-    {
-        _depthTest = true;
-        glEnable(GL_DEPTH_TEST);
     }
 
     // Initialize pointer to camera
@@ -129,11 +122,54 @@ void CWindow::PollMovementKeys(int aForwardKey, int aLeftKey, int aBackKey, int 
     }
 }
 
+void CWindow::SetDepthTest(bool aEnable) noexcept
+{
+    if (aEnable != _depthTest)
+    {
+        (_depthTest = aEnable) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+}
+
+void CWindow::SetStencilTest(bool aEnable) noexcept
+{
+    if (aEnable != _stencilTest)
+    {
+        (_stencilTest = aEnable) ? glEnable(GL_STENCIL_TEST) : glDisable(GL_STENCIL_TEST);
+    }
+}
+
+void CWindow::SetDepthBufferWrite(bool aEnable) noexcept
+{
+    glDepthMask(aEnable ? GL_TRUE : GL_FALSE);
+}
+
+void CWindow::SetStencilMask(uint8_t aMask) noexcept
+{
+    glStencilMask(aMask);
+}
+
+void CWindow::SetStencilUpdate(int aStencilFail, int aDepthFail, int aAllPass) noexcept
+{
+    glStencilOp(aStencilFail, aDepthFail, aAllPass);
+}
+
+void CWindow::SetStencilCondition(int aTestCondition, int aReference, uint8_t aMask) noexcept
+{
+    glStencilFunc(aTestCondition, aReference, aMask);
+}
+
+void CWindow::ClearStencilBuffer() noexcept
+{
+    glClear(GL_STENCIL_BUFFER_BIT);
+}
+
 void CWindow::ClearColor(float aX, float aY, float aZ, float aW) const noexcept
 {
     glClearColor(aX, aY, aZ, aW);
 
-    auto clearMask = GL_COLOR_BUFFER_BIT | (_depthTest ? GL_DEPTH_BUFFER_BIT : 0);
+    auto clearMask = GL_COLOR_BUFFER_BIT |
+                     (_depthTest   ? GL_DEPTH_BUFFER_BIT   : 0) |
+                     (_stencilTest ? GL_STENCIL_BUFFER_BIT : 0);
     glClear(clearMask);
 }
 
