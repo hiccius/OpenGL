@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
         }
 
         // Shader programs
-        auto shaderProgram{CShaderProgram::Build("shader.vert", "shader.frag")};
+        auto shaderProgram{CShaderProgram::Build("shader.vert", "01-shader.frag")};
         shaderProgram.Use();
         if (depthBuffer == DepthBuffer::Visible)
         {
