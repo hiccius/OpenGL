@@ -10,9 +10,9 @@ The examples in this section show different *advanced* features of OpenGL.
 
 - **Stencil testing** is used to discard fragments while rendering. It is done based on the content of the **stencil buffer** (usually an 8-bit buffer) and performed after the fragment is processed in the **fragment shader** but before **depth testing**. A common approach is to write to the buffer while rendering some objects and then conditionally render some fragments of the following objects based on the content of the buffer.
 
-- For textures that don't have a solid color but some **transparency** (**alpha** value less than 1.0), **blending** needs to be applied. Different **factors** can be used for the **destination** color vector (the one already in the **color buffer**) and the **source** color vector (new fragment's one) to perform the blending. A constant can also be added into the mix.
-    - To correctly render transparent objects so other objects that are behind them can be seen, it is necessary to render them in other from the ones in the **background** to the ones in the **foreground** so they can pass the depth test. There are other techniques to solve this issue, like **order independent transparency**.
-    - If it is only required to show parts of a texture and ignore others, the fragments can be directly **discarded** in the fragment shader using an alpha value as the threshold.
+- For textures that don't have a solid color but some **transparency** (**alpha** value less than 1.0), **blending** needs to be applied. Different **factors** can be used for the **destination** color vector (the one already in the **color buffer**) and the **source** color vector (new fragment's one) to perform the blending. A **constant color vector** can also be added into the mix to have more control of the proportions.
+    - To correctly render transparent objects so other objects that are behind them can be seen, it is necessary to render them in other from the ones in the **background** to the ones in the **foreground** so they can pass the depth test. There are other techniques to solve this potential issue, like **order independent transparency**.
+    - If it is only required to **show** parts of a texture and **ignore** others, the fragments can be directly **discarded** in the **fragment shader** using an alpha value as threshold.
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [1. Depth testing](#1-depth-testing), [2. Stencil testing](#2-stencil-testing) and [4. Blending](#4-blending). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
@@ -49,7 +49,7 @@ In this example, **stencil testing** is used to to display **object outlining**.
 </div>
 
 #### 3. Discarding fragments
-This example places some textures representing grass around the scene. The grass is loaded as a squared image with **transparency**. The **fragment shader** discards the texels with an **alpha value** close to 0.0, effectively only rendering the grass.
+This example places some textures representing grass around the scene. The grass is loaded as a squared image with **transparency**. The **fragment shader** discards the texels with an **alpha value** close to 0.0 effectively only rendering the grass.
 
 <div align="center">
   <img src="images/03-grass.png" height="450"><br>
