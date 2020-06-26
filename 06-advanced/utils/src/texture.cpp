@@ -66,7 +66,7 @@ void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
             glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
             glGenerateMipmap(GL_TEXTURE_2D);
 
-            SetWrappingMode(WrappingMode::Repeat);
+            SetWrappingMode(format == GL_RGBA ? WrappingMode::ClampedEdge : WrappingMode::Repeat);
             SetMinifyFilteringMode(FilteringMode::LinearMipmapLinear);
             SetMagnifyFilteringMode(FilteringMode::Linear);
 
