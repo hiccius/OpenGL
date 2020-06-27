@@ -13,3 +13,6 @@ target_link_libraries(03-transparencies PRIVATE utils_06)
 
 add_executable(04-blending 04-blending.cpp)
 target_link_libraries(04-blending PRIVATE utils_06)
+
+add_executable(05-face_culling 05-face_culling.cpp)
+target_link_libraries(05-face_culling PRIVATE utils_06)

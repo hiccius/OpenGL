@@ -27,6 +27,8 @@ public:
     void SetStencilCondition(int aTestCondition, int aReference, uint8_t aMask) noexcept;
     void ClearStencilBuffer() noexcept;
 
+    void SetFaceCulling(bool aEnable) noexcept;
+
     void ClearColor(float aX, float aY, float aZ, float aW) const noexcept;
 
     void UpdateDeltaFrames() noexcept;
@@ -44,6 +46,7 @@ private:
     CCamera*    _camera;
     bool        _depthTest;
     bool        _stencilTest;
+    bool        _faceCulling;
     bool        _firstMouse;
     double      _xCursorLocation;
     double      _yCursorLocation;

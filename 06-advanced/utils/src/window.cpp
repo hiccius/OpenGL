@@ -4,7 +4,7 @@
 #include "camera.hpp"
 
 CWindow::CWindow() noexcept
-    : _window{nullptr}, _depthTest{false}, _stencilTest{false}, _firstMouse{true}
+    : _window{nullptr}, _depthTest{false}, _stencilTest{false}, _faceCulling{false}, _firstMouse{true}
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -161,6 +161,14 @@ void CWindow::SetStencilCondition(int aTestCondition, int aReference, uint8_t aM
 void CWindow::ClearStencilBuffer() noexcept
 {
     glClear(GL_STENCIL_BUFFER_BIT);
+}
+
+void CWindow::SetFaceCulling(bool aEnable) noexcept
+{
+    if (aEnable != _faceCulling)
+    {
+        (_faceCulling = aEnable) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+    }
 }
 
 void CWindow::ClearColor(float aX, float aY, float aZ, float aW) const noexcept
