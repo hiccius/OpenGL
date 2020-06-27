@@ -35,8 +35,7 @@ int main(int argc, char* argv[])
         window.SetDepthTest(true);
 
         // Blending
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        SetBlending(BlendingFactor::Alpha, BlendingFactor::AlphaComplement);
 
         // Shader programs
         auto shaderProgram{CShaderProgram::Build("shader.vert", "04-shader.frag")};
