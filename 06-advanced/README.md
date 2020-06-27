@@ -1,6 +1,6 @@
 ## Chapter 5 - Advanced Features
 ### Content Summary
-This section covers chapters *22. Depth Testing*, *23. Stencil Testing*, *24. Blending* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *22. Depth Testing*, *23. Stencil Testing*, *24. Blending*, *25. Face Culling* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show different *advanced* features of OpenGL.
 
@@ -13,6 +13,8 @@ The examples in this section show different *advanced* features of OpenGL.
 - For textures that don't have a solid color but some **transparency** (**alpha** value less than 1.0), **blending** needs to be applied. Different **factors** can be used for the **destination** color vector (the one already in the **color buffer**) and the **source** color vector (new fragment's one) to perform the blending. A **constant color vector** can also be added into the mix to have more control of the proportions.
     - To correctly render transparent objects so other objects that are behind them can be seen, it is necessary to render them in other from the ones in the **background** to the ones in the **foreground** so they can pass the depth test. There are other techniques to solve this potential issue, like **order independent transparency**.
     - If it is only required to **show** parts of a texture and **ignore** others, the fragments can be directly **discarded** in the **fragment shader** using an alpha value as threshold.
+
+- When **face culling** is enabled, OpenGL can discard (cull) back-facing faces of shapes as they are assumed they will not be visible. This can only be done when **closed shapes** have a consistent **winding order**. By default, **front-facing** faces are defined with their vertices in **counter-clockwise** order; while for **back-facing** ones, they are in **clockwise** order. If the viewer changes positions and looks at a face from the other side, the order for rendering the vertex data changes, and OpenGL can act accordingly **optimizing** the process.
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [1. Depth testing](#1-depth-testing), [2. Stencil testing](#2-stencil-testing) and [4. Blending](#4-blending). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
@@ -67,4 +69,12 @@ In this example, **blending** is applied to display red windows (translucent tex
 <div align="center">
   <img src="images/04-unordered_windows.png" height="450"><br>
   <sup><strong>Fig. 4.2: </strong> Not much transparency this way </sup>
+</div>
+
+#### 5. Face culling
+This example has **face culling** enabled and because all the triangles are consistently defined by their vertices in counter-clockwise order for front-facing ones, back-facing faces are not being rendered without affecting what the the viewer can see.
+
+<div align="center">
+  <img src="images/05-face_culling.png" height="450"><br>
+  <sup><strong>Fig. 5: </strong> The changes are not visible, and that's the point! </sup>
 </div>
