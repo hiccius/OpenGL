@@ -46,11 +46,11 @@ int main(int argc, char* argv[])
 
         CTextureBuffer colorBuffer;
         colorBuffer.GenerateTexture(screenWidth, screenHeight);
-        framebuffer.Attach(colorBuffer);
+        framebuffer.Attach(&colorBuffer);
 
         CRenderbufferObject rbo{CRenderbufferObject::Type::DepthAndStencil};
         rbo.SetUp(screenWidth, screenHeight);
-        framebuffer.Attach(rbo);
+        framebuffer.Attach(&rbo);
 
         if (!framebuffer.IsComplete())
         {
