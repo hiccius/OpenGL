@@ -12,9 +12,9 @@
 
 int main(int argc, char* argv[])
 {
-    constexpr int screenHeight{800};
-    constexpr int screenWidth{600};
-    constexpr float aspect{static_cast<float>(screenHeight) / screenWidth};
+    constexpr int screenWidth{800};
+    constexpr int screenHeight{600};
+    constexpr float aspect{static_cast<float>(screenWidth) / screenHeight};
 
     auto [exit, rotate] = CommandOption("rotate", "Rotate every third container",
                                         argc, argv, std::cout);
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     {
         // Init window
         CWindow window;
-        window.SetUp(screenHeight, screenWidth, "LearnOpenGL", true);
+        window.SetUp(screenWidth, screenHeight, "LearnOpenGL", true);
 
         // Shader program
         CShaderProgram shaderProgram{CShaderProgram::Build("04-shader.vert", "01-shader.frag")};

@@ -17,9 +17,9 @@ enum class DepthBuffer
 
 int main(int argc, char* argv[])
 {
-    constexpr int screenHeight{800};
-    constexpr int screenWidth{600};
-    constexpr double aspect{static_cast<double>(screenHeight) / screenWidth};
+    constexpr int screenWidth{800};
+    constexpr int screenHeight{600};
+    constexpr double aspect{static_cast<double>(screenWidth) / screenHeight};
 
     auto [exit, depthBuffer] = CommandOption({
         { "disable",    { "Disables depth testing",     DepthBuffer::Disabled   }},
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
         // Init window
         CWindow window;
         CCamera camera{0.1, 2.5, aspect};
-        window.SetUp(screenHeight, screenWidth, "LearnOpenGL", &camera);
+        window.SetUp(screenWidth, screenHeight, "LearnOpenGL", &camera);
         window.SetMouseControl();
 
         if (depthBuffer != DepthBuffer::Disabled)
