@@ -1,6 +1,5 @@
 #version 410 core
 uniform sampler2D diffuse;
-uniform bool      viewDepth;
 
 in  vec2 textureCoordinates;
 out vec4 fragColor;
