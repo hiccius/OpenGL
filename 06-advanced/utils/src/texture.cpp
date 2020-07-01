@@ -5,14 +5,13 @@
 #include <glad/glad.h>
 #include "helpers.hpp"
 
-CTexture::CTexture(Type aType) noexcept
-    : _type{aType}
+CTextureBase::CTextureBase() noexcept
 {
     glGenTextures(1, &_id);
     glBindTexture(GL_TEXTURE_2D, _id);
 }
 
-CTexture::~CTexture() noexcept
+CTextureBase::~CTextureBase() noexcept
 {
     if (_id != 0)
     {
@@ -21,28 +20,36 @@ CTexture::~CTexture() noexcept
     }
 }
 
-CTexture::CTexture(CTexture&& aOther) noexcept
+CTextureBase::CTextureBase(CTextureBase&& aOther) noexcept
 {
     _id = aOther._id;
-    _type = aOther._type;
-
     aOther._id = 0;
 }
+
+void CTextureBase::SetMinifyFilteringMode(int aMode) noexcept
+{
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, aMode);
+}
+
+void CTextureBase::SetMagnifyFilteringMode(int aMode) noexcept
+{
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, aMode);
+}
+
+void CTextureBase::ActivateAndBind(int aTextureUnitIndex) const noexcept
+{
+    glActiveTexture(GL_TEXTURE0 + aTextureUnitIndex);
+    glBindTexture(GL_TEXTURE_2D, _id);
+}
+
+CTexture::CTexture(Type aType) noexcept
+    : _type{aType}
+{}
 
 void CTexture::SetWrappingMode(int aMode) noexcept
 {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, aMode);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, aMode);
-}
-
-void CTexture::SetMinifyFilteringMode(int aMode) noexcept
-{
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, aMode);
-}
-
-void CTexture::SetMagnifyFilteringMode(int aMode) noexcept
-{
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, aMode);
 }
 
 void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
@@ -57,7 +64,7 @@ void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
         const char* resourceFilePathCStr{resourceFilePath.string().c_str()};
 #else
         const char* resourceFilePathCStr{resourceFilePath.c_str()};
-#endif // _WIN32 
+#endif // _WIN32
         auto* data = reinterpret_cast<std::byte*>(stbi_load(resourceFilePathCStr, &width, &height, &colorChannels, 0));
         if (data)
         {
@@ -83,12 +90,6 @@ void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
     }
 }
 
-void CTexture::ActivateAndBind(int aTextureUnitIndex) const noexcept
-{
-    glActiveTexture(GL_TEXTURE0 + aTextureUnitIndex);
-    glBindTexture(GL_TEXTURE_2D, _id);
-}
-
 CTexture::Type CTexture::GetType() const noexcept
 {
     return _type;
@@ -107,4 +108,16 @@ int CTexture::GetImageFormat(int aColorChannels) const
     default:
         throw OpenGLException{"IMAGE_TYPE", std::to_string(aColorChannels) + " color channels are not supported"};
     }
+}
+
+void CTextureBuffer::GenerateTexture(int aWidth, int aHeight)
+{
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, aWidth, aHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    SetMinifyFilteringMode(FilteringMode::Linear);
+    SetMagnifyFilteringMode(FilteringMode::Linear);
+}
+
+void CTextureBuffer::Attach() noexcept
+{
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _id, 0);
 }

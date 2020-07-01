@@ -3,8 +3,28 @@
 
 #include <glad/glad.h>
 #include <filesystem>
+#include "framebuffer.hpp"
 
-class CTexture
+class CTextureBase
+{
+public:
+    CTextureBase() noexcept;
+    ~CTextureBase() noexcept;
+
+    CTextureBase(CTextureBase&& aOther) noexcept;
+    CTextureBase(const CTextureBase& aOther) = delete;
+
+    void ActivateAndBind(int aTextureUnitIndex) const noexcept;
+
+protected:
+    void SetMinifyFilteringMode(int aMode) noexcept;
+    void SetMagnifyFilteringMode(int aMode) noexcept;
+
+    unsigned int _id;
+};
+
+
+class CTexture : public CTextureBase
 {
 public:
     enum class Type
@@ -13,24 +33,24 @@ public:
     };
 
     CTexture(Type aType) noexcept;
-    ~CTexture() noexcept;
-
-    CTexture(CTexture&& aOther) noexcept;
-    CTexture(const CTexture& aOther) = delete;
 
     void GenerateTexture(const std::filesystem::path& aTextureFile);
-    void ActivateAndBind(int aTextureUnitIndex) const noexcept;
     Type GetType() const noexcept;
 
 private:
     int GetImageFormat(int aColorChannels) const;
-
     void SetWrappingMode(int aMode) noexcept;
-    void SetMinifyFilteringMode(int aMode) noexcept;
-    void SetMagnifyFilteringMode(int aMode) noexcept;
 
-    unsigned int    _id;
-    Type            _type;
+    Type _type;
+};
+
+
+class CTextureBuffer : public CTextureBase, public CFramebufferAttachment
+{
+public:
+    void GenerateTexture(int aWidth, int aHeight);
+
+    virtual void Attach() noexcept override final;
 };
 
 namespace WrappingMode
