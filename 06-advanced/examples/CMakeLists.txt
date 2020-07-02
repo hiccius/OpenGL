@@ -19,3 +19,9 @@ target_link_libraries(05-face_culling PRIVATE utils_06)
 
 add_executable(06-framebuffers 06-framebuffers.cpp)
 target_link_libraries(06-framebuffers PRIVATE utils_06)
+
+add_executable(07-post_processing 07-post_processing.cpp)
+target_link_libraries(07-post_processing PRIVATE utils_06)
+
+add_executable(08-kernel_effects 08-kernel_effects.cpp)
+target_link_libraries(08-kernel_effects PRIVATE utils_06)
