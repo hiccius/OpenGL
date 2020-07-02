@@ -36,6 +36,12 @@ void CTextureBase::SetMagnifyFilteringMode(int aMode) noexcept
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, aMode);
 }
 
+void CTextureBase::SetWrappingMode(int aMode) noexcept
+{
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, aMode);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, aMode);
+}
+
 void CTextureBase::ActivateAndBind(int aTextureUnitIndex) const noexcept
 {
     glActiveTexture(GL_TEXTURE0 + aTextureUnitIndex);
@@ -45,12 +51,6 @@ void CTextureBase::ActivateAndBind(int aTextureUnitIndex) const noexcept
 CTexture::CTexture(Type aType) noexcept
     : _type{aType}
 {}
-
-void CTexture::SetWrappingMode(int aMode) noexcept
-{
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, aMode);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, aMode);
-}
 
 void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
 {
@@ -113,6 +113,7 @@ int CTexture::GetImageFormat(int aColorChannels) const
 void CTextureBuffer::GenerateTexture(int aWidth, int aHeight)
 {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, aWidth, aHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    SetWrappingMode(WrappingMode::ClampedEdge);
     SetMinifyFilteringMode(FilteringMode::Linear);
     SetMagnifyFilteringMode(FilteringMode::Linear);
 }

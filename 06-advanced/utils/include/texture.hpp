@@ -19,6 +19,7 @@ public:
 protected:
     void SetMinifyFilteringMode(int aMode) noexcept;
     void SetMagnifyFilteringMode(int aMode) noexcept;
+    void SetWrappingMode(int aMode) noexcept;
 
     unsigned int _id;
 };
@@ -39,7 +40,6 @@ public:
 
 private:
     int GetImageFormat(int aColorChannels) const;
-    void SetWrappingMode(int aMode) noexcept;
 
     Type _type;
 };

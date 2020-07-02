@@ -45,10 +45,9 @@ void main()
         return;
     }
 
-    vec3 color = vec3(0.0);
+    fragColor = vec4(vec3(0.0), 1.0f);
     for (int i = 0; i < kernel.length(); ++i)
     {
-        color += texture(screenTexture, (textureCoordinates.st + offsets[i])).rgb * kernel[i];
+        fragColor.rgb += texture(screenTexture, textureCoordinates.st + offsets[i]).rgb * kernel[i];
     }
-    fragColor = vec4(color, 1.0f);
 }
