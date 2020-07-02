@@ -38,7 +38,10 @@ int main(int argc, char* argv[])
         auto objectShader{CShaderProgram::Build("shader.vert", "02-shader.frag")};
         auto screenShader{CShaderProgram::Build("06-shader.vert", "06-shader.frag")};
 
+        objectShader.Use();
         objectShader.SetUniform("diffuse", 0);
+
+        screenShader.Use();
         screenShader.SetUniform("screenTexture", 0);
 
         // Framebuffer
