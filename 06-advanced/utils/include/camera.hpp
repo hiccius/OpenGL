@@ -25,6 +25,7 @@ public:
     void SetPitch(double aYOffset) noexcept;
     void SetFoV(double aYOffset) noexcept;
     void Move(Direction aDirection, double aSpeed) noexcept;
+    void Reverse() noexcept;
 
     void RecalculateDirection() noexcept;
 

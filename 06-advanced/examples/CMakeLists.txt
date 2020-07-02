@@ -25,3 +25,6 @@ target_link_libraries(07-post_processing PRIVATE utils_06)
 
 add_executable(08-kernel_effects 08-kernel_effects.cpp)
 target_link_libraries(08-kernel_effects PRIVATE utils_06)
+
+add_executable(09-rearview 09-rearview.cpp)
+target_link_libraries(09-rearview PRIVATE utils_06)

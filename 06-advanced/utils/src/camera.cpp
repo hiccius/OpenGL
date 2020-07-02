@@ -48,6 +48,12 @@ void CCamera::Move(Direction aDirection, double aSpeed) noexcept
     _viewMatrix.reset();
 }
 
+void CCamera::Reverse() noexcept
+{
+    _direction = -_direction;
+    _viewMatrix.reset();
+}
+
 void CCamera::RecalculateDirection() noexcept
 {
     _direction.x = std::cos(glm::radians(_pitch)) * std::cos(glm::radians(_yaw));
