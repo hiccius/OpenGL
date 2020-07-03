@@ -17,7 +17,6 @@ int main()
     constexpr int screenHeight{600};
     constexpr double aspect{static_cast<double>(screenWidth) / screenHeight};
 
-    // Command options
     try
     {
         // Init window
