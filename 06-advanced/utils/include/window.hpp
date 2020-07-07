@@ -20,6 +20,7 @@ public:
 
     void SetDepthTest(bool aEnable) noexcept;
     void SetDepthBufferWrite(bool aEnable) noexcept;
+    void SetDepthCondition(int aTestCondition) noexcept;
 
     void SetStencilTest(bool aEnable) noexcept;
     void SetStencilMask(uint8_t aMask) noexcept;
@@ -38,6 +39,7 @@ public:
     void PollCallbackKey(int aKey, Callable&& aCallback, T&&... args) const noexcept;
 
     double GetTime() const noexcept;
+    double FPS() const noexcept;
 
 private:
     bool PollKey(int aKey) const noexcept;
@@ -75,6 +77,12 @@ namespace StencilCondition
 {
     static constexpr int Always     = GL_ALWAYS;
     static constexpr int NotEqual   = GL_NOTEQUAL;
+}
+
+namespace DepthCondition
+{
+    static constexpr int Less           = GL_LESS;
+    static constexpr int LessOrEqual    = GL_LEQUAL;
 }
 
 #endif // WINDOW_HPP

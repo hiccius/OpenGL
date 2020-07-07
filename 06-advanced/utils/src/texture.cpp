@@ -16,7 +16,6 @@ CTextureBase::~CTextureBase() noexcept
     if (_id != 0)
     {
         glDeleteTextures(1, &_id);
-        _id = 0;
     }
 }
 

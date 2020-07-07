@@ -7,6 +7,8 @@ set_property(SOURCE ${EXTRA_SOURCES}
 
 add_library(utils_06
     src/camera.cpp
+    src/cubemap.cpp
+    src/drawable.cpp
     src/framebuffer.cpp
     src/matrix.cpp
     src/mesh.cpp

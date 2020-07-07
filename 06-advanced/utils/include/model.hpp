@@ -5,15 +5,16 @@
 #include <assimp/scene.h>
 #include "mesh.hpp"
 #include "texture.hpp"
+#include "drawable.hpp"
 
 class CShaderProgram;
-class CModel
+class CModel : public CDrawable
 {
 public:
     CModel(const std::filesystem::path& aModelFile);
 
     void SetTextureUnitsUniforms(CShaderProgram& aShaderProgram);
-    void Draw() const;
+    virtual void Draw() const override final;
 
 private:
     std::map<std::string, CTexture> _loadedTextures;

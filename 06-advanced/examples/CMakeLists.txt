@@ -28,3 +28,12 @@ target_link_libraries(08-kernel_effects PRIVATE utils_06)
 
 add_executable(09-rearview 09-rearview.cpp)
 target_link_libraries(09-rearview PRIVATE utils_06)
+
+add_executable(10-cubemap 10-cubemap.cpp)
+target_link_libraries(10-cubemap PRIVATE utils_06)
+
+add_executable(11-mirror 11-mirror.cpp)
+target_link_libraries(11-mirror PRIVATE utils_06)
+
+add_executable(12-glass 12-glass.cpp)
+target_link_libraries(12-glass PRIVATE utils_06)

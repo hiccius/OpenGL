@@ -143,6 +143,11 @@ void CWindow::SetDepthBufferWrite(bool aEnable) noexcept
     glDepthMask(aEnable ? GL_TRUE : GL_FALSE);
 }
 
+void CWindow::SetDepthCondition(int aTestCondition) noexcept
+{
+    glDepthFunc(aTestCondition);
+}
+
 void CWindow::SetStencilMask(uint8_t aMask) noexcept
 {
     glStencilMask(aMask);
@@ -197,4 +202,9 @@ void CWindow::RedrawAndPoll() const noexcept
 double CWindow::GetTime() const noexcept
 {
     return glfwGetTime();
+}
+
+double CWindow::FPS() const noexcept
+{
+    return 60.0 / _deltaFrames;
 }
