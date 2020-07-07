@@ -1,6 +1,6 @@
 ## Chapter 5 - Advanced Features
 ### Content Summary
-This section covers chapters *22. Depth Testing*, *23. Stencil Testing*, *24. Blending*, *25. Face Culling*, *26. Framebuffers* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *22. Depth Testing*, *23. Stencil Testing*, *24. Blending*, *25. Face Culling*, *26. Framebuffers* and *27. Cubemaps* of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show different *advanced* features of OpenGL.
 
@@ -23,8 +23,13 @@ The examples in this section show different *advanced* features of OpenGL.
 - Because **framebuffers** render to a texture acting as a color buffer, the resulting texture can be modified in the **fragment shader** and effects like inversion of color, grayscaling of kernel effects can be applied.
     - **Kernel effects** involve the sampling of color values from surrounding pixels to **combine** them with different **weights** to produce a single value. The matrix containing these weights is called the **kernel** (or convolution matrix). With this technique, it is possible to apply effects like sharpening, blurring or edge-detection.
 
+- A **cubemap** is a texture that contains **6 individual 2D textures** and can be sampled using a direction vector if they are centered in the origin. They can be used to implement a **skybox** which can give the illusion af a large environment. When rendering a skybox, it is important to remove the **translation** part of the view matrix so it moves along with the camera and set the **z component** equal to the w component so the perspective division is equal to 1.0, setting the value for depth testing as if it was the farthest object. With a skybox, **environment mapping** techniques can be implemented:
+    - **Reflection** give mirror-like properties to objects. A reflection vector to sample a skybox can be calculated in the fragment shader using the view's **direction vector** and the object's **normal vectors**. **Reflection maps** are often used to determine different reflectivities for each fragment.
+    - **Refraction** is the change in the light's direction when it goes trough different materials. the refraction vector can be calculated in the fragment shader using the view's **direction vector**, the object's **normal vectors** and the **ratio** between the materials **refractive indices**.
+    - **Dynamic environment maps** take into account other objects, not only the skybox and are implemented with the help **framebuffers** to create a **cubemap** around the object. They are **costly** in terms of performance..
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [1. Depth testing](#1-depth-testing), [2. Stencil testing](#2-stencil-testing), [4. Blending](#4-blending), [6. A framebuffer](#6-a-framebuffer), [7. Post-processing effects](#7-post-processing-effects) and [8. Kernel effects](#8-kernel-effects). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [1. Depth testing](#1-depth-testing), [2. Stencil testing](#2-stencil-testing), [4. Blending](#4-blending), [6. A framebuffer](#6-a-framebuffer), [7. Post-processing effects](#7-post-processing-effects), [8. Kernel effects](#8-kernel-effects), [11. Reflections](#11-reflection) and [12. Refractions](#12-refractions). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Depth testing
 This example shows the effect of different settings related to **depth testing**. If the example is executed with the option ```--disable```, no depth testing is performed. When the option is ```--visible```, the depth value of each fragment is displayed as a colour with values closer to 0.0 appearing black and values closer to 1.0, white.
@@ -136,4 +141,38 @@ In this example, the **framebuffer** is drawn over the top left corner of the wi
 <div align="center">
   <img src="images/09-mirror.png" height="450"><br>
   <sup><strong>Fig. 9: </strong> No one is following me for now </sup>
+</div>
+
+#### 10. A skybox
+This example implements a **cubemap** used as a skybox along with the familiar container from previous examples. The skybox dramatically improves the realism of the scene.
+
+<div align="center">
+  <img src="images/10-skybox.png" height="450"><br>
+  <sup><strong>Fig. 10: </strong> A container in the wild </sup>
+</div>
+
+#### 11. Reflections
+In this example, along with the skybox of the previous example, the cube is given **reflective** properties through **environment mapping**. Executing the example with the option ```--model``` loads the same backpack used in [5. Model Loading](05-models).
+
+<div align="center">
+  <img src="images/11-mirror_cube.png" height="450"><br>
+  <sup><strong>Fig. 11.1: </strong> Reflections on a cube </sup>
+</div>
+<br>
+<div align="center">
+  <img src="images/11-mirror_backpack.png" height="450"><br>
+  <sup><strong>Fig. 11.2: </strong> The T-1000's backpack </sup>
+</div>
+
+#### 12. Refractions
+This example, gives the cube is **refractive** properties also through **environment mapping**. Executing the example with the option ```--model``` loads the same backpack used in [5. Model Loading](05-models).
+
+<div align="center">
+  <img src="images/12-glass_cube.png" height="450"><br>
+  <sup><strong>Fig. 12.1: </strong> Glassworks </sup>
+</div>
+<br>
+<div align="center">
+  <img src="images/12-glass_backpack.png" height="450"><br>
+  <sup><strong>Fig. 12.2: </strong> A fragile backpack </sup>
 </div>
