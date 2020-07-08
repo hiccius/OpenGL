@@ -7,3 +7,6 @@ target_link_libraries(01-points PRIVATE utils_07)
 
 add_executable(02-split 02-split.cpp)
 target_link_libraries(02-split PRIVATE utils_07)
+
+add_executable(03-face_orientation 03-face_orientation.cpp)
+target_link_libraries(03-face_orientation PRIVATE utils_07)
