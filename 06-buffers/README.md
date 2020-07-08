@@ -1,6 +1,6 @@
 ## Chapter 6 - Buffers
 ### Content Summary
-This section covers chapters *22. Depth Testing*, *23. Stencil Testing*, *24. Blending*, *25. Face Culling*, *26. Framebuffers* and *27. Cubemaps* of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *22. Depth Testing*, *23. Stencil Testing*, *24. Blending*, *25. Face Culling*, *26. Framebuffers*, *27. Cubemaps* and *28. Advanced Data* of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section cover different buffers of OpenGL and what can be done with them.
 
@@ -27,6 +27,8 @@ The examples in this section cover different buffers of OpenGL and what can be d
     - **Reflection** give mirror-like properties to objects. A reflection vector to sample a skybox can be calculated in the fragment shader using the view's **direction vector** and the object's **normal vectors**. **Reflection maps** are often used to determine different reflectivities for each fragment.
     - **Refraction** is the change in the light's direction when it goes trough different materials. The refraction vector can be calculated in the fragment shader using the view's **direction vector**, the object's **normal vectors** and the **ratio** between the materials' **refractive indices**.
     - **Dynamic environment maps** take into account other objects, not only the skybox, and are implemented with the help **framebuffers** to create a **cubemap** around each object. They are **costly** in terms of performance.
+
+- OpenGL offers a significant number of functions to handle **buffers** with flexibility. It is possible to **reserve** buffer memory, fill different **regions** independently, **copy** data directly to the buffer's **memory location** (e.g. from a file) or **copy** data between **different buffers**.
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [1. Depth testing](#1-depth-testing), [2. Stencil testing](#2-stencil-testing), [4. Blending](#4-blending), [6. A framebuffer](#6-a-framebuffer), [7. Post-processing effects](#7-post-processing-effects), [8. Kernel effects](#8-kernel-effects), [11. Reflections](#11-reflection) and [12. Refractions](#12-refractions). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
