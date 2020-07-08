@@ -23,31 +23,63 @@ int main()
         window.SetUp(screenWidth, screenHeight, "LearnOpenGL", &camera);
         window.SetMouseControl();
         window.SetDepthTest(true);
-        glEnable(GL_PROGRAM_POINT_SIZE);
 
         // Shader programs
-        auto shaderProgram{CShaderProgram::Build("01-shader.vert", "01-shader.frag")};
+        auto shaderProgram{CShaderProgram::Build("02-shader.vert", "02-shader.frag")};
         shaderProgram.Use();
 
         // Vertex data
-        constexpr float points[] =
+        constexpr float cubeVertices[] =
         {
             // positions
             -0.5f, -0.5f, -0.5f,
              0.5f, -0.5f, -0.5f,
              0.5f,  0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
             -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+
             -0.5f, -0.5f,  0.5f,
              0.5f, -0.5f,  0.5f,
              0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f
-        };
-        CVertexBufferObject vboPoints;
-        vboPoints.AddVertexData(points);
+             0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
 
-        CVertexDataHandler pointsData;
-        pointsData.AddVertexBufferObject(&vboPoints);
-        pointsData.AddAttribute(3, 3, 0, false);
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+
+             0.5f,  0.5f,  0.5f,
+             0.5f,  0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+
+            -0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f,  0.5f,
+             0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f, -0.5f,
+
+            -0.5f,  0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
+             0.5f,  0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f
+        };
+        CVertexBufferObject vboCube;
+        vboCube.AddVertexData(cubeVertices);
+
+        CVertexDataHandler cubeData;
+        cubeData.AddVertexBufferObject(&vboCube);
+        cubeData.AddAttribute(3, 3, 0, false);
 
         // Render loop
         while (window.IsOpen())
@@ -65,7 +97,7 @@ int main()
             shaderProgram.SetUniform("view",        static_cast<const CMatrix&>(camera.GetViewMatrix()));
             shaderProgram.SetUniform("projection",  static_cast<const CMatrix&>(camera.GetPerspectiveMatrix()));
 
-            pointsData.DrawPoints(8);
+            cubeData.DrawArrays(36);
 
             // Poll events and redraw window
             window.RedrawAndPoll();
