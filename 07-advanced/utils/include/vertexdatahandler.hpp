@@ -25,6 +25,8 @@ public:
 
     void DrawArrays(int aNumberOfVertices) const noexcept;
     void DrawElements(int aNumberOfVertices) const noexcept;
+    void DrawPoints(int aNumberPoints) const noexcept;
+
 
 private:
     CVertexBufferObject*    _vbo;

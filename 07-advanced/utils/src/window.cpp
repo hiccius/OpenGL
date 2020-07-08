@@ -176,6 +176,11 @@ void CWindow::SetFaceCulling(bool aEnable) noexcept
     }
 }
 
+void CWindow::SetPointSizeControl(bool aEnable) noexcept
+{
+    aEnable ? glEnable(GL_PROGRAM_POINT_SIZE) : glDisable(GL_PROGRAM_POINT_SIZE);
+}
+
 void CWindow::ClearColor(float aX, float aY, float aZ, float aW) const noexcept
 {
     glClearColor(aX, aY, aZ, aW);

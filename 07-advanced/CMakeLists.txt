@@ -16,7 +16,4 @@ add_subdirectory(examples)
 add_custom_target(07-advanced ALL
                   COMMAND ${CMAKE_COMMAND} -E copy_directory
                           ${CMAKE_CURRENT_SOURCE_DIR}/shaders
-                          ${CMAKE_CURRENT_BINARY_DIR}/shaders
-                  COMMAND ${CMAKE_COMMAND} -E copy_directory
-                          ${CMAKE_CURRENT_SOURCE_DIR}/resources
-                          ${CMAKE_CURRENT_BINARY_DIR}/resources)
+                          ${CMAKE_CURRENT_BINARY_DIR}/shaders)

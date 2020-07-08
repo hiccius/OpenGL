@@ -69,3 +69,9 @@ void CVertexDataHandler::DrawElements(int aNumberVertices) const noexcept
     glBindVertexArray(_vaoId);
     glDrawElements(GL_TRIANGLES, aNumberVertices, GL_UNSIGNED_INT, 0);
 }
+
+void CVertexDataHandler::DrawPoints(int aNumberPoints) const noexcept
+{
+    glBindVertexArray(_vaoId);
+    glDrawArrays(GL_POINTS, 0, aNumberPoints);
+}

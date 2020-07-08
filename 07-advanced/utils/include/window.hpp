@@ -29,6 +29,7 @@ public:
     void ClearStencilBuffer() noexcept;
 
     void SetFaceCulling(bool aEnable) noexcept;
+    void SetPointSizeControl(bool aEnable) noexcept;
 
     void ClearColor(float aX, float aY, float aZ, float aW) const noexcept;
 
