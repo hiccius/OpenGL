@@ -17,6 +17,7 @@ add_library(utils_07
     src/shader.cpp
     src/shaderprogram.cpp
     src/texture.cpp
+    src/uniformbufferobject.cpp
     src/vertexbufferobject.cpp
     src/vertexdatahandler.cpp
     src/window.cpp

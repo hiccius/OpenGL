@@ -143,3 +143,21 @@ void CShaderProgram::Use() const
 
     glUseProgram(_id);
 }
+
+void CShaderProgram::SetBindingPoint(std::string_view aBlockName, unsigned int aBindingPoint)
+{
+    glUniformBlockBinding(_id, GetUniformBlockIndex(aBlockName), aBindingPoint);
+}
+
+unsigned int CShaderProgram::GetUniformBlockIndex(std::string_view aBlockName) const
+{
+    auto index = glGetUniformBlockIndex(_id, aBlockName.data());
+    if (index == GL_INVALID_INDEX)
+    {
+        throw OpenGLException{"SHADER_PROGRAM", std::string{aBlockName} + " is not a valid uniform block"};
+    }
+    else
+    {
+        return index;
+    }
+}

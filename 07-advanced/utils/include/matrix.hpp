@@ -23,6 +23,11 @@ public:
 
     CMatrix operator*(const CMatrix& other) const noexcept;
 
+    static constexpr std::size_t Size() noexcept
+    {
+        return sizeof(glm::mat4);
+    }
+
 protected:
     CMatrix(glm::mat4&& aMatrix) noexcept;
 

@@ -18,6 +18,5 @@ CVertexBufferObject::~CVertexBufferObject() noexcept
 CVertexBufferObject::CVertexBufferObject(CVertexBufferObject&& aOther) noexcept
 {
     _id = aOther._id;
-
     aOther._id = 0;
 }

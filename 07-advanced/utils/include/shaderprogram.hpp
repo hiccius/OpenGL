@@ -32,10 +32,13 @@ public:
     void SetUniform(const std::string& aName, const RawFloatVector3& aVector);
     void SetUniform(const std::string& aName, const std::array<float, 3>& aArray);
 
+    void SetBindingPoint(std::string_view aBlockName, unsigned int aBindingPoint);
+
     void Use() const;
 
 private:
     int GetUniformLocation(const std::string& aName) const;
+    unsigned int GetUniformBlockIndex(std::string_view aBlockName) const;
 
     unsigned int _id;
     mutable std::map<std::string, int> _uniformsCache;
