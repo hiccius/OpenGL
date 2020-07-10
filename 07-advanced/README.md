@@ -16,7 +16,7 @@ The examples in this section show different _advanced_ features of OpenGL.
 
 - Variables in shaders can be grouped together in **interface blocks** for **input** or **output** variables. They are declared in a similar way to ```structs``` but using the ```in``` or ```out``` keyword. The **block name** needs to be the same so they can be matched across shaders, their **instance name** can be different.
 
-- **Uniform buffer objects** can be used to avoid the need to set the same uniform variable on different shaders manually (for example when using view and projection matrices). The variables need to be declared in a **uniform block** in shaders and a **uniform block layout** can be specified - *shared* by default but *std140* is most commonly used as it has a fixed set of rules for offsets and padding of variables based on multiples of a **base alignment** for each variable type. Memory needs to be allocated before filling the buffer and it also needs to be linked to a **binding point** (the whole buffer or parts of it to different binding points) so the shader can find the data (the shader also needs to have its uniform blocks linked to the same binding points as the uniform buffer objects).
+- **Uniform buffer objects** can be used to avoid the need to manually set the same uniform variables on different shaders (for example when using view and projection matrices). The variables need to be declared in a **uniform block** in shaders and a **uniform block layout** can be specified - *shared* by default but *std140* is most commonly used as it has a fixed set of rules for offsets and padding of variables based on multiples of a **base alignment** for each variable type. Memory needs to be allocated before filling the buffer and it also needs to be linked to a **binding point** (the whole buffer or parts of it to different binding points) so the shader can find the data (the shader also needs to have its uniform blocks linked to the same binding points as the uniform buffer objects).
 
 ### Examples
 The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [4. xxx](#4-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
@@ -46,9 +46,9 @@ This example takes a different texture depending on the value of *gl_FrontFace*,
 </div>
 
 #### 4. Colored cubes
-In this example, four different shaders are used for each cube and because view and projection matrices are the same for all of them, an **uniform buffer object** is used to store them and make them available for the four shaders.
+In this example, four different shaders are used for each cube and because view and projection matrices are the same for all of them, an **uniform buffer object** is used to store these matrices and make them available for the four shaders.
 
 <div align="center">
   <img src="images/04-cubes.png" height="450"><br>
-  <sup><strong>Fig. 4: </strong> *Chis chis chis* </sup>
+  <sup><strong>Fig. 4: </strong><i> Chis chis chis <i></sup>
 </div>
