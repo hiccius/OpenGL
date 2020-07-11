@@ -8,6 +8,7 @@
 std::map<CShader::Type, std::pair<std::string_view, int>> CShader::TypeCodes
 {
     { Type::VertexShader,   { "Vertex",   GL_VERTEX_SHADER   } },
+    { Type::GeometryShader, { "Geometry", GL_GEOMETRY_SHADER } },
     { Type::FragmentShader, { "Fragment", GL_FRAGMENT_SHADER } }
 };
 
@@ -17,10 +18,9 @@ CShader::CShader(Type aType, std::string_view aSourceCode) noexcept
 
 CShader::CShader(const std::filesystem::path& aSourceFileName)
 {
-    _type = GetTypeFromExtension(aSourceFileName.extension());
-
     try
     {
+        _type = GetTypeFromExtension(aSourceFileName.extension());
         auto sourceFilePath = GetFullPath("shaders" / aSourceFileName);
         ReadSourceCode(sourceFilePath);
     }
@@ -34,7 +34,7 @@ CShader::CShader(CShader&& aOther) noexcept
     : _type{aOther._type}, _shaderId{aOther._shaderId},
       _sourceCodeContent{aOther._sourceCodeContent}, _sourceCode{_sourceCodeContent}
 {
-    _shaderId = 0;
+    aOther._shaderId = 0;
 }
 
 CShader::~CShader() noexcept
@@ -44,7 +44,7 @@ CShader::~CShader() noexcept
 
 void CShader::Compile()
 {
-    unsigned int shaderId = glCreateShader(TypeCodes[_type].second);
+    unsigned int shaderId = glCreateShader(TypeCodes.at(_type).second);
     const char* sourceCodeString = _sourceCode.data();
     glShaderSource(shaderId, 1, &sourceCodeString, nullptr);
     glCompileShader(shaderId);
@@ -83,6 +83,11 @@ int CShader::GetId() const noexcept
     return _shaderId;
 }
 
+std::string CShader::GetTypeName() const noexcept
+{
+    return std::string{TypeCodes[_type].first};
+}
+
 CShader::Type CShader::GetTypeFromExtension(const std::filesystem::path& aExtension) const
 {
     if (aExtension == ".vert")
@@ -92,6 +97,10 @@ CShader::Type CShader::GetTypeFromExtension(const std::filesystem::path& aExtens
     else if (aExtension == ".frag")
     {
         return Type::FragmentShader;
+    }
+    else if (aExtension == ".geom")
+    {
+        return Type::GeometryShader;
     }
     else
     {

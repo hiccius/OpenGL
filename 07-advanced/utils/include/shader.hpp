@@ -8,7 +8,7 @@
 class CShader
 {
 public:
-    enum class Type {VertexShader, FragmentShader};
+    enum class Type {VertexShader, GeometryShader, FragmentShader};
     static std::map<Type, std::pair<std::string_view, int>> TypeCodes;
 
     CShader(Type aType, std::string_view aSourceCode) noexcept;
@@ -19,6 +19,7 @@ public:
     void Compile();
     void Delete() noexcept;
     int GetId() const noexcept;
+    std::string GetTypeName() const noexcept;
 
 private:
     Type GetTypeFromExtension(const std::filesystem::path& aExtension) const;

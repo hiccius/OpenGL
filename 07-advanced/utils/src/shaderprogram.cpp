@@ -1,8 +1,7 @@
-#include "shaderprogram.hpp"
+#include "shaderprogram.ipp"
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
-#include "helpers.hpp"
 #include "matrix.hpp"
 
 CShaderProgram CShaderProgram::Build(std::string_view aVertexShader, std::string_view aFragmentShader)
@@ -15,7 +14,24 @@ CShaderProgram CShaderProgram::Build(std::string_view aVertexShader, std::string
     vertexShader.Compile();
     fragmentShader.Compile();
 
-    shaderProgram.Link(vertexShader, fragmentShader);
+    shaderProgram.Link({std::move(vertexShader), std::move(fragmentShader)});
+
+    return shaderProgram;
+}
+
+CShaderProgram CShaderProgram::Build(std::string_view aVertexShader, std::string_view aGeometryShader, std::string_view aFragmentShader)
+{
+    CShaderProgram shaderProgram;
+
+    CShader vertexShader{aVertexShader};
+    CShader fragmentShader{aFragmentShader};
+    CShader geometryShader{aGeometryShader};
+
+    vertexShader.Compile();
+    geometryShader.Compile();
+    fragmentShader.Compile();
+
+    shaderProgram.Link({std::move(vertexShader), std::move(geometryShader), std::move(fragmentShader)});
 
     return shaderProgram;
 }
@@ -36,44 +52,6 @@ CShaderProgram::CShaderProgram(CShaderProgram&& aOther) noexcept
     : _id{aOther._id}, _uniformsCache{aOther._uniformsCache}
 {
     aOther._id = 0;
-}
-
-void CShaderProgram::Link(const CShader& aVertexShader, const CShader& aFragmentShader)
-{
-    if (_id == 0)
-    {
-        throw OpenGLException{"SHADER_PROGRAM", "Not initialised"};
-    }
-
-    if (aVertexShader.GetId() == 0)
-    {
-        throw OpenGLException{"SHADER_PROGRAM", "Vertex shader needs to be compiled"};
-    }
-
-    if (aFragmentShader.GetId() == 0)
-    {
-        throw OpenGLException{"SHADER_PROGRAM", "Fragment shader needs to be compiled"};
-    }
-
-    glAttachShader(_id, aVertexShader.GetId());
-    glAttachShader(_id, aFragmentShader.GetId());
-    glLinkProgram(_id);
-
-    int success;
-    glGetProgramiv(_id, GL_LINK_STATUS, &success);
-
-    if (!success)
-    {
-        std::string infoLog{};
-        int infoLogSize;
-
-        glGetProgramiv(_id, GL_INFO_LOG_LENGTH, &infoLogSize);
-        infoLog.resize(infoLogSize);
-
-        glGetProgramInfoLog(_id, infoLogSize, nullptr, infoLog.data());
-
-        throw OpenGLException{"SHADER_PROGRAM", "Linking failed:\n" + infoLog};
-    }
 }
 
 void CShaderProgram::SetUniform(const std::string& aName, float aX, float aY, float aZ)
@@ -159,5 +137,17 @@ unsigned int CShaderProgram::GetUniformBlockIndex(std::string_view aBlockName) c
     else
     {
         return index;
+    }
+}
+
+void CShaderProgram::AttachShader(const CShader& aShader)
+{
+    if (aShader.GetId() == 0)
+    {
+        throw OpenGLException{"SHADER_PROGRAM", aShader.GetTypeName() + " shader needs to be compiled"};
+    }
+    else
+    {
+        glAttachShader(_id, aShader.GetId());
     }
 }

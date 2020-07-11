@@ -12,13 +12,15 @@ class CMatrix;
 class CShaderProgram
 {
 public:
+    static CShaderProgram Build(std::string_view aVertexShader, std::string_view aGeometryShader, std::string_view aFragmentShader);
     static CShaderProgram Build(std::string_view aVertexShader, std::string_view aFragmentShader);
 
     CShaderProgram() noexcept;
     ~CShaderProgram() noexcept;
     CShaderProgram(CShaderProgram&& aOther) noexcept;
 
-    void Link(const CShader& aVertexShader, const CShader& aFragmentShader);
+    template<std::size_t N>
+    void Link(const CShader (&aShaders)[N]);
 
     template<typename ...T>
     void SetUniform(const std::string& aName, T...) = delete;
@@ -39,6 +41,8 @@ public:
 private:
     int GetUniformLocation(const std::string& aName) const;
     unsigned int GetUniformBlockIndex(std::string_view aBlockName) const;
+
+    void AttachShader(const CShader& aShader);
 
     unsigned int _id;
     mutable std::map<std::string, int> _uniformsCache;
