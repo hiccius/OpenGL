@@ -1,6 +1,6 @@
 ## Chapter 7 - Advanced Features
 ### Content Summary
-This section covers chapters *29. Advanced GLSL* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *29. Advanced GLSL*, *30. Geometry Shader* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show different _advanced_ features of OpenGL.
 
@@ -18,8 +18,12 @@ The examples in this section show different _advanced_ features of OpenGL.
 
 - **Uniform buffer objects** can be used to avoid the need to manually set the same uniform variables on different shaders (for example when using view and projection matrices). The variables need to be declared in a **uniform block** in shaders and a **uniform block layout** can be specified - *shared* by default but *std140* is most commonly used as it has a fixed set of rules for offsets and padding of variables based on multiples of a **base alignment** for each variable type. Memory needs to be allocated before filling the buffer and it also needs to be linked to a **binding point** (the whole buffer or parts of it to different binding points) so the shader can find the data (the shader also needs to have its uniform blocks linked to the same binding points as the uniform buffer objects).
 
+- Between the vertex and fragment shaders there is another optional shader, the **geometry shader**. This shader takes the vertex of a single **primitive** (e.g. a point, a triangle) and is able to apply transformations and generate other primitives or more vertices.
+    - It is important to take into account that the variables received from the **vertex shader** (position, color...) are passed as **arrays** - one element for each vertex - while the variables which go to the **fragment shader** are sent when a vertex is **emitted**, so they need to have the right value before making the appropriate call.
+    - Geometry shaders are used to dynamically generate shapes on the fly and are useful to draw simple shapes which appear multiple times on a scene in an easier way than defining all of them as vertices for the vertex shader.
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [4. xxx](#4-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [6. xxx](#6-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Points in space
 This example sets the variable *gl_PointSize* equal to the **depth value** when drawing points on the screen, making them appear larger the farther they are from the viewer.
@@ -51,4 +55,12 @@ In this example, four different shaders are used for each cube and because view 
 <div align="center">
   <img src="images/04-cubes.png" height="450"><br>
   <sup><strong>Fig. 4: </strong><i> Chis chis chis <i></sup>
+</div>
+
+#### 5. Winter houses
+In this example, four houses of different colors are drawn using the **geometry shader** from just **single points** passed to the **vertex shader** with different colors associated to them. All the triangles and the extra vertices are generated in the geometry shader.
+
+<div align="center">
+  <img src="images/05-houses.png" height="450"><br>
+  <sup><strong>Fig. 5: </strong><i> Notting Hill in winter <i></sup>
 </div>
