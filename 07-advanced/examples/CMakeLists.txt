@@ -13,3 +13,6 @@ target_link_libraries(03-face_orientation PRIVATE utils_07)
 
 add_executable(04-uniform_buffer_objects 04-uniform_buffer_objects.cpp)
 target_link_libraries(04-uniform_buffer_objects PRIVATE utils_07)
+
+add_executable(05-geometry_shader 05-geometry_shader.cpp)
+target_link_libraries(05-geometry_shader PRIVATE utils_07)
