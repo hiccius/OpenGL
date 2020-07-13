@@ -16,3 +16,9 @@ target_link_libraries(04-uniform_buffer_objects PRIVATE utils_07)
 
 add_executable(05-geometry_shader 05-geometry_shader.cpp)
 target_link_libraries(05-geometry_shader PRIVATE utils_07)
+
+add_executable(06-exploding 06-exploding.cpp)
+target_link_libraries(06-exploding PRIVATE utils_07)
+
+add_executable(07-visible_normals 07-visible_normals.cpp)
+target_link_libraries(07-visible_normals PRIVATE utils_07)

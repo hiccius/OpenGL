@@ -18,6 +18,9 @@ public:
     template<typename ...T>
     void SetData(const T& ...aData) noexcept;
 
+    template<typename ...T>
+    void SetData(std::size_t aOffset, const T& ...aData) noexcept;
+
 private:
     unsigned int _id;
 };

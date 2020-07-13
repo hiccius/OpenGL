@@ -57,7 +57,7 @@ In this example, four different shaders are used for each cube and because view 
   <sup><strong>Fig. 4: </strong><i> Chis chis chis </i></sup>
 </div>
 
-#### 5. Winter houses
+#### 5. Colored houses
 In this example, four houses of different colors are drawn using the **geometry shader** from just **single points** passed to the **vertex shader** with different colors associated to them. All the triangles and the extra vertices are generated in this shader.
 
 <div align="center">

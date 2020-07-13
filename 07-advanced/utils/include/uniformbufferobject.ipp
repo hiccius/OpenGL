@@ -21,3 +21,10 @@ void CUniformBufferObject::SetData(const T& ...aData) noexcept
     glBindBuffer(GL_UNIFORM_BUFFER, _id);
     SetDataImpl(offSet, aData...);
 }
+
+template<typename ...T>
+void CUniformBufferObject::SetData(std::size_t aOffset, const T& ...aData) noexcept
+{
+    glBindBuffer(GL_UNIFORM_BUFFER, _id);
+    SetDataImpl(aOffset, aData...);
+}
