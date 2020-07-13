@@ -23,7 +23,7 @@ The examples in this section show different _advanced_ features of OpenGL.
     - Geometry shaders are used to dynamically generate shapes on the fly and are useful to draw simple shapes which appear multiple times on a scene in an easier way than defining all of them as vertices for the vertex shader.
 
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [6. xxx](#6-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [8. xxx](#6-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Points in space
 This example sets the variable *gl_PointSize* equal to the **depth value** when drawing points on the screen, making them appear larger the farther they are from the viewer.
@@ -63,4 +63,20 @@ In this example, four houses of different colors are drawn using the **geometry 
 <div align="center">
   <img src="images/05-houses.png" height="450"><br>
   <sup><strong>Fig. 5: </strong> Notting Hill in winter </sup>
+</div>
+
+#### 6. Explosive backpack
+This example takes the backpack model and modifies the position of its vertices in the **geometry shader**. The vertices are moved in the direction of its **normal** vector over time and then moved back to their original position in a loop fashion.
+
+<div align="center">
+  <img src="images/06-explosion.gif" height="450"><br>
+  <sup><strong>Fig. 6: </strong> Blowing up </sup>
+</div>
+
+#### 7. Look at the normal vectors
+In this example, the same model is used again but this time one shader draws the model 'as is' while a second one draws **yellow lines** in the direction of each vertex's **normal**, defining them in the **geometry shader**. This is an useful *trick* for debugging.
+
+<div align="center">
+  <img src="images/07-normals.png" height="450"><br>
+  <sup><strong>Fig. 7: </strong> A furry backpack </sup>
 </div>
