@@ -27,6 +27,7 @@ public:
     template<typename T,
              typename = std::enable_if_t<std::is_same_v<int, T> || std::is_same_v<bool, T>>>
     void SetUniform(const std::string& aName, T aValue);
+    void SetUniform(const std::string& aName, float aX, float aY);
     void SetUniform(const std::string& aName, float aX, float aY, float aZ);
     void SetUniform(const std::string& aName, float aX, float aY, float aZ, float aW);
     void SetUniform(const std::string& aName, float aValue);

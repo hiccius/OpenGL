@@ -22,17 +22,19 @@ public:
     void AddElementBufferObject(const std::vector<T>& aIndices) noexcept;
 
     void AddAttribute(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, bool aBytes = true) noexcept;
+    void AddAttributeDivisor(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, unsigned int aDivisor) noexcept;
 
     void DrawArrays(int aNumberOfVertices) const noexcept;
+    void DrawArrays(int aNumberOfVertices, int aInstances) const noexcept;
     void DrawElements(int aNumberOfVertices) const noexcept;
     void DrawPoints(int aNumberPoints) const noexcept;
 
 
 private:
-    CVertexBufferObject*    _vbo;
-    unsigned int            _vaoId;
-    unsigned int            _eboId{0};
-    unsigned int            _lastAttributeIndex{0};
+    std::vector<CVertexBufferObject*> _vbo;
+    unsigned int _vaoId;
+    unsigned int _eboId{0};
+    unsigned int _lastAttributeIndex{0};
 };
 
 #endif // VERTEXDATAHANDLER_HPP

@@ -22,3 +22,9 @@ target_link_libraries(06-exploding PRIVATE utils_07)
 
 add_executable(07-visible_normals 07-visible_normals.cpp)
 target_link_libraries(07-visible_normals PRIVATE utils_07)
+
+add_executable(08-instancing 08-instancing.cpp)
+target_link_libraries(08-instancing PRIVATE utils_07)
+
+add_executable(09-instanced_array 09-instanced_array.cpp)
+target_link_libraries(09-instanced_array PRIVATE utils_07)

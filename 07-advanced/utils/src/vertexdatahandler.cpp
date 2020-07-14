@@ -5,7 +5,6 @@
 #include "vertexbufferobject.hpp"
 
 CVertexDataHandler::CVertexDataHandler() noexcept
-    : _vbo{nullptr}
 {
     glGenVertexArrays(1, &_vaoId);
     glBindVertexArray(_vaoId);
@@ -25,18 +24,13 @@ CVertexDataHandler::~CVertexDataHandler() noexcept
 }
 
 CVertexDataHandler::CVertexDataHandler(CVertexDataHandler&& aOther) noexcept
+    : _vbo{std::move(aOther._vbo)}, _vaoId{aOther._vaoId}, _eboId{aOther._eboId},
+      _lastAttributeIndex{aOther._lastAttributeIndex}
 {
-    _vaoId = aOther._vaoId;
+    aOther._vbo.clear();
     aOther._vaoId = 0;
-
-    if (aOther._eboId != 0)
-    {
-        _eboId = aOther._eboId;
-        aOther._eboId = 0;
-    }
-
-    _lastAttributeIndex = aOther._lastAttributeIndex;
-    _vbo = aOther._vbo;
+    aOther._eboId = 0;
+    aOther._lastAttributeIndex = 0;
 }
 
 void CVertexDataHandler::AddVertexBufferObject(CVertexBufferObject* aVBO)
@@ -46,7 +40,7 @@ void CVertexDataHandler::AddVertexBufferObject(CVertexBufferObject* aVBO)
         throw OpenGLException("VERTEX", "Invalid pointer to VBO");
     }
 
-    _vbo = aVBO;
+    _vbo.push_back(aVBO);
 }
 
 void CVertexDataHandler::AddAttribute(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, bool aBytes) noexcept
@@ -58,10 +52,25 @@ void CVertexDataHandler::AddAttribute(unsigned int aComponents, unsigned int aSt
     ++_lastAttributeIndex;
 }
 
+void CVertexDataHandler::AddAttributeDivisor(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, unsigned int aDivisor) noexcept
+{
+    glVertexAttribPointer(_lastAttributeIndex, aComponents, GL_FLOAT, GL_FALSE,
+                          aStride * sizeof(float), reinterpret_cast<void*>(aOffset * sizeof(float)));
+    glEnableVertexAttribArray(_lastAttributeIndex);
+    glVertexAttribDivisor(_lastAttributeIndex, aDivisor);
+    ++_lastAttributeIndex;
+}
+
 void CVertexDataHandler::DrawArrays(int aNumberVertices) const noexcept
 {
     glBindVertexArray(_vaoId);
     glDrawArrays(GL_TRIANGLES, 0, aNumberVertices);
+}
+
+void CVertexDataHandler::DrawArrays(int aNumberVertices, int aInstances) const noexcept
+{
+    glBindVertexArray(_vaoId);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, aNumberVertices, aInstances);
 }
 
 void CVertexDataHandler::DrawElements(int aNumberVertices) const noexcept
