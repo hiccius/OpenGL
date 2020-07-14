@@ -22,8 +22,11 @@ The examples in this section show different _advanced_ features of OpenGL.
     - It is important to take into account that the variables received from the **vertex shader** (position, color...) are passed as **arrays** - one element for each vertex - and that the variables which go to the **fragment shader** are sent when a vertex is **emitted**, so they need to have the right value before making the appropriate call.
     - Geometry shaders are used to dynamically generate shapes on the fly and are useful to draw simple shapes which appear multiple times on a scene in an easier way than defining all of them as vertices for the vertex shader.
 
+- In order to draw multiple elements that share the same **vertex data**, the most efficient way to do it is by using **instancing**. A single render call draws as many elements as specified and it is possible to distinguish between them in the vertex shader by reading the *gl_InstanceID* variable.
+    - Different data for each instance can be passed to the vertex shader using **instanced arrays**. They are defined as another vertex attribute (stored in a different vertex buffer object) that have a different **attribute divisor** from the default (0 - which updates it for every vertex). A value of 1 updates it every instance, 2 every two instances, and so on.
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [8. xxx](#6-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [10. xxx](#10-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Points in space
 This example sets the variable *gl_PointSize* equal to the **depth value** when drawing points on the screen, making them appear larger the farther they are from the viewer.
@@ -79,4 +82,20 @@ In this example, the same model is used again but this time one shader draws the
 <div align="center">
   <img src="images/07-normals.png" height="450"><br>
   <sup><strong>Fig. 7: </strong> A furry backpack </sup>
+</div>
+
+#### 8. A grid of squares
+This example draws multiple instances of the same square where the different positions are assigned from an uniform array which value is selected using the *gl_InstanceID* as index.
+
+<div align="center">
+  <img src="images/08-grid.png" height="450"><br>
+  <sup><strong>Fig. 8: </strong> Nothing more than a grid </sup>
+</div>
+
+#### 9. A grid of squares of different sizes
+In this example, a different approach is used for drawing the grid. An **instanced array** containing the position of each instance is passed as a vertex attribute to the shader. To draw squares of different sizes, ```gl_InstanceID / 100.0``` is used as a scale factor.
+
+<div align="center">
+  <img src="images/09-grid_sizes.png" height="450"><br>
+  <sup><strong>Fig. 9: </strong> Growing squares </sup>
 </div>
