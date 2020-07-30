@@ -15,11 +15,13 @@ public:
 
     constexpr CCamera(double aSensitivity, double aMovementSpeedFactor, double aAspectRatio, bool aFPS = false) noexcept
         : _sensitivity{aSensitivity}, _movementSpeedFactor{aMovementSpeedFactor},
-          _aspectRatio{aAspectRatio}, _fpsStyle{aFPS},
+          _aspectRatio{aAspectRatio}, _fpsStyle{aFPS}, _farPlane{100.0f},
           _yaw{-90.0}, _pitch{0.0}, _fov{45.0},
           _upNormal{0.0f, 1.0f, 0.0f}, _rightNormal{1.0f, 0.0f, 0.0f},
           _direction{0.0f, 0.0f, -1.0f}, _position{0.0f, 0.0f, 3.0f}
     {}
+
+    void SetFarPlane(float aFarPlane) noexcept;
 
     void SetYaw(double aXOffset) noexcept;
     void SetPitch(double aYOffset) noexcept;
@@ -40,6 +42,8 @@ private:
     const double _movementSpeedFactor;
     const double _aspectRatio;
     const bool   _fpsStyle;
+
+    float  _farPlane;
 
     double _yaw;
     double _pitch;

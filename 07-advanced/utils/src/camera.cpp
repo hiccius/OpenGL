@@ -4,6 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "matrixderived.hpp"
 
+void CCamera::SetFarPlane(float aFarPlane) noexcept
+{
+    _farPlane = aFarPlane;
+}
+
 void CCamera::SetYaw(double aXOffset) noexcept
 {
     _yaw += _sensitivity * aXOffset;
@@ -78,7 +83,7 @@ const CPerspectiveMatrix& CCamera::GetPerspectiveMatrix() noexcept
 {
     if (!_perspectiveMatrix)
     {
-        _perspectiveMatrix = std::make_unique<CPerspectiveMatrix>(_fov, _aspectRatio, 0.1f, 100.0f, true);
+        _perspectiveMatrix = std::make_unique<CPerspectiveMatrix>(_fov, _aspectRatio, 0.1f, _farPlane, true);
     }
 
     return *_perspectiveMatrix;
