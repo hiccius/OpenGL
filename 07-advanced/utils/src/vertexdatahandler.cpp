@@ -52,10 +52,11 @@ void CVertexDataHandler::AddAttribute(unsigned int aComponents, unsigned int aSt
     ++_lastAttributeIndex;
 }
 
-void CVertexDataHandler::AddAttributeDivisor(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, unsigned int aDivisor) noexcept
+void CVertexDataHandler::AddAttributeDivisor(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, unsigned int aDivisor, bool aBytes) noexcept
 {
     glVertexAttribPointer(_lastAttributeIndex, aComponents, GL_FLOAT, GL_FALSE,
-                          aStride * sizeof(float), reinterpret_cast<void*>(aOffset * sizeof(float)));
+                          aStride * (aBytes ? 1 : sizeof(float)),
+                          reinterpret_cast<void*>(aOffset * (aBytes ? 1 : sizeof(float))));
     glEnableVertexAttribArray(_lastAttributeIndex);
     glVertexAttribDivisor(_lastAttributeIndex, aDivisor);
     ++_lastAttributeIndex;
@@ -79,8 +80,19 @@ void CVertexDataHandler::DrawElements(int aNumberVertices) const noexcept
     glDrawElements(GL_TRIANGLES, aNumberVertices, GL_UNSIGNED_INT, 0);
 }
 
+void CVertexDataHandler::DrawElements(int aNumberVertices, int aInstances) const noexcept
+{
+    glBindVertexArray(_vaoId);
+    glDrawElementsInstanced(GL_TRIANGLES, aNumberVertices, GL_UNSIGNED_INT, 0, aInstances);
+}
+
 void CVertexDataHandler::DrawPoints(int aNumberPoints) const noexcept
 {
     glBindVertexArray(_vaoId);
     glDrawArrays(GL_POINTS, 0, aNumberPoints);
+}
+
+void CVertexDataHandler::BindVAO() const noexcept
+{
+    glBindVertexArray(_vaoId);
 }

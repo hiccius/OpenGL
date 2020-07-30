@@ -46,6 +46,14 @@ void CModel::Draw() const
     }
 }
 
+void CModel::Draw(unsigned int aInstances) const
+{
+    for (const auto& mesh : _meshes)
+    {
+        mesh.Draw(_numberDiffuseUnits, _numberSpecularUnits, aInstances);
+    }
+}
+
 void CModel::ProcessNode(const aiNode* aNode, const aiScene* aScene)
 {
     for(unsigned int i = 0; i < aNode->mNumMeshes; ++i)
@@ -120,4 +128,9 @@ std::vector<CTexture*> CModel::LoadMaterialTextures(const aiMaterial* aMaterial,
         textures.push_back(&textureLoaded->second);
     }
     return textures;
+}
+
+std::vector<CMesh>& CModel::GetMeshes() noexcept
+{
+    return _meshes;
 }

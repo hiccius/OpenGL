@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <vector>
+#include "helpers.hpp"
 
 class CVertexBufferObject
 {
@@ -15,7 +16,12 @@ public:
     template<std::size_t N>
     void AddVertexData(const float (&aVertices)[N]) const noexcept;
 
-    template<typename T>
+    template<typename T,
+             typename = std::enable_if_t<!TSupportsSize<T>::value>>
+    auto AddVertexData(const std::vector<T>& aVertices) const noexcept;
+
+    template<typename T,
+             typename = std::enable_if_t<TSupportsSize<T>::value>>
     void AddVertexData(const std::vector<T>& aVertices) const noexcept;
 
 private:

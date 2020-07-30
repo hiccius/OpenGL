@@ -22,13 +22,15 @@ public:
     void AddElementBufferObject(const std::vector<T>& aIndices) noexcept;
 
     void AddAttribute(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, bool aBytes = true) noexcept;
-    void AddAttributeDivisor(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, unsigned int aDivisor) noexcept;
+    void AddAttributeDivisor(unsigned int aComponents, unsigned int aStride, unsigned int aOffset, unsigned int aDivisor, bool aBytes = true) noexcept;
 
     void DrawArrays(int aNumberOfVertices) const noexcept;
     void DrawArrays(int aNumberOfVertices, int aInstances) const noexcept;
     void DrawElements(int aNumberOfVertices) const noexcept;
+    void DrawElements(int aNumberOfVertices, int aInstances) const noexcept;
     void DrawPoints(int aNumberPoints) const noexcept;
 
+    void BindVAO() const noexcept;
 
 private:
     std::vector<CVertexBufferObject*> _vbo;

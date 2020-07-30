@@ -28,3 +28,6 @@ target_link_libraries(08-instancing PRIVATE utils_07)
 
 add_executable(09-instanced_array 09-instanced_array.cpp)
 target_link_libraries(09-instanced_array PRIVATE utils_07)
+
+add_executable(10-asteroids 10-asteroids.cpp)
+target_link_libraries(10-asteroids PRIVATE utils_07)

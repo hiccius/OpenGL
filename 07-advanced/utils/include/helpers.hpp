@@ -79,6 +79,55 @@ std::pair<bool, T> CommandOption(TCommandOptionMap<T> aOptions, T aDefault,
     return std::make_pair(false, aDefault);
 }
 
+template<std::size_t N>
+using StringViewArrray = std::array<std::string_view, N>;
+
+template<std::size_t N>
+std::tuple<bool, bool, StringViewArrray<N>> CommandOptionArgs(std::string_view optionKeyword,
+                                                              std::string_view optionDescription,
+                                                              int argc, char* argv[], std::ostream& out,
+                                                              StringViewArrray<N> argKeywords)
+{
+    if (static_cast<unsigned int>(argc) > N)
+    {
+        std::string_view firstArg{argv[1]};
+        if (firstArg == "--" + std::string{optionKeyword})
+        {
+            if (static_cast<unsigned int>(argc) > N+1)
+            {
+                StringViewArrray<N> args;
+                for (std::size_t i = 0; i < N; ++i)
+                {
+                    args[i] = argv[i + 2];
+                }
+                return std::make_tuple(false, true, std::move(args));
+            }
+        }
+        else if (firstArg != "--help")
+        {
+            StringViewArrray<N> args;
+            for (std::size_t i = 0; i < N; ++i)
+            {
+                args[i] = argv[i + 1];
+            }
+            return std::make_tuple(false, false, std::move(args));
+        }
+    }
+
+    auto tabSize{optionKeyword.size() + 7};
+    out.setf(std::ios_base::left, std::ios_base::adjustfield);
+    out << "Usage: " << argv[0] << " [option]";
+    std::for_each(argKeywords.begin(), argKeywords.end(),
+                  [&out](const auto& arg){out << " " << arg;});
+    out << "\n\n";
+    out << "Options:\n";
+    out << std::setw(tabSize) << "  --" + std::string{optionKeyword};
+    out << optionDescription << "\n";
+    out << std::setw(tabSize) << "  --help";
+    out << "Displays this message\n\n";
+    return std::make_tuple(true, false, StringViewArrray<N>{});
+}
+
 inline std::pair<bool, bool> CommandOption(std::string_view optionKeyword,
                                            std::string_view optionDescription,
                                            int argc, char* argv[], std::ostream& out)
@@ -151,5 +200,11 @@ T ToRadians(const T& aDegrees) noexcept
 {
     return aDegrees * M_PI / 180.0;
 }
+
+template <typename T, typename = void>
+struct TSupportsSize : std::false_type{};
+
+template <typename T>
+struct TSupportsSize<T, std::void_t<decltype(std::declval<T>().Size())>> : std::true_type{};
 
 #endif // HELPERS_HPP

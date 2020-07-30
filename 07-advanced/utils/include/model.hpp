@@ -14,7 +14,9 @@ public:
     CModel(const std::filesystem::path& aModelFile);
 
     void SetTextureUnitsUniforms(CShaderProgram& aShaderProgram);
+    std::vector<CMesh>& GetMeshes() noexcept;
     virtual void Draw() const override final;
+    void Draw(unsigned int aInstances) const;
 
 private:
     std::map<std::string, CTexture> _loadedTextures;
