@@ -61,7 +61,7 @@ int main()
         }
         CVertexBufferObject vboInstances;
         vboInstances.AddVertexData(translations);
-        quadsData.AddAttributeDivisor(2, 2, 0, 1);
+        quadsData.AddAttributeDivisor(2, 2, 0, 1, false);
 
         // Render loop
         while (window.IsOpen())
