@@ -4,7 +4,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include "helpers.hpp"
-#include "shaderprogram.hpp"
+#include "shaderprogram.ipp"
 
 CModel::CModel(const std::filesystem::path& aModelFile)
     : _folder{aModelFile.parent_path()}
