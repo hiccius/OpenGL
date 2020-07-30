@@ -211,5 +211,5 @@ double CWindow::GetTime() const noexcept
 
 double CWindow::FPS() const noexcept
 {
-    return 60.0 / _deltaFrames;
+    return 1.0 / _deltaFrames;
 }
