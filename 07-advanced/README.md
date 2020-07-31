@@ -106,11 +106,11 @@ This example shows the difference between drawing an element multiple times one 
 _**Note:** testing this without using **uniform buffer objects** for **view** and **projection** matrices made the performance of using instanced arrays much worse than drawing them one by one. After changing it, the limit for instancing was around 60000 asteroids with an acceptable frame rate while drawing them one by one had the limit at around 30000 asteroids._
 
 <div align="center">
-  <img src="images/10-regular_30000.gif" height="450"><br>
-  <sup><strong>Fig. 10.1: </strong> 30000 asteroids drawn one by one </sup>
+  <img src="images/10-regular_40000.gif" height="450"><br>
+  <sup><strong>Fig. 10.1: </strong> 40000 asteroids drawn one by one (not very smooth) </sup>
 </div>
 
 <div align="center">
-  <img src="images/10-instanced_30000.gif" height="450"><br>
-  <sup><strong>Fig. 10.2: </strong> 30000 asteroids drawn using an instanced array </sup>
+  <img src="images/10-instanced_40000.gif" height="450"><br>
+  <sup><strong>Fig. 10.2: </strong> 40000 asteroids drawn using an instanced array (quite smooth) </sup>
 </div>
