@@ -101,9 +101,9 @@ In this example, a different approach is used for drawing the grid. An **instanc
 </div>
 
 #### 10. Asteroids
-This example shows the difference between drawing an element multiple times one by one and using an **instanced array**. The example draws a planet in the center of the space and some asteroids around it. The example requires the number of asteroids to be passed as an argument and also accepts the optional argument ```--instancing``` to draw the asteroids using instanced arrays.
+This example shows the difference between drawing an element multiple times one by one and using an **instanced array**. The example draws a planet in the center and some asteroids around it. The example requires the number of asteroids to be passed as an argument and also accepts the optional argument ```--instancing``` to draw the asteroids using instanced arrays.
 
-_**Note:** testing this without using **uniform buffer objects** for **view** and **projection** matrices made the performance of using instanced arrays much worse than drawing them one by one. After changing it, the limit for instancing was around 60000 asteroids with an acceptable frame rate and drawing them one by one had the limit at around 30000 asteroids._
+_**Note:** testing this without using **uniform buffer objects** for **view** and **projection** matrices made the performance of using instanced arrays much worse than drawing them one by one. After changing it, the limit for instancing was around 60000 asteroids with an acceptable frame rate while drawing them one by one had the limit at around 30000 asteroids._
 
 <div align="center">
   <img src="images/10-regular_30000.gif" height="450"><br>
