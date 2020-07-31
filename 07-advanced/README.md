@@ -23,10 +23,10 @@ The examples in this section show different _advanced_ features of OpenGL.
     - Geometry shaders are used to dynamically generate shapes on the fly and are useful to draw simple shapes which appear multiple times on a scene in an easier way than defining all of them as vertices for the vertex shader.
 
 - To draw multiple elements that share the same **vertex data**, the most efficient way to do it is by using **instancing**. A single render call draws as many elements as specified and it is possible to distinguish between them in the vertex shader by reading the *gl_InstanceID* variable.
-    - Different data for each instance can be passed to the vertex shader using **instanced arrays**. They are defined as another vertex attribute (stored in a different vertex buffer object) that have a different **attribute divisor** from the default (0 - which updates it for every vertex). A value of 1 updates it every instance, 2 every two instances, and so on.
+    - Different data for each instance can be passed to the vertex shader using **instanced arrays**. They are defined as another vertex attribute (stored in a different vertex buffer object) that has a different **attribute divisor** from the default (0 - which updates it for every vertex). A value of 1 updates it every instance, 2 every two instances, and so on.
 
 ### Examples
-The examples can be executed one by one without needing to pass any arguments, the only examples supporting an optional argument are [10. xxx](#10-xxx). The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments except for [10. Asteroids](#10-asteroids), which requires an integer value and another optional argument. The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Points in space
 This example sets the variable *gl_PointSize* equal to the **depth value** when drawing points on the screen, making them appear larger the farther they are from the viewer.
@@ -98,4 +98,19 @@ In this example, a different approach is used for drawing the grid. An **instanc
 <div align="center">
   <img src="images/09-grid_sizes.png" height="450"><br>
   <sup><strong>Fig. 9: </strong> Growing squares </sup>
+</div>
+
+#### 10. Asteroids
+This example shows the difference between drawing an element multiple times one by one and using an **instanced array**. The example draws a planet in the center of the space and some asteroids around it. The example requires the number of asteroids to be passed as an argument and also accepts the optional argument ```--instancing``` to draw the asteroids using instanced arrays.
+
+_**Note:** testing this without using **uniform buffer objects** for **view** and **projection** matrices made the performance of using instanced arrays much worse than drawing them one by one. After changing it, the limit for instancing was around 60000 asteroids with an acceptable frame rate and drawing them one by one had the limit at around 30000 asteroids._
+
+<div align="center">
+  <img src="images/10-regular_30000.gif" height="450"><br>
+  <sup><strong>Fig. 10.1: </strong> 30000 asteroids drawn one by one </sup>
+</div>
+
+<div align="center">
+  <img src="images/10-instanced_30000.gif" height="450"><br>
+  <sup><strong>Fig. 10.2: </strong> 30000 asteroids drawn using an instanced array </sup>
 </div>
