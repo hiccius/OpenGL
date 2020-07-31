@@ -14,7 +14,7 @@ std::vector<CMatrix> GenerateRockModels(unsigned int aNumInstances)
 {
     std::vector<CMatrix> rockModels;
     float sizeFactor = std::max(std::floor(std::log10(aNumInstances)), 1.0);
-    float radius = sizeFactor * 50;
+    float radius = sizeFactor * 40;
     float offset = sizeFactor * std::sqrt(10);
 
     std::default_random_engine generator{std::random_device{}()};
