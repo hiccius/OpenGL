@@ -26,7 +26,7 @@ The examples in this section show different _advanced_ features of OpenGL.
     - Different data for each instance can be passed to the vertex shader using **instanced arrays**. They are defined as another vertex attribute (stored in a different vertex buffer object) that has a different **attribute divisor** from the default (0 - which updates it for every vertex). A value of 1 updates it every instance, 2 every two instances, and so on.
 
 - The **rasterizer** can introduce **aliasing** when transforming vertex data into fragments. These **jagged edges** can be reduced with **anti-aliasing** techniques such as **SSAA** (Super Sample Anti-Aliasing) - which involves using a high resolution renderbuffer that is then downsampled but is **not efficient**) - or **MSAA** (Multi Sample Anti-Aliasing) - which involves increasing the number of **sample points** per pixel and, depending on how many **subsamples** are covered by the shape, the color contribution to the framebuffer varies. MSAA surrounds hard edges with lighter colors, giving them a **smoother** appearance. This technique also requires for depth and stencil buffers to have a higher resolution.
-    - For off-screen MSAA, **multisample buffers** acting as **attachments** (texture attachments and renderbuffer objects) to framebuffers need to be created manually. To sample the framebuffer in the fragment shader it first needs to be **resolved** - downscaled - to an intermediate framebuffer with a **non-multisampled texture** attachment. After **blitting** the image, the color texture attached to the intermediate framebuffer can be sampled in the fragment shader.
+    - For off-screen MSAA, **multisample buffers** acting as **attachments** (texture attachments and renderbuffer objects) to framebuffers need to be created manually. To sample the framebuffer in the fragment shader it first needs to be **resolved** - downscaled - to an intermediate framebuffer with a **non-multisampled texture** attachment. After this process (called **blitting**), the color texture attached to the intermediate framebuffer can be sampled in the fragment shader.
     - **Multisampled textures** can also be passed to the fragment shader and each subsample accessed in order to develop custom anti-aliasing techniques.
 
 ### Examples
@@ -120,7 +120,7 @@ _**Note:** testing this without using **uniform buffer objects** for **view** an
 </div>
 
 #### 11. Anti-Aliasing
-In this example, **anti-aliasing** is performed over the model. The example can be run with the option ```--disable```, to compare it against not applying anti-aliasing, and also with the option ```--framebuffer```, where the technique is applied to a framebuffer which is then sampled in another fragment shader to apply a grayscale conversion.
+In this example, **anti-aliasing** is performed over a green cube. The example can be run with the option ```--disable```, to compare it against not applying anti-aliasing, and also with the option ```--framebuffer```, where the technique is applied to a framebuffer which is then sampled in another fragment shader to apply a grayscale conversion.
 
 <div align="center">
   <img src="images/11-no_antialiasing.png" height="450"><br>
