@@ -25,8 +25,12 @@ The examples in this section show different _advanced_ features of OpenGL.
 - To draw multiple elements that share the same **vertex data**, the most efficient way to do it is by using **instancing**. A single render call draws as many elements as specified and it is possible to distinguish between them in the vertex shader by reading the *gl_InstanceID* variable.
     - Different data for each instance can be passed to the vertex shader using **instanced arrays**. They are defined as another vertex attribute (stored in a different vertex buffer object) that has a different **attribute divisor** from the default (0 - which updates it for every vertex). A value of 1 updates it every instance, 2 every two instances, and so on.
 
+- Sometimes the **rasterizer** can introduce **aliasing** when transforming vertex data into fragments. These **jagged edges** can be reduced with **anti-aliasing** techniques such as **SSAA** (Super Sample Anti-Aliasing) - which involves using a high resolution renderbuffer that is then downsampled and is **not efficient**) - or **MSAA** (Multi Sample Anti-Aliasing) - which involves increasing the number of **sample points** per pixel and, depending on how many **subsamples** are covered by the shape, the color contribution to the framebuffer is more or less. MSAA surrounds hard edges with lighter colors, giving them a **smoother** appearance. This technique also requires depth and stencil buffers to have a higher resolution.
+    - For off-screen MSA **multisample buffers** acting as **attachments** (texture attachments and renderbuffer objects) to framebuffers need to be created manually. To sample the framebuffer in the fragment shader it first needs to be **resolved** - downscaled - to an intermediate framebuffer with a **non-multisampled texture** attachment. After **blitting** the image, the color texture attached to the framebuffer can be sampled in the fragment shader.
+    - **Multisampled textures** can also be passed to the fragment shader and each subsample accessed in order to develop custom anti-aliasing techniques.
+
 ### Examples
-The examples can be executed one by one without needing to pass any arguments except for [10. Asteroids](#10-asteroids), which requires an integer value and another optional argument. The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
+The examples can be executed one by one without needing to pass any arguments except for [10. Asteroids](#10-asteroids), which requires an integer value and can also be passed an optional argument. Example [11. Anti-Aliasing](#11-anti-aliasing) accepts an optional argument as well. The examples need to be launched from the root *build* folder so they can find the right path for the shaders. To exit the examples, just press <kbd>ESC</kbd>.
 
 #### 1. Points in space
 This example sets the variable *gl_PointSize* equal to the **depth value** when drawing points on the screen, making them appear larger the farther they are from the viewer.
@@ -113,4 +117,22 @@ _**Note:** testing this without using **uniform buffer objects** for **view** an
 <div align="center">
   <img src="images/10-instanced_40000.gif" height="450"><br>
   <sup><strong>Fig. 10.2: </strong> 40000 asteroids drawn using an instanced array (quite smooth) </sup>
+</div>
+
+#### 11. Anti-Aliasing
+In this example, **anti-aliasing** is performed over the model. The example can be run with the option ```--disable```, to compare it against not applying anti-aliasing, and also with the option ```--framebuffer```, where the technique is applied to a framebuffer which is then sampled in another shader to apply a grayscale conversion.
+
+<div align="center">
+  <img src="images/11-no_antialiasing.png" height="450"><br>
+  <sup><strong>Fig. 11.1: </strong> Non-smooth edges </sup>
+</div>
+
+<div align="center">
+  <img src="images/11-antialiasing.png" height="450"><br>
+  <sup><strong>Fig. 11.2: </strong> Goodbye jagged edges </sup>
+</div>
+
+<div align="center">
+  <img src="images/11-framebuffer.png" height="450"><br>
+  <sup><strong>Fig. 11.3: </strong> Anti-aliasing on framebuffers </sup>
 </div>
