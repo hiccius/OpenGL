@@ -3,8 +3,9 @@
 #include "helpers.hpp"
 #include "camera.hpp"
 
-CWindow::CWindow() noexcept
-    : _window{nullptr}, _depthTest{false}, _stencilTest{false}, _faceCulling{false}, _firstMouse{true}
+CWindow::CWindow(bool aMultisample) noexcept
+    : _window{nullptr}, _depthTest{false}, _stencilTest{false},
+      _faceCulling{false}, _multisample{aMultisample}, _firstMouse{true}
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -13,6 +14,11 @@ CWindow::CWindow() noexcept
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+
+    if (_multisample)
+    {
+        glfwWindowHint(GLFW_SAMPLES, 4);
+    }
 }
 
 CWindow::~CWindow() noexcept
@@ -48,6 +54,12 @@ void CWindow::SetUp(int aWidth, int aHeight, std::string_view aTitle, CCamera* a
 
     // Initialize pointer to camera
     _camera = aCamera;
+
+    // Set multisampling
+    if (_multisample)
+    {
+        glEnable(GL_MULTISAMPLE);
+    }
 }
 
 void CWindow::SetMouseControl() const

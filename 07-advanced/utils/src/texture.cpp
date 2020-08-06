@@ -5,10 +5,11 @@
 #include <glad/glad.h>
 #include "helpers.hpp"
 
-CTextureBase::CTextureBase() noexcept
+CTextureBase::CTextureBase(bool aMultisample) noexcept
+    : _target{aMultisample ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D}
 {
     glGenTextures(1, &_id);
-    glBindTexture(GL_TEXTURE_2D, _id);
+    glBindTexture(_target, _id);
 }
 
 CTextureBase::~CTextureBase() noexcept
@@ -20,31 +21,31 @@ CTextureBase::~CTextureBase() noexcept
 }
 
 CTextureBase::CTextureBase(CTextureBase&& aOther) noexcept
+    : _target{aOther._target}, _id{aOther._id}
 {
-    _id = aOther._id;
     aOther._id = 0;
 }
 
 void CTextureBase::SetMinifyFilteringMode(int aMode) noexcept
 {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, aMode);
+    glTexParameteri(_target, GL_TEXTURE_MIN_FILTER, aMode);
 }
 
 void CTextureBase::SetMagnifyFilteringMode(int aMode) noexcept
 {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, aMode);
+    glTexParameteri(_target, GL_TEXTURE_MAG_FILTER, aMode);
 }
 
 void CTextureBase::SetWrappingMode(int aMode) noexcept
 {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, aMode);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, aMode);
+    glTexParameteri(_target, GL_TEXTURE_WRAP_S, aMode);
+    glTexParameteri(_target, GL_TEXTURE_WRAP_T, aMode);
 }
 
 void CTextureBase::ActivateAndBind(int aTextureUnitIndex) const noexcept
 {
     glActiveTexture(GL_TEXTURE0 + aTextureUnitIndex);
-    glBindTexture(GL_TEXTURE_2D, _id);
+    glBindTexture(_target, _id);
 }
 
 CTexture::CTexture(Type aType) noexcept
@@ -69,8 +70,8 @@ void CTexture::GenerateTexture(const std::filesystem::path& aTextureFile)
         {
             int format = GetImageFormat(colorChannels);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
+            glTexImage2D(_target, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(_target);
 
             SetWrappingMode(format == GL_RGBA ? WrappingMode::ClampedEdge : WrappingMode::Repeat);
             SetMinifyFilteringMode(FilteringMode::LinearMipmapLinear);
@@ -109,15 +110,31 @@ int CTexture::GetImageFormat(int aColorChannels) const
     }
 }
 
+CTextureBuffer::CTextureBuffer(unsigned int aSamples)
+    : CTextureBase{aSamples != 1}, _samples{aSamples}
+{
+    if (aSamples == 0)
+    {
+        throw OpenGLException{"TEXTURE_BUFFER", "Buffer cannot have 0 samples"};
+    }
+}
+
 void CTextureBuffer::GenerateTexture(int aWidth, int aHeight)
 {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, aWidth, aHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
-    SetWrappingMode(WrappingMode::ClampedEdge);
-    SetMinifyFilteringMode(FilteringMode::Linear);
-    SetMagnifyFilteringMode(FilteringMode::Linear);
+    if (_samples == 1)
+    {
+        glTexImage2D(_target, 0, GL_RGB, aWidth, aHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+        SetWrappingMode(WrappingMode::ClampedEdge);
+        SetMinifyFilteringMode(FilteringMode::Linear);
+        SetMagnifyFilteringMode(FilteringMode::Linear);
+    }
+    else
+    {
+        glTexImage2DMultisample(_target, _samples, GL_RGB, aWidth, aHeight, GL_TRUE);
+    }
 }
 
 void CTextureBuffer::Attach() noexcept
 {
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _id, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _target, _id, 0);
 }

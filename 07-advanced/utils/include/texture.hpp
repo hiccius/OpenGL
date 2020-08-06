@@ -8,7 +8,7 @@
 class CTextureBase
 {
 public:
-    CTextureBase() noexcept;
+    CTextureBase(bool aMultisample = false) noexcept;
     ~CTextureBase() noexcept;
 
     CTextureBase(CTextureBase&& aOther) noexcept;
@@ -21,7 +21,8 @@ protected:
     void SetMagnifyFilteringMode(int aMode) noexcept;
     void SetWrappingMode(int aMode) noexcept;
 
-    unsigned int _id;
+    const int       _target;
+    unsigned int    _id;
 };
 
 
@@ -48,9 +49,13 @@ private:
 class CTextureBuffer : public CTextureBase, public CFramebufferAttachment
 {
 public:
+    CTextureBuffer(unsigned int aSamples = 1);
     void GenerateTexture(int aWidth, int aHeight);
 
     virtual void Attach() noexcept override final;
+
+private:
+    const unsigned int _samples;
 };
 
 namespace WrappingMode

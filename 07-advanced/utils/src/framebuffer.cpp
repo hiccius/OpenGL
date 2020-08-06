@@ -1,7 +1,5 @@
 #include "framebuffer.hpp"
 
-#include "glad/glad.h"
-
 CFramebuffer::CFramebuffer() noexcept
 {
     glGenFramebuffers(1, &_id);
@@ -37,7 +35,14 @@ void CFramebuffer::BindDefault() noexcept
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void CFramebuffer::Bind() noexcept
+void CFramebuffer::Bind(CFramebuffer::Target aTarget) noexcept
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, _id);
+    glBindFramebuffer(static_cast<GLenum>(aTarget), _id);
+}
+
+void CFramebuffer::Blit(CFramebuffer& aDestination, int aWidth, int aHeight) noexcept
+{
+    Bind(Target::Read);
+    aDestination.Bind(Target::Draw);
+    glBlitFramebuffer(0, 0, aWidth, aHeight, 0, 0, aWidth, aHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 }

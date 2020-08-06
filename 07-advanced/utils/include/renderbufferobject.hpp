@@ -11,7 +11,7 @@ public:
         Stencil, Depth, DepthAndStencil
     };
 
-    CRenderbufferObject(Type aType) noexcept;
+    CRenderbufferObject(Type aType, unsigned int aSamples = 1);
     ~CRenderbufferObject() noexcept;
 
     CRenderbufferObject(const CRenderbufferObject& aOther) = delete;
@@ -20,8 +20,9 @@ public:
     virtual void Attach() noexcept override final;
 
 private:
-    unsigned int    _id;
-    Type            _type;
+    const unsigned int  _samples;
+    unsigned int        _id;
+    const Type          _type;
 
     unsigned int GetInternalFormat() const;
     unsigned int GetAttachmentType() const;

@@ -9,7 +9,7 @@ class CCamera;
 class CWindow
 {
 public:
-    CWindow() noexcept;
+    CWindow(bool aMultisample = false) noexcept;
     ~CWindow() noexcept;
 
     void SetUp(int aWidth, int aHeight, std::string_view aTitle, CCamera* aCamera = nullptr);
@@ -50,6 +50,7 @@ private:
     bool        _depthTest;
     bool        _stencilTest;
     bool        _faceCulling;
+    const bool  _multisample;
     bool        _firstMouse;
     double      _xCursorLocation;
     double      _yCursorLocation;

@@ -31,3 +31,6 @@ target_link_libraries(09-instanced_array PRIVATE utils_07)
 
 add_executable(10-asteroids 10-asteroids.cpp)
 target_link_libraries(10-asteroids PRIVATE utils_07)
+
+add_executable(11-anti_aliasing 11-anti_aliasing.cpp 11-framebuffer_wrapper.cpp)
+target_link_libraries(11-anti_aliasing PRIVATE utils_07)
