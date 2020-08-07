@@ -1,6 +1,6 @@
 ## Chapter 7 - Advanced Features
 ### Content Summary
-This section covers chapters *29. Advanced GLSL*, *30. Geometry Shader* and **_[TO BE COMPLETED]_** of [LearnOpenGL](https://learnopengl.com).
+This section covers chapters *29. Advanced GLSL*, *30. Geometry Shader*, *31. Instancing* and *32. Anti Aliasing* of [LearnOpenGL](https://learnopengl.com).
 
 The examples in this section show different _advanced_ features of OpenGL.
 
